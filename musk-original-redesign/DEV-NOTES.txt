@@ -1,0 +1,8 @@
+MUSK — DESIGN ONLY (thay thế các bản thử nghiệm trước)
+
+Nguồn: Downloads/Hackathon/Bull/Musk/musk-web-chat-src.html.
+Giữ nguyên toàn bộ nội dung, markup bên trong body và JavaScript gốc. Chỉ nhúng ảnh, bổ sung lớp CSS skin và khung HTML chuẩn.
+Không thêm hai lựa chọn vào card đề xuất. Không sửa câu chữ, cấu trúc card, disclosure hay logic so sánh/voucher. Sidebar và nút chuyển ngành vẫn hoạt động như gốc.
+Chỉ thay font/color/spacing/border/button/ảnh thumbnail; logo được áp bằng CSS. Nhãn demo và bộ đếm bước trên header được ẩn bằng CSS theo yêu cầu trước đó. Các ID vẫn giữ nguyên.
+musk-design-only.html và musk-redesign.html có cùng nội dung; mở trực tiếp không cần server. Font Be Vietnam Pro cần mạng, có fallback.
+Đã đối chiếu JavaScript và phần markup gốc: trùng khớp sau khi nhúng ảnh. Không tích hợp API hay Shopee thật; nội dung mẫu và giới hạn của file gốc được giữ nguyên.

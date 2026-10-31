@@ -1,5 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
+import brandLogo from "./assets/musk-logo.png";
 import { IntentSummary } from "./components/requirements";
+import { AssistantText } from "./components/data-notes";
 import { OfferResults, formatMoney } from "./components/offers/OfferResults";
 import { VariantSelection } from "./components/offers/VariantSelection";
 import { ActivityLog } from "./components/chat/ActivityLog";
@@ -455,12 +457,7 @@ export default function App() {
           }}
           aria-label="Musk - bắt đầu lại"
         >
-          <span className="brand-symbol">
-            m<span>✦</span>
-          </span>
-          <span className="brand-word">
-            musk<span>MUA ĐÚNG. CHỌN ĐÁNG.</span>
-          </span>
+          <img className="brand-logo" src={brandLogo} alt="musk" width={132} height={44} />
         </a>
         <div className="header-middle">
           <span className="live-dot" />
@@ -557,7 +554,11 @@ export default function App() {
                           {item.kind === "error" ? "Không thể tiếp tục" : "Musk"}
                         </span>
                       )}
-                      <p>{item.text}</p>
+                      {item.kind === "assistant" ? (
+                        <AssistantText text={item.text} />
+                      ) : (
+                        <p>{item.text}</p>
+                      )}
                       {item.suggestedReplies?.length &&
                       item === state.messages.at(-1) &&
                       !state.busy ? (

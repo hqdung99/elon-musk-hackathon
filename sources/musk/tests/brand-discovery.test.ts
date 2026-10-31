@@ -225,6 +225,10 @@ it("routes a category through sourced brands, nine listings, within-brand ranks 
   expect(html).toContain('href="https://brands.example/0"');
   expect(html).toContain("So sánh cùng thương hiệu: Clear (3 offer)");
   expect(html).toContain("CÙNG THƯƠNG HIỆU #1");
+  expect(html.match(/class="comparison-table"/g)).toHaveLength(4);
+  expect(html).toContain("<caption>So sánh giữa các thương hiệu</caption>");
+  expect(html).toContain("<caption>So sánh Clear</caption>");
+  expect(html).toContain('scope="row">Chi phí / 100ml');
   expect(html.match(/ĐỀ XUẤT CHO BẠN/g)).toHaveLength(1);
   expect(html).toContain("Giới hạn tổng 9 listing");
   expect(html).not.toContain(" máy");

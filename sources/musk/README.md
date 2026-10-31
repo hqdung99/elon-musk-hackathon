@@ -1,6 +1,27 @@
 # Musk local MVP
 
-Shopping assistant built with React, Vite, and TypeScript. Dark theme, no application backend.
+Shopping assistant built with React, Vite, and TypeScript. Warm light theme, no application backend.
+
+The UI follows the supplied Musk redesign: local logo, cream canvas, white cards,
+muted chat bubbles, teal selection states and rounded controls. Stronger text,
+borders and semantic colors improve clarity. Tested text-color pairs
+meet 4.5:1 contrast on their surfaces; control borders and focus indicators meet
+3:1. Earlier results and disabled controls remain readable instead of fading.
+This is a visual refresh only; shopping logic, real product images, evidence disclosures and
+explicit approval/revalidation remain unchanged. The request summary collapses
+on mobile, while configuration and data-mode disclosures remain accessible.
+Recommendations show the essential product, SKU, seller, total, delivery and
+warranty facts. Full reasons, caveats and evidence remain expandable. Comparisons
+use side-by-side tables, including within-brand groups; swipe or scroll horizontally
+on narrow screens to inspect and select another offer.
+Missing optional facts and absent images are omitted from recommendation cards.
+Comparison rows with no data across all offers are hidden; isolated missing cells
+use a dash, never a passing result. Unknown requirement warnings and unconfirmed
+totals remain visible, with full missing-data notes in expandable evidence.
+Chat messages, including earlier revalidation messages, collapse optional
+missing-field lists into a disclosure with readable labels. Unknown requirements,
+essential checkout facts and previously confirmed terms that became unknown
+remain visible; stored messages and checkout validation are unchanged.
 
 ## Run
 
