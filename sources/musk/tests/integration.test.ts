@@ -106,15 +106,22 @@ it("integrates OpenAI contracts and Shopee search, relevance, explicit SKU, cart
                     ],
                     limitations: ["Mẫu đánh giá nhỏ."],
                   }
-                : task === "rank_offers"
+                : task === "choose_variant"
                   ? {
-                      ranked_offers: data.profiles.map((profile: { offer_id: string }) => ({
-                        offer_id: profile.offer_id,
-                        preference_reasons: [],
-                        trade_offs: ["Chưa rõ tổng thanh toán nên chưa xác nhận ngân sách."],
-                      })),
+                      status: "uncertain",
+                      variant_id: null,
+                      reason: "Cần chọn SKU trong luồng thử nghiệm thủ công.",
+                      ambiguous_variant_ids: ["789", "790"],
                     }
-                  : undefined;
+                  : task === "rank_offers"
+                    ? {
+                        ranked_offers: data.profiles.map((profile: { offer_id: string }) => ({
+                          offer_id: profile.offer_id,
+                          preference_reasons: [],
+                          trade_offs: ["Chưa rõ tổng thanh toán nên chưa xác nhận ngân sách."],
+                        })),
+                      }
+                    : undefined;
       if (!output) throw new Error(`Unexpected OpenAI task: ${task}`);
       payload = {
         id: "integration",
@@ -309,6 +316,7 @@ it("integrates OpenAI contracts and Shopee search, relevance, explicit SKU, cart
     "interpret_intent",
     "build_search_plan",
     "assess_listings",
+    "choose_variant",
     "summarize_reviews",
     "rank_offers",
     "summarize_reviews",

@@ -28,6 +28,12 @@ export function recommendOffers(
     recommended_offer_id: recommended?.offer_id ?? null,
     reasons: recommended?.preference_reasons.map((reason) => reason.reason) ?? [],
     limitations: [
+      ...intent.requirements
+        .filter((requirement) => !requirement.field_path)
+        .map(
+          (requirement) =>
+            `Chưa hỗ trợ xác minh: ${requirement.user_text}. Yêu cầu vẫn được giữ; bạn cần kiểm tra trên Shopee.`,
+        ),
       ...(marketplace.mode === "fixture" ? fixtureLimitations(profiles) : []),
       ...new Set(profiles.flatMap((profile) => profile.quote.limitations ?? [])),
       ...(ai.mode === "demo" ? ["AI demo theo kịch bản cố định, không gọi mô hình."] : []),

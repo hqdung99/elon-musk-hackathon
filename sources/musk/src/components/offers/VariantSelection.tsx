@@ -16,8 +16,13 @@ export function VariantSelection({
     Object.fromEntries(
       prepared.candidates.map(({ listing, product }) => [
         listingKey(listing),
-        product.variants.find((variant) => variant.variant_id === product.default_variant_id)
-          ?.variant_id ?? (product.variants.length === 1 ? product.variants[0].variant_id : ""),
+        prepared.suggested_choices
+          ? Object.hasOwn(prepared.suggested_choices, listingKey(listing))
+            ? (prepared.suggested_choices[listingKey(listing)] ?? skip)
+            : ""
+          : (product.variants.find((variant) => variant.variant_id === product.default_variant_id)
+              ?.variant_id ??
+            (product.variants.length === 1 ? product.variants[0].variant_id : "")),
       ]),
     ),
   );
@@ -26,13 +31,13 @@ export function VariantSelection({
 
   return (
     <section className="variant-selection" aria-label="Chọn biến thể">
-      <div className="eyebrow">BẠN CHỌN SKU · MUSK KHÔNG TỰ ĐOÁN</div>
-      <h2>Chọn biến thể trước khi so sánh</h2>
+      <div className="eyebrow">CẦN XÁC NHẬN YÊU CẦU BIẾN THỂ</div>
+      <h2>Xác nhận biến thể chưa rõ</h2>
       <p className="muted">
-        Shopee chưa chọn sẵn biến thể cho một số sản phẩm. Chọn đúng màu, dung lượng hoặc bỏ qua
-        từng listing. Sau khi tiếp tục, Musk xóa toàn bộ giỏ cũ, không khôi phục; chỉ thêm một SKU
-        mỗi lần để kiểm tra giá và phí ship rồi dọn giỏ trống trước phương án tiếp theo. Không chỉnh
-        sửa giỏ trong lúc xử lý. Không đặt hàng.
+        Musk chưa xác định được SKU đáp ứng yêu cầu cụ thể từ thông tin biến thể. Xem lý do trong
+        nhật ký, chọn SKU phù hợp hoặc bỏ qua listing. Sau khi tiếp tục, Musk xóa toàn bộ giỏ cũ,
+        không khôi phục; chỉ thêm một SKU mỗi lần để kiểm tra giá và phí ship rồi dọn giỏ trống
+        trước phương án tiếp theo. Không chỉnh sửa giỏ trong lúc xử lý. Không đặt hàng.
       </p>
       <ListingReviewTrail review={prepared.search_review} intent={prepared.intent} />
       <form

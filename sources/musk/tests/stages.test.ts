@@ -27,6 +27,70 @@ const plan: SearchPlan = {
 const dependencies = () => ({ ai: demoAI, marketplace: createFixtureMarketplace() });
 
 describe("separate pipeline stages", () => {
+  it("searches with clear unsupported mattress requirements and preserves unknown checks", async () => {
+    const deps = dependencies();
+    // Reuse fixture profiles while allowing this orchestration test's category.
+    const fixtureSearch = deps.marketplace.searchProducts.bind(deps.marketplace);
+    const search = vi
+      .spyOn(deps.marketplace, "searchProducts")
+      .mockImplementation((plan, page, signal) =>
+        fixtureSearch({ ...plan, query: "iPhone 16 128GB" }, page, signal),
+      );
+    const intent = {
+      product_description: "Nệm cao su 1m6 x 2m",
+      quantity: 1,
+      delivery_area: "TP.HCM",
+      requirements: [
+        {
+          requirement_id: "size",
+          user_text: "Nệm cao su 1m6 x 2m",
+          field_path: null,
+          operator: null,
+          value: "1m6 x 2m",
+          unit: null,
+        },
+      ],
+      preferences: [],
+      questions_for_user: ["Có yêu cầu chưa thể kiểm tra; vui lòng làm rõ hoặc sửa yêu cầu đó."],
+    };
+    const ai = { ...demoAI, interpretIntent: async () => intent };
+    const output = await runPipeline(["Mua 1 nệm cao su 1m6 x 2m, giao tại TP.HCM"], {
+      ...deps,
+      ai,
+    });
+    expect(output.status).toBe("complete");
+    expect(search.mock.calls[0][0].query).toContain("Nệm cao su");
+    if (output.status !== "complete") throw new Error("Unsupported attribute blocked search");
+    expect(output.result.intent.requirements).toEqual(intent.requirements);
+    expect(output.result.intent.questions_for_user).toEqual([]);
+    expect(output.result.filters.every((row) => row.status === "unresolved")).toBe(true);
+    expect(
+      output.result.filters[0].checks.find((check) => check.requirement_id === "size"),
+    ).toMatchObject({ result: "unknown", reason: expect.stringContaining("chưa hỗ trợ xác minh") });
+    expect(output.result.recommendation.limitations.join(" ")).toContain("Nệm cao su 1m6 x 2m");
+  });
+
+  it("asks a specific question for missing values of supported requirements", async () => {
+    const deps = dependencies();
+    const intent = await demoAI.interpretIntent([request]);
+    intent.requirements = [
+      {
+        requirement_id: "budget",
+        user_text: "Ngân sách tối đa",
+        field_path: "quote.total",
+        operator: "lte",
+        value: null,
+        unit: "VND",
+      },
+    ];
+    const output = await interpretIntent(["Ngân sách tối đa"], {
+      ...deps,
+      ai: { ...demoAI, interpretIntent: async () => intent },
+    });
+    expect(output.questions_for_user.join(" ")).toContain("Ngân sách tối đa");
+    expect(output.questions_for_user.join(" ")).not.toContain("Có yêu cầu chưa thể kiểm tra");
+  });
+
   it("can execute each stage directly with explicit inputs and outputs", async () => {
     const deps = dependencies();
     const intent = await interpretIntent([request], deps);

@@ -69,7 +69,11 @@ function check(profile: OfferProfile, requirement: Requirement): RequirementChec
     profile_field_paths: requirement.field_path ? [requirement.field_path] : [],
   };
   const unknown = (reason: string): RequirementCheck => ({ ...base, result: "unknown", reason });
-  if (!requirement.field_path || !requirement.operator || requirement.value === null)
+  if (!requirement.field_path)
+    return unknown(
+      "Musk chưa hỗ trợ xác minh thuộc tính này; giữ nguyên yêu cầu để bạn kiểm tra trên Shopee.",
+    );
+  if (!requirement.operator || requirement.value === null)
     return unknown("Yêu cầu chưa đủ rõ để kiểm tra.");
   if (!profile.sources.some((source) => source.field_path === requirement.field_path))
     return unknown("Thiếu nguồn bằng chứng cho điều kiện này.");

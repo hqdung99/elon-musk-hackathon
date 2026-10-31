@@ -27,8 +27,11 @@ export function IntentSummary({ intent }: { intent: ShoppingIntent | null }) {
             <ul className="summary-list">
               {intent.requirements.map((requirement) => (
                 <li key={requirement.requirement_id}>
-                  <span className="check-mark">✓</span>
+                  <span className={requirement.field_path ? "check-mark" : "preference-mark"}>
+                    {requirement.field_path ? "✓" : "?"}
+                  </span>
                   {requirement.user_text}
+                  {!requirement.field_path && " · Chưa hỗ trợ xác minh"}
                 </li>
               ))}
             </ul>

@@ -56,7 +56,18 @@ async function selectionSetup() {
     status: "ok",
     data: { items: [listing], has_more: false, next_page: null },
   });
-  const dependencies = { ai: demoAI, marketplace };
+  const dependencies = {
+    ai: {
+      ...demoAI,
+      chooseVariant: async () => ({
+        status: "uncertain" as const,
+        variant_id: null,
+        reason: "Cần xác nhận SKU trong bài kiểm tra chọn thủ công.",
+        ambiguous_variant_ids: ["128", "256"],
+      }),
+    },
+    marketplace,
+  };
   const quote = vi.spyOn(marketplace, "getOfferQuote");
   const output = await runPipeline([request], dependencies);
   if (output.status !== "selection") throw new Error("Expected explicit variant selection.");
@@ -176,7 +187,7 @@ describe("relevance and explicit SKU selection", () => {
     ).toBe(true);
   });
 
-  it.each(["missing", "wrong_variant", "extra_listing", "all_skipped"])(
+  it.each(["missing", "wrong_variant", "extra_listing"])(
     "rejects invalid user selections: %s",
     async (kind) => {
       const { listing, prepared, dependencies } = await selectionSetup();
@@ -214,7 +225,7 @@ describe("relevance and explicit SKU selection", () => {
     expect(quote.mock.calls[0][0]).toEqual(listings[1]);
     expect(result.search_review.entries[0]).toMatchObject({
       status: "skipped",
-      reasons: expect.arrayContaining(["Bạn bỏ qua listing này ở bước chọn biến thể."]),
+      reasons: expect.arrayContaining(["Listing được bỏ qua ở bước chọn biến thể."]),
     });
     expect(result.search_review.entries[0].selected_variant).toBeUndefined();
     expect(result.search_review.entries[1].status).toBe("eligible");

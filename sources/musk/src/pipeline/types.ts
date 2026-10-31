@@ -20,6 +20,7 @@ export interface PipelineDependencies {
 }
 
 export interface PreparedSearch {
+  suggested_choices?: VariantChoices;
   intent: ShoppingIntent;
   candidates: { listing: Listing; product: ProductDetails; relevance: "relevant" | "unknown" }[];
   truncated: boolean;

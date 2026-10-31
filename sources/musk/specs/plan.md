@@ -251,7 +251,9 @@ sequenceDiagram
     M->>A: 4.1 Assess listing relevance
     A-->>M: 4.2 Return relevant, irrelevant or unknown with reasons
     M->>S: 4.3 Get product and variants for retained listings
-    M->>U: 4.4 Ask for SKU or skip if selection is needed
+    M->>A: 4.4 Choose SKU from explicit requirements; default/any when unconstrained
+    A-->>M: Selected SKU, no match, or precise uncertainty
+    M->>U: Ask only when an explicit variant constraint is uncertain
     U-->>M: 4.5 Choose SKU or skip
 ```
 
@@ -274,8 +276,7 @@ ListingRelevance = {
 
 **Validate:** exactly one relevance assessment per supplied listing, with a
 non-empty reason. Every prepared candidate needs a valid variant ID or an explicit
-skip; reject extra keys. Use the platform default or sole variant when available,
-otherwise ask. Product and variant shapes are defined in step 5.
+skip; reject extra keys. AI chooses from listed IDs using explicit variant requirements, including variant names for unsupported attributes. Prefer the platform default among matches; without variant constraints choose any listed SKU. Skip clear non-matches. Ask only for unresolved explicit constraints, retaining confident suggestions and reasons in the review trail. Stock, pricing and requirements are still checked after selection. Product and variant shapes are defined in step 5.
 
 ## 5. Build offer profile
 

@@ -47,7 +47,7 @@ Refresh Shopee headers with the same command when the session expires; restart V
 
 > Mua 1 máy iPhone 16 128GB mới. Tổng ngân sách tối đa 25 triệu VND. Giao tại TP.HCM. Chỉ mua Shopee Mall. Ưu tiên giá rẻ.
 
-Choose a SKU or skip each listing, inspect the recommendation, then click **Duyệt & kiểm tra lại**.
+Musk automatically chooses a SKU matching explicit requirements. If no variant constraint is stated, it chooses the default or any listed SKU. Clear non-matches are skipped; only unresolved explicit variant constraints need manual selection. Inspect the recommendation, then click **Duyệt & kiểm tra lại**.
 Expand **Các listing đã xem** to see the search, every returned organic listing, and why each was kept, removed, skipped, or not evaluated due to limits.
 The cap is **12 retained offers** (unknowns included), not 12 raw listings; search is bounded to 3 pages.
 If revalidation allows continuing, Musk leaves only the approved SKU and quantity in the cart.

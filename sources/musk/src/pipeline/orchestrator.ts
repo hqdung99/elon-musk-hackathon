@@ -11,6 +11,7 @@ import { rankOffers } from "./rank-offers";
 import { recommendOffers } from "./recommend-offers";
 import { revalidateOffer } from "./revalidate-offer";
 import { searchProducts } from "./search-products";
+import { selectVariants } from "./select-variants";
 import type {
   HandoffResult,
   PipelineDependencies,
@@ -55,18 +56,8 @@ export async function runWithIntent(
 
   stage("profiling");
   const prepared = await prepareSearch(search, intent, dependencies);
-  if (
-    prepared.candidates.some(
-      ({ product }) => product.variants.length > 1 && product.default_variant_id === null,
-    )
-  )
-    return { status: "selection", ...prepared };
-  const choices = Object.fromEntries(
-    prepared.candidates.map(({ listing, product }) => [
-      listingKey(listing),
-      product.default_variant_id ?? product.variants[0].variant_id,
-    ]),
-  );
+  const choices = await selectVariants(prepared, dependencies);
+  if (!choices) return { status: "selection", ...prepared };
 
   return { status: "complete", result: await completeSelection(prepared, choices, dependencies) };
 }
@@ -95,8 +86,6 @@ export async function completeSelection(
   const selected = prepared.candidates.filter(
     ({ listing }) => choices[listingKey(listing)] !== null,
   );
-  if (prepared.candidates.length && !selected.length)
-    throw new Error("Cần chọn ít nhất một sản phẩm để tiếp tục.");
   const stage = (value: Stage) => {
     signal?.throwIfAborted();
     progress(value);
@@ -137,7 +126,7 @@ export async function completeSelection(
     if (!entry) throw new Error("Nhật ký tìm kiếm thiếu listing đã đánh giá.");
     if (choices[listingKey(listing)] === null) {
       entry.status = "skipped";
-      entry.reasons.push("Bạn bỏ qua listing này ở bước chọn biến thể.");
+      entry.reasons.push("Listing được bỏ qua ở bước chọn biến thể.");
       continue;
     }
 
