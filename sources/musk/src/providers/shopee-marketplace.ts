@@ -450,6 +450,7 @@ export function createShopeeAdapter(
           if (image_url) break;
         }
       }
+
       const productSources: FieldSource[] = [];
       if (image_url) productSources.push(source(listing, "product.image_url"));
       const model = modelFromTitle(title);
