@@ -214,7 +214,7 @@ sequenceDiagram
     participant M as Musk
     participant S as Shopee API
     participant A as AI
-    M->>S: 3.1 Search up to three pages
+    M->>S: 3.1 Search until ten organic results (max three pages)
     S-->>M: 3.2 Return organic listings
     M->>M: 3.3 Deduplicate listings and start review trail
 ```
@@ -235,8 +235,9 @@ ListingReview = {
 }
 ```
 
-**Validate:** unique `(seller_id, listing_id)` pairs. Current limits are three
-pages and twelve retained offers; `pages_fetched <= page_limit`.
+**Validate:** unique `(seller_id, listing_id)` pairs. Only the first ten organic
+results are analyzed (`listing_limit`); extra pages, up to three, are read only to make
+up for ads or duplicates; `pages_fetched <= page_limit`.
 `truncated` signals incomplete coverage. Inventory only fetched listings;
 initial entries are `pending` and later decisions update their status and reasons.
 
@@ -377,7 +378,7 @@ sequenceDiagram
     participant A as AI
     M->>M: 6.1 Check hard requirements against sourced facts
     M->>M: 6.2 Exclude failures and retain passing or unknown offers
-    M->>M: 6.3 Continue profiling until twelve retained offers or candidates run out
+    M->>M: 6.3 Profile the relevant ones among the ten analyzed listings
 ```
 
 **Output:**
@@ -521,9 +522,10 @@ and quantity. Fixture handoff returns `simulated` with a null URL.
 
 ## Shared rules
 
-- Fetch at most three organic search pages and deduplicate by shop and listing.
-  The twelve-offer cap counts retained offers, including unresolved ones, not
-  raw listings. Skips and confirmed failures do not consume slots.
+- Analyze only the first ten organic search results (deduplicated by shop and
+  listing); read further pages, at most three, only to make up for ads. Every later
+  step (relevance, quotes, reviews, ranking) runs on those ten; failures do not
+  trigger fetching more.
 - Review trail records kept, removed, skipped and unevaluated listings with reasons.
 - Validate AI listing identities and review citations. Musk derives ranks,
   review counts and missing-field lists from the source data.

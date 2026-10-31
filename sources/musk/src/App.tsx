@@ -2,10 +2,13 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { IntentSummary } from "./components/requirements";
 import { OfferResults, formatMoney } from "./components/offers/OfferResults";
 import { VariantSelection } from "./components/offers/VariantSelection";
+import { ActivityLog } from "./components/chat/ActivityLog";
 import { Settings } from "./components/chat/Settings";
 import type { SettingsValue } from "./components/chat/Settings";
 import type { OfferProfile, PipelineResult, Stage } from "./domain/schemas";
 import { createOpenAI, defaultOpenAIConfig, demoAI, readLocalConfig } from "./providers/ai";
+import { trackAI, trackMarketplace } from "./providers/activity";
+import type { Activity } from "./providers/activity";
 import { createFixtureMarketplace } from "./providers/fixtures";
 import { shopeeAdapter } from "./providers/marketplace";
 import { CartCleanupError } from "./providers/shopee-cart";
@@ -117,12 +120,20 @@ export default function App() {
     text: string,
     id?: number,
     checkoutUrl?: string,
+    suggestedReplies?: string[],
   ) {
     dispatch({
       type: "message",
       runId: id,
-      message: { id: crypto.randomUUID(), kind, text, checkoutUrl },
+      message: { id: crypto.randomUUID(), kind, text, checkoutUrl, suggestedReplies },
     });
+  }
+
+  function addReply(reply: string) {
+    setInput((current) =>
+      current.trim() ? `${current.trim().replace(/[.,;]$/, "")}. ${reply}` : reply,
+    );
+    inputRef.current?.focus();
   }
 
   function nextRun() {
@@ -144,12 +155,19 @@ export default function App() {
   }
 
   async function dependencies(signal: AbortSignal, id: number, revalidating = false) {
+    const report = (activity: Activity) => dispatch({ type: "activity", runId: id, activity });
+
     return {
-      ai: settings.aiMode === "openai" ? await createOpenAI(settings.openai) : demoAI,
-      marketplace:
+      ai: trackAI(
+        settings.aiMode === "openai" ? await createOpenAI(settings.openai) : demoAI,
+        report,
+      ),
+      marketplace: trackMarketplace(
         settings.dataMode === "fixture"
           ? createFixtureMarketplace(settings.scenario, revalidating || freshData.current)
           : shopeeAdapter,
+        report,
+      ),
       signal,
       progress: (stage: Stage) => dispatch({ type: "progress", runId: id, stage }),
     };
@@ -178,7 +196,13 @@ export default function App() {
                 ? "Đã dừng yêu cầu mua sắm."
                 : decision.question!;
         if (signal.aborted || id !== runId.current) return;
-        message("assistant", answer, id);
+        message(
+          "assistant",
+          answer,
+          id,
+          undefined,
+          decision.action === "clarify" ? decision.suggested_replies : undefined,
+        );
         if (decision.action === "decline") {
           shopping.current = { intent: null, result: null };
           userTexts.current = [];
@@ -242,6 +266,8 @@ export default function App() {
           "assistant",
           `Để chọn đúng, Musk cần làm rõ:\n${output.intent.questions_for_user.map((question) => `• ${question}`).join("\n")}`,
           id,
+          undefined,
+          output.intent.suggested_replies,
         );
       } else if (output.status === "selection") {
         dispatch({ type: "selection", runId: id, prepared: output });
@@ -524,6 +550,18 @@ export default function App() {
                         </span>
                       )}
                       <p>{item.text}</p>
+                      {item.suggestedReplies?.length &&
+                      item === state.messages.at(-1) &&
+                      !state.busy ? (
+                        <div className="suggested-replies">
+                          <span>Gợi ý trả lời · chọn một hoặc nhiều, sửa nếu cần rồi gửi</span>
+                          {item.suggestedReplies.map((reply) => (
+                            <button key={reply} type="button" onClick={() => addReply(reply)}>
+                              {reply}
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
                       {item.checkoutUrl && (
                         <a
                           className="button primary"
@@ -548,12 +586,11 @@ export default function App() {
               {state.busy && (
                 <div className="progress-card" role="status">
                   <span className="spinner" />
-                  <div>
-                    <b>{stages[state.stage]}</b>
-                    <span>
-                      Musk đang làm rõ từng lựa chọn. Bạn có thể dừng hoặc gửi yêu cầu mới.
-                    </span>
-                  </div>
+                  <ActivityLog
+                    key={state.runId}
+                    stage={stages[state.stage]}
+                    activities={state.activities}
+                  />
                   <button
                     className="button text-button"
                     onClick={() => {

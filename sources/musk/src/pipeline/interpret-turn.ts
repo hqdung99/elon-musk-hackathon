@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { PipelineResult, ShoppingIntent } from "../domain/schemas";
 import type { AIAdapter } from "../providers/ai";
+import { cleanReplies } from "./suggested-replies";
 
 export const turnSchema = z.object({
   action: z.enum([
@@ -14,6 +15,8 @@ export const turnSchema = z.object({
     "request_approval",
   ]),
   question: z.string().nullable(),
+  // Short messages the user can pick to answer a clarify question.
+  suggested_replies: z.array(z.string()).optional(),
 });
 
 export type TurnDecision = z.infer<typeof turnSchema>;
@@ -44,7 +47,9 @@ export async function interpretTurn(
       question: "Bạn muốn hỏi về sản phẩm nào? Chưa có kết quả so sánh cho yêu cầu hiện tại.",
     };
 
-  return decision;
+  return decision.action === "clarify"
+    ? { ...decision, suggested_replies: cleanReplies(decision.suggested_replies) }
+    : decision;
 }
 
 // Only the active intent is carried forward, never the full transcript. A new
@@ -62,7 +67,12 @@ export function intentMessages(
 export function canReuseProfiles(previous: ShoppingIntent, next: ShoppingIntent): boolean {
   return (
     !next.questions_for_user.length &&
-    JSON.stringify({ ...previous, preferences: [], questions_for_user: [] }) ===
-      JSON.stringify({ ...next, preferences: [], questions_for_user: [] })
+    JSON.stringify({
+      ...previous,
+      preferences: [],
+      questions_for_user: [],
+      suggested_replies: [],
+    }) ===
+      JSON.stringify({ ...next, preferences: [], questions_for_user: [], suggested_replies: [] })
   );
 }

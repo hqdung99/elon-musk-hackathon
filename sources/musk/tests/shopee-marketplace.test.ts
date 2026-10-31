@@ -150,7 +150,8 @@ describe("Shopee marketplace adapter", () => {
     expect(JSON.parse(searchUrl.searchParams.get("fe_filter_options") ?? "[]")).toEqual([
       { group_name: "SHOP_TYPE", values: ["OFFICIAL_MALL"] },
     ]);
-    expect(searchUrl.searchParams.get("newest")).toBe("60");
+    expect(searchUrl.searchParams.get("limit")).toBe("20");
+    expect(searchUrl.searchParams.get("newest")).toBe("20");
   });
 
   it("shares product data across product, seller, quote, and policy methods", async () => {

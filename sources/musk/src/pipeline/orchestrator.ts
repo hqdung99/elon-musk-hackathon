@@ -6,7 +6,7 @@ import { filterOffers } from "./filter-offers";
 import { interpretIntent } from "./interpret-intent";
 import { openCheckout } from "./open-checkout";
 import { planSearch } from "./plan-search";
-import { buildOfferProfiles, prepareSearch } from "./profiles";
+import { buildOfferProfiles, mapConcurrent, prepareSearch } from "./profiles";
 import { rankOffers } from "./rank-offers";
 import { recommendOffers } from "./recommend-offers";
 import { revalidateOffer } from "./revalidate-offer";
@@ -19,6 +19,8 @@ import type {
   RunResult,
   VariantChoices,
 } from "./types";
+
+const profileConcurrency = 4;
 
 export async function runPipeline(
   messages: string[],
@@ -93,16 +95,25 @@ export async function completeSelection(
 
   const profiles: OfferProfile[] = [];
   let retained = 0;
+  let next = 0;
   const listingLimit = prepared.search_review.listing_limit;
-  for (const { listing, product } of selected) {
-    if (retained >= listingLimit) break;
-    const built = await buildOfferProfiles(
-      [listing],
-      intent,
-      dependencies,
-      choices,
-      new Map([[listingKey(listing), product]]),
-    );
+  // Profiles (quotes, reviews and their AI summaries) are built concurrently, but a round never
+  // takes more listings than open slots, so the retained limit selects the same offers as a
+  // one-by-one walk. Shopee cart operations are serialized inside the adapter.
+  while (next < selected.length && retained < listingLimit) {
+    const round = selected.slice(next, next + listingLimit - retained);
+    next += round.length;
+    const built = (
+      await mapConcurrent(round, profileConcurrency, ({ listing, product }) =>
+        buildOfferProfiles(
+          [listing],
+          intent,
+          dependencies,
+          choices,
+          new Map([[listingKey(listing), product]]),
+        ),
+      )
+    ).flat();
     profiles.push(...built);
     retained += filterOffers(built, intent).candidates.length;
   }

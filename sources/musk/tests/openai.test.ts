@@ -65,7 +65,11 @@ it("uses a constrained turn decision before interpreting a new product", async (
   vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
     bodies.push(await new Request(input, init).text());
 
-    return toolResponse("interpret_turn", { action: "new_product", question: null });
+    return toolResponse("interpret_turn", {
+      action: "new_product",
+      question: null,
+      suggested_replies: [],
+    });
   });
   const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
   const intent = await demoAI.interpretIntent([
@@ -74,9 +78,11 @@ it("uses a constrained turn decision before interpreting a new product", async (
   expect(await ai.interpretTurn("mua nệm cao su", { intent, result: null })).toEqual({
     action: "new_product",
     question: null,
+    suggested_replies: [],
   });
   const body = JSON.parse(bodies[0]);
   expect(body.response_format.json_schema.name).toBe("interpret_turn");
+  expect(body.response_format.json_schema.schema.required).toContain("suggested_replies");
   expect(body.response_format.json_schema.strict).toBe(true);
   const data = JSON.parse(body.messages[1].content).data;
   expect(data.text).toBe("mua nệm cao su");
@@ -102,6 +108,7 @@ it("uses the supplied OpenAI endpoint, model, API version and structured output 
     ],
     preferences: [],
     questions_for_user: [],
+    suggested_replies: [],
   };
   const requests: { url: string; headers: Headers; body: string }[] = [];
   vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
@@ -123,6 +130,9 @@ it("uses the supplied OpenAI endpoint, model, API version and structured output 
   expect(JSON.parse(requests[0].body).model).toBe("gpt-5-mini");
   expect(JSON.parse(requests[0].body).response_format.json_schema.name).toBe("interpret_intent");
   expect(JSON.parse(requests[0].body).response_format.json_schema.strict).toBe(true);
+  expect(JSON.parse(requests[0].body).response_format.json_schema.schema.required).toContain(
+    "suggested_replies",
+  );
 });
 
 it.each(["mall", "is_mall", "no_filters"])(
@@ -317,4 +327,106 @@ it("preserves exact missing fields and derives ranks without altering AI orderin
   expect(ranking.ranked_offers.map((row) => row.missing_fields)).toEqual(
     ordered.map((profile) => profile.missing_fields),
   );
+});
+
+it("uses low reasoning effort only for listing relevance classification", async () => {
+  const bodies: Record<string, unknown>[] = [];
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    const body = JSON.parse(await new Request(input, init).text());
+    bodies.push(body);
+    const task = body.response_format.json_schema.name;
+
+    return toolResponse(
+      task,
+      task === "assess_listings"
+        ? {
+            assessments: [
+              {
+                listing_id: "1",
+                seller_id: "2",
+                status: "relevant",
+                reason: "Tiêu đề là điện thoại.",
+              },
+            ],
+          }
+        : { ...intent, suggested_replies: [] },
+    );
+  });
+  const intent = await demoAI.interpretIntent([
+    "Mua 1 máy iPhone 16 128GB, tổng tối đa 25 triệu VND, giao tại TP.HCM.",
+  ]);
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  await ai.assessListings(intent, [
+    { listing_id: "1", seller_id: "2", url: "https://shopee.vn/product/2/1", title: "iPhone 16" },
+  ]);
+  await ai.interpretIntent(["Mua iPhone 16"]);
+  expect(bodies[0].reasoning_effort).toBe("low");
+  expect(bodies[1].reasoning_effort).toBeUndefined();
+});
+
+it("summarizes only written reviews with a short, low-effort request", async () => {
+  const bodies: Record<string, unknown>[] = [];
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    bodies.push(JSON.parse(await new Request(input, init).text()));
+
+    return toolResponse("summarize_reviews", {
+      themes: [
+        {
+          subject: "product",
+          sentiment: "positive",
+          description: "Máy tốt.",
+          review_ids: ["a"],
+        },
+      ],
+      limitations: [],
+    });
+  });
+  const review = (review_id: string, text: string) => ({
+    review_id,
+    variant_id: "789",
+    rating: 5,
+    text,
+    posted_at: "2026-10-29T00:00:00Z",
+    source_url: "https://shopee.vn/product/456/123",
+  });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  const summary = await ai.summarizeReviews(
+    [review("a", `  ${"Tốt ".repeat(100)}`), review("b", "   "), review("c", "Giao nhanh")],
+    "789",
+  );
+  expect(summary.analyzed_review_count).toBe(3);
+  expect(summary.themes[0].matching_variant_review_count).toBe(1);
+  expect(bodies).toHaveLength(1);
+  expect(bodies[0].reasoning_effort).toBe("low");
+  const data = JSON.parse((bodies[0].messages as { content: string }[])[1].content).data;
+  expect(data.reviews.map((entry: { review_id: string }) => entry.review_id)).toEqual(["a", "c"]);
+  expect(Object.keys(data.reviews[0]).sort()).toEqual([
+    "rating",
+    "review_id",
+    "text",
+    "variant_id",
+  ]);
+  expect(data.reviews[0].text).toHaveLength(280);
+  expect(data.instructions).toContain("at most 4 themes");
+});
+
+it("does not call the model when reviews have ratings but no text", async () => {
+  const fetcher = vi.fn();
+  vi.stubGlobal("fetch", fetcher);
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  const summary = await ai.summarizeReviews(
+    [
+      {
+        review_id: "a",
+        variant_id: null,
+        rating: 5,
+        text: "",
+        posted_at: "2026-10-29T00:00:00Z",
+        source_url: "https://shopee.vn/product/456/123",
+      },
+    ],
+    "789",
+  );
+  expect(summary).toMatchObject({ analyzed_review_count: 1, themes: [] });
+  expect(fetcher).not.toHaveBeenCalled();
 });

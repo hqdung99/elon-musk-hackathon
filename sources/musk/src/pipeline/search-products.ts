@@ -8,17 +8,21 @@ export interface CandidateResults {
   search_review: SearchReview;
 }
 
+// Only the first organic results are analyzed, to keep AI and Shopee calls few and fast.
+export const searchListingLimit = 10;
+
 export async function searchProducts(
   plan: SearchPlan,
   { marketplace, signal }: PipelineDependencies,
 ): Promise<CandidateResults> {
   const listings = new Map<string, Listing>();
   const visited = new Set<number>();
-  const listingLimit = 12;
+  // Extra pages are fetched only when ads or duplicates leave fewer than the limit on a page.
+  const listingLimit = searchListingLimit;
   const pageLimit = 3;
   let page: number | null = 1;
-  let truncated = false;
-  while (page !== null) {
+  let hasMore = false;
+  while (page !== null && listings.size < listingLimit && visited.size < pageLimit) {
     signal?.throwIfAborted();
     if (visited.has(page)) throw new Error("Adapter trả về trang tìm kiếm lặp.");
     visited.add(page);
@@ -27,15 +31,13 @@ export async function searchProducts(
       listings.set(`${listing.seller_id}:${listing.listing_id}`, listing);
     if (results.has_more && results.next_page === null)
       throw new Error("Adapter báo còn kết quả nhưng thiếu trang kế tiếp.");
-    if (visited.size >= pageLimit) {
-      truncated = results.has_more;
-      break;
-    }
-
+    hasMore = results.has_more;
     page = results.has_more ? results.next_page : null;
   }
 
-  const fetched = [...listings.values()];
+  const found = [...listings.values()];
+  const fetched = found.slice(0, listingLimit);
+  const truncated = hasMore || found.length > listingLimit;
 
   return {
     listings: fetched,
