@@ -333,7 +333,7 @@ describe("checkout shipping estimates", () => {
               price_model: { price_single_model_id: 789 },
             },
             stock: 5,
-            max_quantity: 5,
+            selected_variation: { max_quantity: 5 },
           },
         };
       else if (path.endsWith("/checkout/get")) {

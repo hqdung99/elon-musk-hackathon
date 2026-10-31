@@ -1,6 +1,7 @@
 import { calculateTotal } from "../domain/requirements";
 import {
   policiesSchema,
+  isSelectableVariant,
   listingKey,
   listingRelevanceSchema,
   productSchema,
@@ -169,10 +170,13 @@ export async function assembleProfile(
   const reviews = reviewSchema.array().parse(unwrap(rawReviews));
   if (product.listing_id !== listing.listing_id || seller.seller_id !== listing.seller_id)
     throw new Error("Dữ liệu sản phẩm và người bán không khớp listing.");
+  const selectable = product.variants.filter((variant) =>
+    isSelectableVariant(variant, intent.quantity ?? 1),
+  );
   const selected = variantId
     ? product.variants.find((variant) => variant.variant_id === variantId)
-    : (product.variants.find((variant) => variant.variant_id === product.default_variant_id) ??
-      (product.variants.length === 1 ? product.variants[0] : undefined));
+    : (selectable.find((variant) => variant.variant_id === product.default_variant_id) ??
+      (selectable.length === 1 ? selectable[0] : undefined));
   if (!selected)
     throw new Error("Chưa xác định được chính xác biến thể; cần bổ sung adapter chọn biến thể.");
   if (selected.model != null) product.model = selected.model;

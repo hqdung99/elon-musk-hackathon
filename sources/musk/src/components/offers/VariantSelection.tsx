@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { listingKey } from "../../domain/schemas";
+import { isSelectableVariant, listingKey } from "../../domain/schemas";
 import type { PreparedSearch, VariantChoices } from "../../pipeline/types";
 import { ListingReviewTrail } from "./ListingReviewTrail";
 
@@ -14,20 +14,40 @@ export function VariantSelection({
 }) {
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(
-      prepared.candidates.map(({ listing, product }) => [
-        listingKey(listing),
-        prepared.suggested_choices
-          ? Object.hasOwn(prepared.suggested_choices, listingKey(listing))
-            ? (prepared.suggested_choices[listingKey(listing)] ?? skip)
-            : ""
-          : (product.variants.find((variant) => variant.variant_id === product.default_variant_id)
-              ?.variant_id ??
-            (product.variants.length === 1 ? product.variants[0].variant_id : "")),
-      ]),
+      prepared.candidates.map(({ listing, product }) => {
+        const key = listingKey(listing);
+        const variants = product.variants.filter((variant) =>
+          isSelectableVariant(variant, prepared.intent.quantity ?? 1),
+        );
+        const suggestion = prepared.suggested_choices?.[key];
+        const value = !variants.length
+          ? skip
+          : prepared.suggested_choices
+            ? Object.hasOwn(prepared.suggested_choices, key)
+              ? suggestion === null
+                ? skip
+                : (variants.find((variant) => variant.variant_id === suggestion)?.variant_id ?? "")
+              : ""
+            : (variants.find((variant) => variant.variant_id === product.default_variant_id)
+                ?.variant_id ?? (variants.length === 1 ? variants[0].variant_id : ""));
+
+        return [key, value];
+      }),
     ),
   );
   const ready =
-    Object.values(values).every(Boolean) && Object.values(values).some((value) => value !== skip);
+    prepared.candidates.every(({ listing, product }) => {
+      const value = values[listingKey(listing)];
+
+      return (
+        value === skip ||
+        product.variants.some(
+          (variant) =>
+            variant.variant_id === value &&
+            isSelectableVariant(variant, prepared.intent.quantity ?? 1),
+        )
+      );
+    }) && Object.values(values).some((value) => value !== skip);
 
   return (
     <section className="variant-selection" aria-label="Chọn biến thể">
@@ -74,8 +94,14 @@ export function VariantSelection({
                 </option>
                 <option value={skip}>Bỏ qua sản phẩm này</option>
                 {product.variants.map((variant) => (
-                  <option key={variant.variant_id} value={variant.variant_id}>
+                  <option
+                    key={variant.variant_id}
+                    value={variant.variant_id}
+                    disabled={!isSelectableVariant(variant, prepared.intent.quantity ?? 1)}
+                  >
                     {variant.name}
+                    {!isSelectableVariant(variant, prepared.intent.quantity ?? 1) &&
+                      " · Không khả dụng"}
                   </option>
                 ))}
               </select>

@@ -140,27 +140,45 @@ export interface SearchReview {
   entries: ListingReview[];
 }
 
+const imageUrlSchema = z.string().url().startsWith("https://");
+
+export const productVariantSchema = z.object({
+  variant_id: z.string(),
+  name: z.string(),
+  model: z.string().nullable().optional(),
+  storage_gb: z.number().nullable().optional(),
+  has_stock: z.boolean().nullable().optional(),
+  is_clickable: z.boolean().nullable().optional(),
+  is_grayout: z.boolean().nullable().optional(),
+  stock: z.number().int().nonnegative().nullable().optional(),
+  image_url: imageUrlSchema.nullable().optional(),
+});
+
 export const productSchema = z.object({
   listing_id: z.string(),
   title: z.string(),
+  image_url: imageUrlSchema.nullable().optional(),
   model: z.string().nullable(),
   storage_gb: z.number().nullable(),
   condition: z.enum(["new", "used", "refurbished"]).nullable(),
-  variants: z
-    .array(
-      z.object({
-        variant_id: z.string(),
-        name: z.string(),
-        model: z.string().nullable().optional(),
-        storage_gb: z.number().nullable().optional(),
-      }),
-    )
-    .min(1),
+  variants: z.array(productVariantSchema).min(1),
   default_variant_id: z.string().nullable(),
   sources: z.array(sourceSchema),
 });
 
 export type ProductDetails = z.infer<typeof productSchema>;
+
+export function isSelectableVariant(
+  variant: ProductDetails["variants"][number],
+  quantity = 1,
+): boolean {
+  return (
+    variant.has_stock !== false &&
+    variant.is_clickable !== false &&
+    variant.is_grayout !== true &&
+    (variant.stock == null || variant.stock >= quantity)
+  );
+}
 
 export const sellerSchema = z.object({
   seller_id: z.string(),

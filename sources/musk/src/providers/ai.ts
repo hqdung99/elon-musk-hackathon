@@ -6,6 +6,7 @@ import { variantDecisionSchema } from "../pipeline/select-variants";
 import type { VariantDecision } from "../pipeline/select-variants";
 import {
   intentSchema,
+  isSelectableVariant,
   listingRelevanceSchema,
   rankingSchema,
   reviewSummarySchema,
@@ -185,20 +186,41 @@ export async function createOpenAI(config: OpenAIConfig): Promise<AIAdapter> {
 
   return {
     mode: "openai",
-    chooseVariant: (intent, product, signal) =>
-      structured(
+    chooseVariant: async (intent, product, signal) => {
+      signal?.throwIfAborted();
+      const variants = product.variants.filter((variant) =>
+        isSelectableVariant(variant, intent.quantity ?? 1),
+      );
+      if (!variants.length)
+        return {
+          status: "no_match",
+          variant_id: null,
+          reason: "Không có SKU khả dụng cho số lượng yêu cầu.",
+        };
+      const variantIds = variants.map((variant) => variant.variant_id);
+
+      return structured(
         variantDecisionSchema.extend({
-          variant_id: z.enum(product.variants.map((variant) => variant.variant_id)).nullable(),
+          variant_id: z.enum(variantIds).nullable(),
+          ambiguous_variant_ids: z.array(z.enum(variantIds)),
         }),
         "choose_variant",
         {
           intent,
-          product,
+          product: {
+            ...product,
+            variants,
+            default_variant_id:
+              variants.find((variant) => variant.variant_id === product.default_variant_id)
+                ?.variant_id ?? null,
+          },
           instructions:
+            "Known unavailable or insufficient-stock SKUs have been removed. Missing stock is unknown, not a guarantee of availability; exact quantity and purchase limits are checked during quoting. " +
             "Choose one exact listed SKU based on explicit product requirements, including material, dimensions, storage, model and color mentioned in product_description or requirement user_text. Use only variant names/attributes and product facts; never invent variant facts. If multiple variants satisfy all variant-specific requirements, choose the platform default among matches, otherwise any matching variant. If no variant-specific requirement was stated, choose the platform default or any listed variant without asking the user; do not invent a color/size preference. If all variants clearly contradict an explicit variant constraint, return no_match with null variant_id. Missing evidence is NOT a reason to pause: if material, warranty, dimensions or other facts are simply absent, choose the best non-contradicting/default SKU and disclose exactly what is unverified in reason. Return uncertain ONLY if the user must disambiguate between two or more actual selectable variants; include their exact IDs in ambiguous_variant_ids and explain the specific choice. Never use uncertain for absent product facts, unverified attributes, or an unspecified color/size. Without genuine choice ambiguity, ambiguous_variant_ids must be empty. Selected does not prove stock, price, policies or eligibility; those are checked later. Explain the chosen SKU and matching evidence in Vietnamese.",
         },
         signal,
-      ),
+      );
+    },
     interpretTurn: (text, context, signal) =>
       structured(
         turnSchema.required({ suggested_replies: true }),
@@ -509,21 +531,23 @@ export const demoAI: AIAdapter = {
     const constraints = intent.requirements.filter(
       (row) => row.field_path === "product.storage_gb" || row.field_path === "product.model",
     );
-    const candidates = product.variants.filter((variant) =>
-      constraints.every((row) => {
-        const value =
-          row.field_path === "product.storage_gb"
-            ? (variant.storage_gb ?? product.storage_gb)
-            : (variant.model ?? product.model);
-        if (value === null || value === undefined) return true;
-        if (row.operator === "eq") return value === row.value;
-        if (row.operator === "gte" && typeof value === "number" && typeof row.value === "number")
-          return value >= row.value;
-        if (row.operator === "lte" && typeof value === "number" && typeof row.value === "number")
-          return value <= row.value;
+    const candidates = product.variants.filter(
+      (variant) =>
+        isSelectableVariant(variant, intent.quantity ?? 1) &&
+        constraints.every((row) => {
+          const value =
+            row.field_path === "product.storage_gb"
+              ? (variant.storage_gb ?? product.storage_gb)
+              : (variant.model ?? product.model);
+          if (value === null || value === undefined) return true;
+          if (row.operator === "eq") return value === row.value;
+          if (row.operator === "gte" && typeof value === "number" && typeof row.value === "number")
+            return value >= row.value;
+          if (row.operator === "lte" && typeof value === "number" && typeof row.value === "number")
+            return value <= row.value;
 
-        return true;
-      }),
+          return true;
+        }),
     );
     const selected =
       candidates.find((variant) => variant.variant_id === product.default_variant_id) ??

@@ -35,7 +35,7 @@ it("shows one named recommendation and keeps selectable alternatives collapsed",
   expect(html).toContain(`Musk đề xuất: ${winner?.seller.name}`);
   const [primary, alternatives] = html.split('<details class="excluded alternatives">');
   expect(primary.match(/class="offer-card /g)).toHaveLength(1);
-  expect(alternatives.match(/class="offer-card /g)).toHaveLength(2);
+  expect(alternatives.match(/class="offer-card /g)).toHaveLength(1);
   expect(html).not.toContain('class="excluded alternatives" open');
   expect(html.match(/ĐỀ XUẤT CHO BẠN/g)).toHaveLength(1);
   expect(html).toContain("THAM KHẢO #2");
@@ -60,6 +60,46 @@ it("labels estimated totals without claiming local voucher optimization", async 
   expect(html).not.toContain("(đã áp dụng)");
   expect(html).not.toContain("voucher tính cục bộ");
   expect(html).not.toContain("API trả");
+});
+
+it("renders the selected SKU image for recommendations and alternatives", async () => {
+  const output = await runPipeline([request], {
+    ai: demoAI,
+    marketplace: createFixtureMarketplace(),
+  });
+  if (output.status !== "complete") throw new Error("Expected completed comparison.");
+  for (const profile of output.result.profiles) {
+    profile.product.image_url = `https://down-vn.img.susercontent.com/file/product-${profile.product.listing_id}`;
+    const selected = profile.product.variants.find(
+      (variant) => variant.variant_id === profile.selected_variant_id,
+    );
+    if (!selected) throw new Error("Expected selected SKU.");
+    selected.image_url = `https://down-vn.img.susercontent.com/file/sku-${profile.product.listing_id}`;
+  }
+  const html = render(output.result);
+  expect(html).toContain('src="https://down-vn.img.susercontent.com/file/sku-value"');
+  expect(html).toContain('src="https://down-vn.img.susercontent.com/file/sku-fast"');
+  expect(html).not.toContain('src="https://down-vn.img.susercontent.com/file/product-value"');
+  expect(html).not.toContain("phone-art");
+  expect(html).toContain('referrerPolicy="no-referrer"');
+});
+
+it("uses the product image when the SKU image is missing and labels absent images", async () => {
+  const output = await runPipeline([request], {
+    ai: demoAI,
+    marketplace: createFixtureMarketplace(),
+  });
+  if (output.status !== "complete") throw new Error("Expected completed comparison.");
+  const profile = output.result.profiles[0];
+  profile.product.image_url = "https://down-vn.img.susercontent.com/file/product-image";
+  expect(render(output.result)).toContain(
+    'src="https://down-vn.img.susercontent.com/file/product-image"',
+  );
+  profile.product.image_url = null;
+  const html = render(output.result);
+  expect(html).toContain("Chưa có ảnh sản phẩm");
+  expect(html).not.toContain("phone-art");
+  expect(html).not.toContain("<img");
 });
 
 it("does not invent a winner or show approval when all offers fail requirements", async () => {

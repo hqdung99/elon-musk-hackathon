@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { listingKey } from "../domain/schemas";
+import { isSelectableVariant, listingKey } from "../domain/schemas";
 import type { ProductDetails, ShoppingIntent } from "../domain/schemas";
 import type { PreparedSearch, PipelineDependencies, VariantChoices } from "./types";
 
@@ -53,14 +53,43 @@ export async function selectVariants(
   let needsSelection = false;
   for (const { listing, product } of prepared.candidates) {
     signal?.throwIfAborted();
+    const entry = prepared.search_review.entries.find(
+      (entry) => listingKey(entry.listing) === listingKey(listing),
+    );
+    if (!entry) throw new Error("Nhật ký tìm kiếm thiếu listing chọn SKU.");
+    const variants = product.variants.filter((variant) =>
+      isSelectableVariant(variant, prepared.intent.quantity ?? 1),
+    );
+    if (variants.length !== product.variants.length)
+      entry.reasons.push(
+        "Không chọn SKU không khả dụng hoặc không đủ tồn kho theo dữ liệu sản phẩm.",
+      );
+    if (!variants.length) {
+      choices[listingKey(listing)] = null;
+      entry.reasons.push("Không có SKU khả dụng cho số lượng yêu cầu; bỏ qua listing.");
+      continue;
+    }
+
+    const selectableProduct = {
+      ...product,
+      variants,
+      default_variant_id:
+        variants.find((variant) => variant.variant_id === product.default_variant_id)?.variant_id ??
+        null,
+    };
     const decision = variantDecisionSchema.parse(
-      await ai.chooseVariant(prepared.intent, product, signal),
+      await ai.chooseVariant(prepared.intent, selectableProduct, signal),
     );
     if (
       decision.status === "selected" &&
       !product.variants.some((variant) => variant.variant_id === decision.variant_id)
     )
       throw new Error("AI chọn SKU không tồn tại trong listing.");
+    if (
+      decision.status === "selected" &&
+      !variants.some((variant) => variant.variant_id === decision.variant_id)
+    )
+      throw new Error("AI chọn SKU không khả dụng hoặc không đủ tồn kho.");
     if (decision.status !== "selected" && decision.variant_id !== null)
       throw new Error("Quyết định SKU chưa xác nhận không được chứa variant_id.");
     if (
@@ -69,15 +98,17 @@ export async function selectVariants(
       )
     )
       throw new Error("AI tham chiếu SKU không tồn tại khi giải thích lựa chọn chưa rõ.");
-    const entry = prepared.search_review.entries.find(
-      (entry) => listingKey(entry.listing) === listingKey(listing),
-    );
-    if (!entry) throw new Error("Nhật ký tìm kiếm thiếu listing chọn SKU.");
+    if (
+      decision.ambiguous_variant_ids.some(
+        (id) => !variants.some((variant) => variant.variant_id === id),
+      )
+    )
+      throw new Error("AI tham chiếu SKU không khả dụng khi giải thích lựa chọn chưa rõ.");
     entry.reasons.push(`Chọn SKU: ${decision.reason}`);
     if (decision.status === "uncertain") {
       if (new Set(decision.ambiguous_variant_ids).size >= 2) needsSelection = true;
       else {
-        const selected = fallbackVariant(prepared.intent, product);
+        const selected = fallbackVariant(prepared.intent, selectableProduct);
         choices[listingKey(listing)] = selected?.variant_id ?? null;
         entry.reasons.push(
           selected

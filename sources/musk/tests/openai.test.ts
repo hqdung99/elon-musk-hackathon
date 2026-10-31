@@ -1,6 +1,7 @@
 import { afterEach, beforeAll, expect, it, vi } from "vitest";
 import { createOpenAI, defaultOpenAIConfig, demoAI, readLocalConfig } from "../src/providers/ai";
 import { createFixtureMarketplace, fixtureListings } from "../src/providers/fixtures";
+import { unwrap } from "../src/providers/marketplace";
 import { assembleProfile } from "../src/pipeline/profiles";
 
 afterEach(() => {
@@ -89,6 +90,55 @@ it("uses a constrained turn decision before interpreting a new product", async (
   expect(data.context.intent.product_description).toBe("iPhone 16 128GB");
   expect(data.context.has_results).toBe(false);
   expect(data.context.result).toBeUndefined();
+});
+
+it("constrains OpenAI SKU choices to variants not known to be unavailable", async () => {
+  const bodies: string[] = [];
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    bodies.push(await new Request(input, init).text());
+
+    return toolResponse("choose_variant", {
+      status: "selected",
+      variant_id: "unknown",
+      reason: "Không có mâu thuẫn",
+      ambiguous_variant_ids: [],
+    });
+  });
+  const intent = await demoAI.interpretIntent(["Mua 2 máy iPhone 16 128GB, giao tại TP.HCM"]);
+  const product = unwrap(await createFixtureMarketplace().getProductDetails(fixtureListings[0]));
+  product.variants = [
+    { variant_id: "sold-out", name: "Hết hàng", has_stock: false },
+    { variant_id: "insufficient", name: "Chỉ còn 1", stock: 1 },
+    { variant_id: "unknown", name: "Chưa xác minh", stock: null },
+  ];
+  product.default_variant_id = "sold-out";
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  expect((await ai.chooseVariant(intent, product)).variant_id).toBe("unknown");
+  const body = JSON.parse(bodies[0]);
+  const data = JSON.parse(body.messages[1].content).data;
+  expect(
+    data.product.variants.map((variant: { variant_id: string }) => variant.variant_id),
+  ).toEqual(["unknown"]);
+  expect(data.product.default_variant_id).toBeNull();
+  expect(body.response_format.json_schema.schema.properties.variant_id.anyOf[0].enum).toEqual([
+    "unknown",
+  ]);
+});
+
+it("does not call OpenAI when every variant is known unavailable", async () => {
+  const fetcher = vi.fn();
+  vi.stubGlobal("fetch", fetcher);
+  const intent = await demoAI.interpretIntent(["Mua 1 máy iPhone 16 128GB, giao tại TP.HCM"]);
+  const product = unwrap(await createFixtureMarketplace().getProductDetails(fixtureListings[0]));
+  product.variants.forEach((variant) => {
+    variant.has_stock = false;
+  });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  expect(await ai.chooseVariant(intent, product)).toMatchObject({
+    status: "no_match",
+    variant_id: null,
+  });
+  expect(fetcher).not.toHaveBeenCalled();
 });
 
 it("uses the supplied OpenAI endpoint, model, API version and structured output without a network call", async () => {

@@ -34,9 +34,16 @@ function terms(profile: OfferProfile): Record<string, unknown> {
     selected_variant_id: profile.selected_variant_id,
     product: {
       ...profile.product,
-      variants: [...profile.product.variants].sort((a, b) =>
-        a.variant_id.localeCompare(b.variant_id),
-      ),
+      image_url: undefined,
+      // Availability is rechecked for the selected SKU through quote.in_stock.
+      variants: profile.product.variants
+        .map((variant) => ({
+          variant_id: variant.variant_id,
+          name: variant.name,
+          model: variant.model,
+          storage_gb: variant.storage_gb,
+        }))
+        .sort((a, b) => a.variant_id.localeCompare(b.variant_id)),
       sources: undefined,
     },
     seller: {

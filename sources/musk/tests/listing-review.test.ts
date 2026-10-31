@@ -11,8 +11,8 @@ import { createFixtureMarketplace, fixtureListings } from "../src/providers/fixt
 const request =
   "Mua 1 máy iPhone 16 128GB, tổng tối đa 25 triệu VND, giao tại TP.HCM. Ưu tiên giá rẻ.";
 
-it("fills the 10 analyzed listings across pages and accounts for every one of them", async () => {
-  const listings = Array.from({ length: 9 }, (_, index) => ({
+it("fills the 3 analyzed listings across pages and accounts for every one of them", async () => {
+  const listings = Array.from({ length: 2 }, (_, index) => ({
     ...fixtureListings[0],
     listing_id: `other-${index}`,
     title: `Other product ${index}`,
@@ -49,15 +49,15 @@ it("fills the 10 analyzed listings across pages and accounts for every one of th
   });
   if (output.status !== "complete") throw new Error("Expected completed comparison.");
   const { result } = output;
-  expect(result.search_review.entries).toHaveLength(10);
+  expect(result.search_review.entries).toHaveLength(3);
   expect(result.search_review.pages_fetched).toBe(2);
   expect(result.search_review.truncated).toBe(false);
   expect(result.search_review.plan.query).toContain("iPhone");
   expect(
     result.search_review.entries.filter((entry) => entry.status === "irrelevant"),
-  ).toHaveLength(9);
-  expect(result.search_review.entries[9].status).toBe("eligible");
-  expect(assessListings.mock.calls.map((call) => call[1].length)).toEqual([10]);
+  ).toHaveLength(2);
+  expect(result.search_review.entries[2].status).toBe("eligible");
+  expect(assessListings.mock.calls.map((call) => call[1].length)).toEqual([3]);
   expect(product).toHaveBeenCalledOnce();
   expect(quote).toHaveBeenCalledOnce();
   expect(marketplace.searchProducts).toHaveBeenCalledTimes(2);
@@ -70,17 +70,22 @@ it("fills the 10 analyzed listings across pages and accounts for every one of th
       onRevise: vi.fn(),
     }),
   );
-  expect(html).toContain("Các listing đã xem (10)");
-  expect(html.match(/data-review-status=/g)).toHaveLength(10);
+  expect(html).toContain("Các listing đã xem (3)");
+  expect(html.match(/data-review-status=/g)).toHaveLength(3);
   expect(html).toContain("Không phải điện thoại được yêu cầu.");
   expect(html).not.toContain("Chưa đánh giá: giới hạn tìm kiếm");
-  expect(html.replace(/\s+/g, " ")).toContain("Musk chỉ phân tích 10 kết quả đầu tiên");
+  expect(html.replace(/\s+/g, " ")).toContain("Musk chỉ phân tích 3 kết quả đầu tiên");
 });
 
 it("keeps unknown checks visible without misreporting them as rejection", async () => {
+  const marketplace = createFixtureMarketplace();
+  vi.spyOn(marketplace, "searchProducts").mockResolvedValue({
+    status: "ok",
+    data: { items: [fixtureListings[0], fixtureListings[3]], has_more: false, next_page: null },
+  });
   const output = await runPipeline([`${request} Bảo hành tối thiểu 12 tháng.`], {
     ai: demoAI,
-    marketplace: createFixtureMarketplace(),
+    marketplace,
   });
   if (output.status !== "complete") throw new Error("Expected completed comparison.");
   const unknown = output.result.search_review.entries.find(

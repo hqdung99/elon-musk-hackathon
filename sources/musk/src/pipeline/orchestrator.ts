@@ -1,5 +1,5 @@
 import { createApproval } from "../domain/checkout";
-import { listingKey } from "../domain/schemas";
+import { isSelectableVariant, listingKey } from "../domain/schemas";
 import type { OfferProfile, PipelineResult, ShoppingIntent, Stage } from "../domain/schemas";
 import type { CheckoutAdapter } from "../providers/checkout";
 import { filterOffers } from "./filter-offers";
@@ -80,9 +80,13 @@ export async function completeSelection(
     if (
       !Object.hasOwn(choices, key) ||
       (choices[key] !== null &&
-        !product.variants.some((variant) => variant.variant_id === choices[key]))
+        !product.variants.some(
+          (variant) =>
+            variant.variant_id === choices[key] &&
+            isSelectableVariant(variant, intent.quantity ?? 1),
+        ))
     )
-      throw new Error("Cần chọn biến thể hợp lệ hoặc bỏ qua từng listing.");
+      throw new Error("Cần chọn biến thể hợp lệ, khả dụng hoặc bỏ qua từng listing.");
   }
 
   const selected = prepared.candidates.filter(

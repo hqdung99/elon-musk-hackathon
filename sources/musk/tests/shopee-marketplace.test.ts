@@ -1,4 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { isSelectableVariant } from "../src/domain/schemas";
 import { createShopeeAdapter } from "../src/providers/marketplace";
 import { cartItem, cartServer } from "./helpers/shopee-cart";
 
@@ -75,6 +77,226 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 describe("Shopee marketplace adapter", () => {
+  it("preserves availability from the captured product response without inferring exact stock", async () => {
+    const captured = JSON.parse(
+      readFileSync(new URL("../../../apis/get_product/response.json", import.meta.url), "utf8"),
+    );
+    const adapter = createShopeeAdapter(async () => jsonResponse(captured));
+    const result = await adapter.getProductDetails({
+      ...listing,
+      listing_id: String(captured.data.item.item_id),
+      seller_id: String(captured.data.item.shop_id),
+    });
+    if (result.status !== "ok") throw new Error("Expected captured product details.");
+    expect(result.data.image_url).toBe(
+      "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-megm9h2a4f7k62",
+    );
+    expect(result.data.variants.map((variant) => variant.image_url)).toEqual([
+      "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-megm9h2acumd01",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-megm9h242p6q9f",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-megm9h2a4f7k62",
+    ]);
+    expect(result.data.variants).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "Bạc",
+          has_stock: false,
+          is_clickable: false,
+          is_grayout: true,
+          stock: null,
+        }),
+        expect.objectContaining({
+          name: "Cam Vũ Trụ",
+          has_stock: true,
+          is_clickable: true,
+          is_grayout: false,
+          stock: null,
+        }),
+      ]),
+    );
+    expect(
+      result.data.variants
+        .filter((variant) => isSelectableVariant(variant))
+        .map((variant) => variant.variant_id),
+    ).toEqual(["276504907701"]);
+  });
+
+  it("prefers direct SKU images over tier images and falls back to the product gallery", async () => {
+    const product = {
+      ...productResponse,
+      data: {
+        ...productResponse.data,
+        product_images: { images: [null, "gallery-image"] },
+        item: {
+          ...productResponse.data.item,
+          image: "",
+          tier_variations: [{ images: ["tier-image"] }],
+          models: [
+            {
+              ...productResponse.data.item.models[0],
+              extinfo: {
+                tier_index: [0],
+                sku_image: "https://down-vn.img.susercontent.com/file/sku-image",
+              },
+            },
+          ],
+        },
+      },
+    };
+    const result = await createShopeeAdapter(async () => jsonResponse(product)).getProductDetails(
+      listing,
+    );
+    expect(result).toMatchObject({
+      status: "ok",
+      data: {
+        image_url: "https://down-vn.img.susercontent.com/file/gallery-image",
+        variants: [
+          expect.objectContaining({
+            image_url: "https://down-vn.img.susercontent.com/file/sku-image",
+          }),
+        ],
+      },
+    });
+  });
+
+  it("keeps missing product and SKU images unknown", async () => {
+    const result = await createShopeeAdapter(async () =>
+      jsonResponse(productResponse),
+    ).getProductDetails(listing);
+    expect(result).toMatchObject({
+      status: "ok",
+      data: {
+        image_url: null,
+        variants: [expect.objectContaining({ image_url: null })],
+      },
+    });
+  });
+
+  it("does not guess a variant image when its tier index is unavailable", async () => {
+    const product = {
+      ...productResponse,
+      data: {
+        ...productResponse.data,
+        item: {
+          ...productResponse.data.item,
+          tier_variations: [{ images: ["other-color"] }],
+          models: [
+            {
+              ...productResponse.data.item.models[0],
+              extinfo: { tier_index: [4], sku_image: "" },
+            },
+          ],
+        },
+      },
+    };
+    const result = await createShopeeAdapter(async () => jsonResponse(product)).getProductDetails(
+      listing,
+    );
+    expect(result).toMatchObject({
+      status: "ok",
+      data: { variants: [expect.objectContaining({ image_url: null })] },
+    });
+  });
+
+  it("rejects invalid image values without treating them as usable URLs", async () => {
+    const product = structuredClone(productResponse);
+    Object.assign(product.data.item, { image: "javascript:alert(1)" });
+    await expect(
+      createShopeeAdapter(async () => jsonResponse(product)).getProductDetails(listing),
+    ).rejects.toThrow("invalid ID or URL");
+  });
+
+  it.each([
+    { has_stock: false },
+    { is_clickable: false },
+    { is_grayout: true },
+    { stock: 0 },
+    { stock: 1 },
+  ])(
+    "refuses known unavailable/insufficient SKUs before selection or cart calls: %j",
+    async (availability) => {
+      const product = structuredClone(productResponse);
+      Object.assign(product.data.item.models[0], availability);
+      const fetcher = vi.fn(async () => jsonResponse(product));
+      const adapter = createShopeeAdapter(fetcher);
+      await expect(
+        adapter.getOfferQuote(listing, "789", { quantity: 2, delivery_area: "TP.HCM" }),
+      ).rejects.toThrow("không khả dụng hoặc không đủ tồn kho");
+      expect(fetcher).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it.each([
+    { stock: 5, maximum: 1, expected: false },
+    { stock: null, maximum: 1, expected: false },
+    { stock: 1, maximum: 5, expected: false },
+    { stock: null, maximum: null, expected: null },
+  ])(
+    "uses the nested selection limit and keeps missing stock unknown: %j",
+    async ({ stock, maximum, expected }) => {
+      const fetcher = vi.fn(async (input: RequestInfo | URL) => {
+        if (String(input).endsWith("/select_variation_pc"))
+          return jsonResponse({
+            error: 0,
+            data: {
+              product_price: productResponse.data.product_price,
+              stock,
+              max_quantity: 999,
+              selected_variation: { max_quantity: maximum },
+            },
+          });
+        if (String(input).includes("/get_pc")) return jsonResponse(productResponse);
+
+        throw new Error("Unexpected request; unavailable/unknown stock must not mutate the cart.");
+      });
+      const quote = await createShopeeAdapter(fetcher).getOfferQuote(listing, "789", {
+        quantity: 2,
+        delivery_area: "TP.HCM",
+      });
+      expect(quote).toMatchObject({
+        status: "ok",
+        data: { in_stock: expected, shipping_cost: null },
+      });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    },
+  );
+
+  it("preserves unknown model availability and surfaces a later selection failure explicitly", async () => {
+    const product = structuredClone(productResponse);
+    Object.assign(product.data.item.models[0], { stock: null, has_stock: null });
+    const fetcher = vi.fn(async (input: RequestInfo | URL) =>
+      String(input).includes("/get_pc")
+        ? jsonResponse(product)
+        : jsonResponse({ error: 17, error_msg: "SKU no longer available" }),
+    );
+    const adapter = createShopeeAdapter(fetcher);
+    const details = await adapter.getProductDetails(listing);
+    expect(details).toMatchObject({
+      status: "ok",
+      data: {
+        variants: [
+          expect.objectContaining({
+            has_stock: null,
+            stock: null,
+            is_clickable: null,
+            is_grayout: null,
+          }),
+        ],
+      },
+    });
+    await expect(
+      adapter.getOfferQuote(listing, "789", { quantity: 1, delivery_area: "TP.HCM" }),
+    ).rejects.toThrow("SKU no longer available");
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it("rejects malformed availability instead of treating it as available", async () => {
+    const product = structuredClone(productResponse);
+    Object.assign(product.data.item.models[0], { has_stock: "false" });
+    const adapter = createShopeeAdapter(async () => jsonResponse(product));
+    await expect(adapter.getProductDetails(listing)).rejects.toThrow();
+  });
+
   it("maps API-provided filters and searches organic results with pagination", async () => {
     const fetcher = vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(String(input), "https://musk.local");
@@ -177,7 +399,7 @@ describe("Shopee marketplace adapter", () => {
           data: {
             product_price: productResponse.data.product_price,
             stock: 5,
-            max_quantity: 5,
+            selected_variation: { max_quantity: 1 },
           },
         });
       if (url.pathname.includes("/get_recommend_"))

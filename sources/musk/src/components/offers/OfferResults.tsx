@@ -119,6 +119,40 @@ function Evidence({ profile }: { profile: OfferProfile }) {
   );
 }
 
+function ProductImage({
+  url,
+  fallbackUrl,
+  alt,
+}: {
+  url: string | null | undefined;
+  fallbackUrl: string | null | undefined;
+  alt: string;
+}) {
+  const [failedUrls, setFailedUrls] = useState<string[]>([]);
+  const image = [url, fallbackUrl].find(
+    (candidate) => candidate && !failedUrls.includes(candidate),
+  );
+
+  return (
+    <div className="product-image">
+      {image ? (
+        <img
+          src={image}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={() => setFailedUrls((failed) => [...failed, image])}
+        />
+      ) : (
+        <span className="muted small" role="status">
+          {url || fallbackUrl ? "Không tải được ảnh sản phẩm" : "Chưa có ảnh sản phẩm"}
+        </span>
+      )}
+    </div>
+  );
+}
+
 function OfferCard({
   profile,
   ranked,
@@ -151,13 +185,11 @@ function OfferCard({
         </span>
       </div>
       <div className="offer-product">
-        <div className="phone-art" aria-hidden="true">
-          <div className="phone-camera">
-            <i />
-            <i />
-          </div>
-          <div className="phone-logo">●</div>
-        </div>
+        <ProductImage
+          url={variant?.image_url}
+          fallbackUrl={profile.product.image_url}
+          alt={`${profile.product.title}${variant ? ` · ${variant.name}` : ""}`}
+        />
         <div>
           <p className="muted small">{variant?.name}</p>
           <h3>{profile.product.title.split(" · ")[0]}</h3>

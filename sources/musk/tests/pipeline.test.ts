@@ -8,7 +8,7 @@ import {
 import { createOpenAI, defaultOpenAIConfig, demoAI } from "../src/providers/ai";
 import { fixtureCheckout } from "../src/providers/checkout";
 import { openCheckout as handoffCheckout } from "../src/pipeline/open-checkout";
-import { createFixtureMarketplace } from "../src/providers/fixtures";
+import { createFixtureMarketplace, fixtureListings } from "../src/providers/fixtures";
 import { unwrap } from "../src/providers/marketplace";
 import { approveAndRevalidate, runPipeline } from "../src/pipeline/orchestrator";
 import { assembleProfile } from "../src/pipeline/profiles";
@@ -18,10 +18,16 @@ import { CartCleanupError } from "../src/providers/shopee-cart";
 
 const request =
   "Mua 1 máy iPhone 16 128GB, tổng tối đa 19 triệu VND, giao tại TP.HCM. Bảo hành tối thiểu 12 tháng. Ưu tiên giá rẻ.";
-async function complete(messages = [request]) {
+async function complete(messages = [request], listings = fixtureListings) {
+  const marketplace = createFixtureMarketplace();
+  if (listings !== fixtureListings)
+    vi.spyOn(marketplace, "searchProducts").mockResolvedValue({
+      status: "ok",
+      data: { items: listings, has_more: false, next_page: null },
+    });
   const output = await runPipeline(messages, {
     ai: demoAI,
-    marketplace: createFixtureMarketplace(),
+    marketplace,
   });
   if (output.status !== "complete")
     throw new Error(`Unexpected clarification: ${output.intent.questions_for_user}`);
@@ -43,10 +49,13 @@ describe("pipeline", () => {
     }
   });
   it("ranks offers without confirmed failures, keeping unknown checks explicit", async () => {
-    const result = await complete();
-    expect(result.profiles).toHaveLength(4);
+    const result = await complete(
+      [request],
+      [fixtureListings[0], fixtureListings[3], fixtureListings[2]],
+    );
+    expect(result.profiles).toHaveLength(3);
     expect(result.intent.delivery_area).toBe("tp.hcm");
-    expect(result.ranking.ranked_offers).toHaveLength(3);
+    expect(result.ranking.ranked_offers).toHaveLength(2);
     expect(result.ranking.ranked_offers[0].offer_id).toContain("value:");
     expect(result.ranking.ranked_offers.some((row) => row.offer_id.startsWith("unknown:"))).toBe(
       true,
@@ -123,7 +132,10 @@ describe("pipeline", () => {
     ).toThrow("giải thích");
   });
   it("ranks an offer with an unknown total without citing it as a price reason", async () => {
-    const result = await complete();
+    const result = await complete(
+      [request],
+      [fixtureListings[0], fixtureListings[3], fixtureListings[2]],
+    );
     const profiles = result.profiles
       .filter((profile) =>
         result.filters.some(
@@ -322,6 +334,31 @@ describe("domain rules", () => {
 });
 
 describe("approval and checkout", () => {
+  it("does not block checkout solely because presentation images changed", async () => {
+    const { profiles, intent } = await complete();
+    const profile = profiles[0];
+    profile.product.image_url = "https://down-vn.img.susercontent.com/file/old-product";
+    profile.product.variants[0].image_url = "https://down-vn.img.susercontent.com/file/old-sku";
+    const approval = createApproval(1, profile);
+    const fresh = structuredClone(profile);
+    fresh.product.image_url = "https://down-vn.img.susercontent.com/file/new-product";
+    fresh.product.variants[0].image_url = "https://down-vn.img.susercontent.com/file/new-sku";
+    expect(validateApprovedOffer(approval, fresh, intent, 1).changed_fields).toEqual([]);
+  });
+
+  it("ignores variant stock metadata changes but blocks loss of selected-SKU availability", async () => {
+    const { profiles, intent } = await complete();
+    const profile = profiles[0];
+    profile.product.variants[0].stock = 5;
+    profile.product.variants[0].has_stock = true;
+    const approval = createApproval(1, profile);
+    const fresh = structuredClone(profile);
+    fresh.product.variants[0].stock = 4;
+    expect(validateApprovedOffer(approval, fresh, intent, 1).changed_fields).toEqual([]);
+    fresh.quote.in_stock = false;
+    expect(validateApprovedOffer(approval, fresh, intent, 1).status).toBe("requirements_not_met");
+  });
+
   it("blocks changes to a quoted discount", async () => {
     const { profiles, intent } = await complete();
     const profile = structuredClone(profiles[0]);
@@ -413,7 +450,10 @@ describe("approval and checkout", () => {
     expect(lost.became_unknown_fields).toEqual(["quote.estimated_delivery_to"]);
   });
   it("warns but continues to checkout when facts were already unknown at approval", async () => {
-    const result = await complete();
+    const result = await complete(
+      [request],
+      [fixtureListings[0], fixtureListings[3], fixtureListings[2]],
+    );
     const profile = result.profiles.find((item) => item.offer_id.startsWith("unknown:"))!;
     const openCheckout = vi.fn(fixtureCheckout.openCheckout);
     const output = await approveAndRevalidate(

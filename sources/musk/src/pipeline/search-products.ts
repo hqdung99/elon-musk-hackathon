@@ -9,7 +9,7 @@ export interface CandidateResults {
 }
 
 // Only the first organic results are analyzed, to keep AI and Shopee calls few and fast.
-export const searchListingLimit = 10;
+export const searchListingLimit = 3;
 
 export async function searchProducts(
   plan: SearchPlan,

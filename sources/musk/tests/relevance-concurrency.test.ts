@@ -75,7 +75,7 @@ it("assesses relevance batches concurrently (max 4) and keeps search order", asy
   expect(new Set(prepared.candidates.map(({ listing }) => listingKey(listing))).size).toBe(30);
 });
 
-it("summarizes reviews for up to 4 listings at once and keeps profile order", async () => {
+it("summarizes the 3 analyzed listings concurrently and keeps profile order", async () => {
   const marketplace = createFixtureMarketplace();
   const listings = Array.from({ length: 10 }, (_, index) => ({
     ...fixtureListings[0],
@@ -106,8 +106,8 @@ it("summarizes reviews for up to 4 listings at once and keeps profile order", as
     },
   );
   if (output.status !== "complete") throw new Error("Expected completed comparison.");
-  expect(peak).toBe(4);
+  expect(peak).toBe(3);
   expect(output.result.profiles.map((profile) => profile.seller.seller_id)).toEqual(
-    listings.map((listing) => listing.seller_id),
+    listings.slice(0, 3).map((listing) => listing.seller_id),
   );
 });

@@ -57,6 +57,116 @@ it("chooses the default or first variant without requiring user input when uncon
   });
 });
 
+it.each([{ has_stock: false }, { is_clickable: false }, { is_grayout: true }, { stock: 0 }])(
+  "does not send an unavailable default SKU to AI: %j",
+  async (availability) => {
+    const { prepared, marketplace, listing, product } = await setup();
+    prepared.intent.requirements = [];
+    Object.assign(product.variants[0], availability);
+    const chooseVariant = vi.fn(demoAI.chooseVariant);
+    expect(
+      await selectVariants(prepared, {
+        marketplace,
+        ai: { ...demoAI, chooseVariant },
+      }),
+    ).toEqual({ [listingKey(listing)]: "128" });
+    expect(chooseVariant.mock.calls[0][1].variants.map((variant) => variant.variant_id)).toEqual([
+      "128",
+    ]);
+    expect(chooseVariant.mock.calls[0][1].default_variant_id).toBeNull();
+    expect(product.variants).toHaveLength(2);
+  },
+);
+
+it("uses stock quantity boundaries without assuming missing stock is unavailable", async () => {
+  const { prepared, marketplace, listing, product } = await setup();
+  prepared.intent.requirements = [];
+  prepared.intent.quantity = 2;
+  product.variants[0].stock = 1;
+  product.variants[1].stock = 2;
+  expect(await selectVariants(prepared, { marketplace, ai: demoAI })).toEqual({
+    [listingKey(listing)]: "128",
+  });
+  product.variants[1].stock = null;
+  product.variants[1].has_stock = null;
+  expect(await selectVariants(prepared, { marketplace, ai: demoAI })).toEqual({
+    [listingKey(listing)]: "128",
+  });
+});
+
+it("skips sold-out listings without asking AI, quoting, or losing the reason", async () => {
+  const { prepared, marketplace, listing, product } = await setup();
+  product.variants.forEach((variant) => {
+    variant.has_stock = false;
+  });
+  const chooseVariant = vi.fn(demoAI.chooseVariant);
+  const quote = vi.spyOn(marketplace, "getOfferQuote");
+  const choices = await selectVariants(prepared, { marketplace, ai: { ...demoAI, chooseVariant } });
+  expect(choices).toEqual({ [listingKey(listing)]: null });
+  const result = await completeSelection(prepared, choices!, { marketplace, ai: demoAI });
+  expect(chooseVariant).not.toHaveBeenCalled();
+  expect(quote).not.toHaveBeenCalled();
+  expect(result.profiles).toEqual([]);
+  expect(result.search_review.entries[0].status).toBe("skipped");
+  expect(result.search_review.entries[0].reasons.join(" ")).toContain("Không có SKU khả dụng");
+});
+
+it("fallback selection cannot choose a sold-out variant", async () => {
+  const { prepared, marketplace, listing, product } = await setup();
+  prepared.intent.requirements = [];
+  product.variants[0].has_stock = false;
+  expect(
+    await selectVariants(prepared, {
+      marketplace,
+      ai: {
+        ...demoAI,
+        chooseVariant: async () => ({
+          status: "uncertain",
+          variant_id: null,
+          reason: "Thiếu thông tin.",
+        }),
+      },
+    }),
+  ).toEqual({ [listingKey(listing)]: "128" });
+});
+
+it("rejects an AI decision selecting a known-unavailable SKU", async () => {
+  const { prepared, marketplace, product } = await setup();
+  product.variants[0].has_stock = false;
+  await expect(
+    selectVariants(prepared, {
+      marketplace,
+      ai: {
+        ...demoAI,
+        chooseVariant: async () => ({
+          status: "selected",
+          variant_id: "256",
+          reason: "Default",
+        }),
+      },
+    }),
+  ).rejects.toThrow("không khả dụng");
+});
+
+it("rejects AI ambiguity involving a known-unavailable SKU", async () => {
+  const { prepared, marketplace, product } = await setup();
+  product.variants[0].has_stock = false;
+  await expect(
+    selectVariants(prepared, {
+      marketplace,
+      ai: {
+        ...demoAI,
+        chooseVariant: async () => ({
+          status: "uncertain",
+          variant_id: null,
+          reason: "Chọn một SKU",
+          ambiguous_variant_ids: ["128", "256"],
+        }),
+      },
+    }),
+  ).rejects.toThrow("không khả dụng");
+});
+
 it("skips a listing with no matching SKU without quoting it", async () => {
   const { prepared, marketplace, product } = await setup();
   product.variants = [product.variants[0]];

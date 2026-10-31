@@ -47,9 +47,16 @@ Refresh Shopee headers with the same command when the session expires; restart V
 
 > Mua 1 máy iPhone 16 128GB mới. Tổng ngân sách tối đa 25 triệu VND. Giao tại TP.HCM. Chỉ mua Shopee Mall. Ưu tiên giá rẻ.
 
-Musk automatically chooses a SKU matching explicit requirements. If no variant constraint is stated, it chooses the default or any listed SKU. Clear non-matches are skipped; only unresolved explicit variant constraints need manual selection. Inspect the recommendation, then click **Duyệt & kiểm tra lại**.
+Musk automatically chooses a SKU matching explicit requirements. Known-unavailable SKUs
+and SKUs with insufficient reported stock are excluded from automatic and manual selection;
+listings with no selectable SKU are skipped. Missing availability stays unknown.
+If no variant constraint is stated, it chooses the default or any selectable SKU.
+Clear non-matches are skipped; only unresolved explicit variant constraints need manual selection.
+Inspect the recommendation, then click **Duyệt & kiểm tra lại**.
+Recommendation cards use Shopee's selected-SKU image when available, falling back
+to the product image. Missing or failed images are labeled, not replaced with fake artwork.
 Expand **Các listing đã xem** to see the search, every returned organic listing, and why each was kept, removed, skipped, or not evaluated due to limits.
-Musk analyzes only the **first 10 organic search results** (ads excluded; up to 3 pages are read only to make up for ads). Relevance, quotes, reviews and ranking all run on those 10.
+Musk analyzes only the **first 3 organic search results** for faster testing (ads excluded; up to 3 pages are read only to make up for ads). Relevance, quotes, reviews and ranking all run on those 3.
 If revalidation allows continuing, Musk leaves only the approved SKU and quantity in the cart.
 Click **Mở giỏ hàng Shopee** to continue manually using the same Shopee account.
 
@@ -59,6 +66,9 @@ Click **Mở giỏ hàng Shopee** to continue manually using the same Shopee acc
 - Approval leaves only the approved SKU and quantity. If cleanup fails, empty the cart and reload Musk before retrying.
 - Musk fetches shop and platform vouchers for the selected SKU and subtracts the largest eligible cash voucher once from the reconciled checkout estimate. Vouchers are not stacked; select the displayed code manually at checkout. Shipping uses the saved account address and remains estimated. Missing pricing and policies stay unknown.
 - Known term changes or failed requirements block handoff; unknown checks remain visible warnings. Verify intended items and all final terms on Shopee.
+- Product-level stock flags do not guarantee the requested quantity. Quotes check
+  current stock and the selected variation's purchase limit; upstream selection
+  errors still surface explicitly if availability changes between requests.
 - **Musk never places orders or makes payments.**
 - Never commit credentials. Shopee headers stay server-side; **`VITE_` OpenAI keys are browser-visible and embedded in builds**. Do not share credential-containing builds.
 - The Shopee proxy works only during development. API errors never silently switch to demo data. Search is bounded, not market-wide; conversations clear on reload.

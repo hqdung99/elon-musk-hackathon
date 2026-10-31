@@ -235,7 +235,7 @@ ListingReview = {
 }
 ```
 
-**Validate:** unique `(seller_id, listing_id)` pairs. Only the first ten organic
+**Validate:** unique `(seller_id, listing_id)` pairs. Only the first three organic
 results are analyzed (`listing_limit`); extra pages, up to three, are read only to make
 up for ads or duplicates; `pages_fetched <= page_limit`.
 `truncated` signals incomplete coverage. Inventory only fetched listings;
@@ -259,6 +259,12 @@ sequenceDiagram
 ```
 
 **Output:** uncertain relevance stays visible; `null` in choices means skip.
+Known-unavailable variants (`has_stock=false`, `is_clickable=false`,
+`is_grayout=true`, or reported `stock` below requested quantity) are not offered
+to AI, fallback selection, or manual selection. Listings with no selectable
+variant are skipped with a recorded reason. Missing availability stays unknown.
+Quotes check `data.stock` and `data.selected_variation.max_quantity`; availability
+can change before selection, so upstream failures remain explicit.
 
 ```text
 PreparedSearch = {
@@ -304,12 +310,14 @@ OfferProfile = {
   policies: PurchasePolicies, missing_fields: string[], sources: FieldSource[]
 }
 ProductDetails = {
-  listing_id: string, title: string, model: string|null, storage_gb: number|null,
+  listing_id: string, title: string, image_url?: Url|null, model: string|null, storage_gb: number|null,
   condition: "new"|"used"|"refurbished"|null, variants: ProductVariant[],
   default_variant_id: string|null, sources: FieldSource[]
 }
 ProductVariant = {
-  variant_id: string, name: string, model?: string|null, storage_gb?: number|null
+  variant_id: string, name: string, model?: string|null, storage_gb?: number|null,
+  has_stock?: boolean|null, is_clickable?: boolean|null, is_grayout?: boolean|null,
+  stock?: NonNegativeInt|null, image_url?: Url|null
 }
 SellerDetails = {
   seller_id: string, name: string, is_mall: boolean|null, rating: number|null,
@@ -522,9 +530,9 @@ and quantity. Fixture handoff returns `simulated` with a null URL.
 
 ## Shared rules
 
-- Analyze only the first ten organic search results (deduplicated by shop and
+- Analyze only the first three organic search results for faster testing (deduplicated by shop and
   listing); read further pages, at most three, only to make up for ads. Every later
-  step (relevance, quotes, reviews, ranking) runs on those ten; failures do not
+  step (relevance, quotes, reviews, ranking) runs on those three; failures do not
   trigger fetching more.
 - Review trail records kept, removed, skipped and unevaluated listings with reasons.
 - Validate AI listing identities and review citations. Musk derives ranks,

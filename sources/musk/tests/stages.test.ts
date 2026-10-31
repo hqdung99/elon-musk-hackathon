@@ -97,11 +97,11 @@ describe("separate pipeline stages", () => {
     expect(intent.questions_for_user).toEqual([]);
     const searchPlan = await planSearch(intent, deps);
     const candidates = await searchProducts(searchPlan, deps);
-    expect(candidates.truncated).toBe(false);
+    expect(candidates.truncated).toBe(true);
     const profiles = await buildOfferProfiles(candidates.listings, intent, deps);
     const { filters, candidates: considered } = filterOffers(profiles, intent);
-    expect(filters).toHaveLength(4);
-    expect(considered).toHaveLength(3);
+    expect(filters).toHaveLength(3);
+    expect(considered).toHaveLength(2);
     const ranking = await rankOffers(intent, considered, deps);
     const recommendation = recommendOffers(
       intent,
@@ -257,7 +257,7 @@ describe("separate pipeline stages", () => {
       search_review: {
         plan,
         pages_fetched: 2,
-        listing_limit: 10,
+        listing_limit: 3,
         page_limit: 3,
         truncated: false,
         entries: [fixtureListings[0], fixtureListings[1]].map((listing) => ({
@@ -270,7 +270,7 @@ describe("separate pipeline stages", () => {
     expect(search.mock.calls.map((call) => call[1])).toEqual([1, 2]);
   });
 
-  it("keeps only the first 10 raw search results and reports the rest as truncated", async () => {
+  it("keeps only the first 3 raw search results and reports the rest as truncated", async () => {
     const listings = Array.from({ length: 13 }, (_, index) => ({
       ...fixtureListings[0],
       listing_id: `listing-${index}`,
@@ -283,12 +283,12 @@ describe("separate pipeline stages", () => {
       ai: demoAI,
       marketplace: { ...createFixtureMarketplace(), searchProducts: search },
     });
-    expect(output.listings).toEqual(listings.slice(0, 10));
+    expect(output.listings).toEqual(listings.slice(0, 3));
     expect(output.truncated).toBe(true);
     expect(output.search_review.truncated).toBe(true);
-    expect(output.search_review.entries).toHaveLength(10);
-    expect(output.search_review.entries[9]).toMatchObject({
-      listing: listings[9],
+    expect(output.search_review.entries).toHaveLength(3);
+    expect(output.search_review.entries[2]).toMatchObject({
+      listing: listings[2],
       status: "pending",
       reasons: [],
     });
@@ -334,7 +334,7 @@ describe("separate pipeline stages", () => {
       output.truncated,
     );
     expect(recommendation.limitations).toContain(
-      "Chỉ phân tích 10 kết quả tìm kiếm đầu tiên; chưa bao phủ mọi kết quả.",
+      "Chỉ phân tích 3 kết quả tìm kiếm đầu tiên; chưa bao phủ mọi kết quả.",
     );
   });
 

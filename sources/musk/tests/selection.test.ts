@@ -76,6 +76,24 @@ async function selectionSetup() {
 }
 
 describe("relevance and explicit SKU selection", () => {
+  it("disables unavailable manual options and refuses them before quoting", async () => {
+    const { prepared, listing, dependencies, quote } = await selectionSetup();
+    prepared.candidates[0].product.variants[0].has_stock = false;
+    const html = renderToStaticMarkup(
+      createElement(VariantSelection, {
+        prepared,
+        onContinue: vi.fn(),
+      }),
+    );
+    expect(html).toMatch(/<option[^>]*value="128"[^>]*disabled=""[^>]*>/);
+    expect(html).toContain("Không khả dụng");
+    expect(html).not.toMatch(/<option[^>]*value="256"[^>]*disabled/);
+    await expect(
+      completeSelection(prepared, { [listingKey(listing)]: "128" }, dependencies),
+    ).rejects.toThrow("khả dụng");
+    expect(quote).not.toHaveBeenCalled();
+  });
+
   it("removes explicitly irrelevant listings but retains uncertain listings", async () => {
     const marketplace = createFixtureMarketplace();
     const getProduct = vi.spyOn(marketplace, "getProductDetails");

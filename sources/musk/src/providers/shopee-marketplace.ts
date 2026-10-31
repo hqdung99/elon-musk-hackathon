@@ -1,3 +1,4 @@
+import { isSelectableVariant, productVariantSchema } from "../domain/schemas";
 import type {
   FieldSource,
   Listing,
@@ -18,7 +19,7 @@ import type { CheckoutAdapter, CheckoutNavigation } from "./checkout";
 
 type JsonRecord = Record<string, unknown>;
 
-// Musk analyzes only the first 10 organic results; 20 per page usually covers them after ads.
+// Fetch a small page to cover the analyzed results even when some entries are ads.
 const searchPageSize = 20;
 
 interface ProductResponse {
@@ -94,6 +95,53 @@ function conditionFromApi(value: unknown): ProductDetails["condition"] {
   if (value === "refurbished") return "refurbished";
 
   return null;
+}
+
+function imageUrl(value: unknown): string | null {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") throw new Error("Shopee image must be a string.");
+  const image = value.trim();
+  if (!image) return null;
+  if (image.startsWith("https://")) return new URL(image).href;
+  if (!/^[a-zA-Z0-9_-]+$/.test(image)) throw new Error("Shopee image has an invalid ID or URL.");
+
+  return `https://down-vn.img.susercontent.com/file/${image}`;
+}
+
+function productVariant(
+  model: JsonRecord,
+  index = 0,
+  tierVariations: JsonRecord[] = [],
+): ProductDetails["variants"][number] {
+  const variantId = stringValue(model.model_id);
+  if (!variantId) throw new Error("Shopee product model is missing its ID.");
+  const name = stringValue(model.name) ?? `Biến thể ${index + 1}`;
+  const extinfo = record(model.extinfo ?? {}, "product model extinfo");
+  let image = imageUrl(extinfo.sku_image);
+  if (!image) {
+    const tiers = arrayValue(extinfo.tier_index ?? [], "product model tier_index");
+    for (let tier = 0; tier < tiers.length; tier += 1) {
+      const option = tiers[tier];
+      const variation = tierVariations[tier];
+      if (!variation || typeof option !== "number" || !Number.isSafeInteger(option) || option < 0)
+        continue;
+      const images = arrayValue(variation.images ?? [], "product tier images");
+      image = imageUrl(images[option]);
+      if (image) break;
+    }
+  }
+
+  return productVariantSchema.parse({
+    variant_id: variantId,
+    name,
+    model: modelFromTitle(name),
+    storage_gb: storageFromTitle(name),
+    has_stock: model.has_stock ?? null,
+    is_clickable: model.is_clickable ?? null,
+    is_grayout: model.is_grayout ?? null,
+    stock: model.stock ?? null,
+    image_url: image,
+  });
 }
 
 function productUrl(listing: Listing): string {
@@ -197,7 +245,9 @@ export function createShopeeAdapter(
         profile.quote.listing_id !== profile.product.listing_id ||
         profile.quote.variant_id !== profile.selected_variant_id ||
         !profile.product.variants.some(
-          (variant) => variant.variant_id === profile.selected_variant_id,
+          (variant) =>
+            variant.variant_id === profile.selected_variant_id &&
+            isSelectableVariant(variant, profile.quote.quantity),
         )
       )
         throw new Error("Approved product, quote and selected SKU do not match.");
@@ -371,26 +421,16 @@ export function createShopeeAdapter(
       const title = stringValue(item.title ?? item.name) ?? listing.title;
       const rawModels = Array.isArray(item.models) ? item.models : [];
       const models = rawModels.map((model) => record(model, "product model"));
+      const tierVariations = arrayValue(item.tier_variations ?? [], "product tier variations").map(
+        (tier) => record(tier, "product tier variation"),
+      );
       const priceData = record(data.product_price ?? {}, "get_product.data.product_price");
       const priceModel = record(
         priceData.price_model ?? {},
         "get_product.data.product_price.price_model",
       );
       const defaultVariantId = stringValue(priceModel.price_single_model_id);
-      const variants = models.flatMap((model, index) => {
-        const variantId = stringValue(model.model_id);
-        if (!variantId) throw new Error("Shopee product model is missing its ID.");
-        const name = stringValue(model.name) ?? `Biến thể ${index + 1}`;
-
-        return [
-          {
-            variant_id: variantId,
-            name,
-            model: modelFromTitle(name),
-            storage_gb: storageFromTitle(name),
-          },
-        ];
-      });
+      const variants = models.map((model, index) => productVariant(model, index, tierVariations));
       if (!variants.length) {
         if (!defaultVariantId) throw new Error("Shopee product has no confirmed model ID.");
         variants.push({
@@ -402,7 +442,16 @@ export function createShopeeAdapter(
       }
 
       const rawCondition = conditionFromApi(item.condition);
+      let image_url = imageUrl(item.image);
+      if (!image_url) {
+        const gallery = record(data.product_images ?? {}, "get_product.data.product_images");
+        for (const image of arrayValue(gallery.images ?? [], "product images")) {
+          image_url = imageUrl(image);
+          if (image_url) break;
+        }
+      }
       const productSources: FieldSource[] = [];
+      if (image_url) productSources.push(source(listing, "product.image_url"));
       const model = modelFromTitle(title);
       const storage_gb = storageFromTitle(title);
       if (model) productSources.push(source(listing, "product.model"));
@@ -412,6 +461,7 @@ export function createShopeeAdapter(
       return ok<ProductDetails>({
         listing_id: stringValue(item.item_id) ?? listing.listing_id,
         title,
+        image_url,
         model,
         storage_gb,
         condition: rawCondition,
@@ -519,6 +569,10 @@ export function createShopeeAdapter(
         throw new Error(
           `Shopee variant ${variantId} was not found for item ${listing.listing_id}.`,
         );
+      if (!isSelectableVariant(productVariant(selectedModel), buyer.quantity))
+        throw new Error(
+          `Shopee SKU ${variantId} không khả dụng hoặc không đủ tồn kho cho ${buyer.quantity} sản phẩm.`,
+        );
       const extinfo = record(selectedModel.extinfo, "product model extinfo");
       const tiers = arrayValue(extinfo.tier_index, "product model tier_index");
       if (tiers.some((tier) => !Number.isInteger(tier) || Number(tier) < 0))
@@ -546,11 +600,17 @@ export function createShopeeAdapter(
         throw new Error("Shopee select_variation returned a different model.");
       const item_unit_price = price(currentPrice.single_value);
       const stock = numberValue(selection.stock);
-      const maximum = numberValue(selection.max_quantity);
+      const variation = record(
+        selection.selected_variation ?? {},
+        "select_variation.data.selected_variation",
+      );
+      const maximum = numberValue(variation.max_quantity);
       const in_stock =
-        stock === null
-          ? null
-          : stock >= buyer.quantity && (maximum === null || maximum >= buyer.quantity);
+        (stock !== null && stock < buyer.quantity) || (maximum !== null && maximum < buyer.quantity)
+          ? false
+          : stock === null
+            ? null
+            : true;
       const sources: FieldSource[] = [];
       if (item_unit_price) sources.push(source(listing, "quote.item_unit_price"));
       if (in_stock !== null) sources.push(source(listing, "quote.in_stock"));
