@@ -657,7 +657,7 @@ h3 {
 }
 .progress-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -679,6 +679,62 @@ h3 {
 }
 .progress-card .button {
   margin-left: auto;
+}
+.activity-log {
+  flex: 1;
+  min-width: 0;
+}
+.activity-elapsed {
+  margin-left: 8px;
+  font-weight: 400;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.activity-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.activity {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.activity.running {
+  color: var(--ink);
+}
+.activity-icon {
+  color: var(--green);
+  text-align: center;
+}
+.activity.error .activity-icon {
+  color: var(--warn-text);
+}
+.activity.running .activity-icon::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--line);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.activity-text small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.activity-time {
+  font-variant-numeric: tabular-nums;
 }
 .spinner {
   width: 20px;
