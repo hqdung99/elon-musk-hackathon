@@ -1,0 +1,133 @@
+{
+    "bff_meta": null,
+    "error": null,
+    "error_msg": null,
+    "data": {
+        "product_price": {
+            "discount": 6,
+            "installment_info": {
+                "recommended_plan": {
+                    "months": 12,
+                    "pay_per_month": 297416666666,
+                    "has_buyer_transaction_fee": true
+                }
+            },
+            "spl_installment_info": null,
+            "pack_size": "",
+            "hide_price": false,
+            "price": {
+                "single_value": 3569000000000,
+                "range_min": -1,
+                "range_max": -1,
+                "price_mask": null
+            },
+            "price_before_discount": {
+                "single_value": 3799000000000,
+                "range_min": -1,
+                "range_max": -1,
+                "price_mask": null
+            },
+            "presale_price": null,
+            "lowest_past_price": null,
+            "labels": null,
+            "hide_discount": false,
+            "discount_text": null,
+            "show_final_price_indicator": null,
+            "final_price_vouchers": null,
+            "has_final_price": true,
+            "final_price_info": null,
+            "price_subtext": null,
+            "price_model": {
+                "price_single_model_id": 276504907701,
+                "price_min_model_id": null,
+                "price_max_model_id": null
+            },
+            "price_promotion": {
+                "price_single_promotion_id": 509423345291929,
+                "price_single_promotion_type": 301,
+                "price_min_promotion_id": null,
+                "price_min_promotion_type": null,
+                "price_max_promotion_id": null,
+                "price_max_promotion_type": null
+            },
+            "instalment_cta_action": {
+                "type": 0,
+                "redirection_url": null
+            },
+            "spl_installment_banner": null,
+            "show_non_logged_in_price_indicator": false
+        },
+        "stock": 395,
+        "selected_variation": {
+            "reminder_text": [],
+            "promotion_labels": {
+                "is_live_streaming_ongoing": null,
+                "live_streaming_promotion_type": null,
+                "wholesale_text": null,
+                "pre_order_text": "",
+                "wholesale_label": null
+            },
+            "max_quantity": 395,
+            "max_quantity_display": null
+        },
+        "promotion_info": {
+            "spl": null,
+            "spl_lite": null,
+            "installment": {
+                "month": 12,
+                "price_raw": 297416666666,
+                "interest": 0,
+                "has_buyer_transaction_fee": true,
+                "display_text": "12 tháng x {{price}} (Lãi suất 0%)"
+            },
+            "wholesale": null,
+            "insurance": null,
+            "item_installment_eligibility": null,
+            "installment_simulation_entry": null
+        },
+        "button_group": {
+            "buy_with_voucher": null,
+            "ineligible_user_platform_exclusive_sku": null,
+            "shop_opt": null
+        },
+        "ongoing_banner": null,
+        "teaser_banner": null,
+        "price_breakdown": null,
+        "tier_variation_display_indicators": [
+            {
+                "title": "Màu Sắc",
+                "options": [
+                    {
+                        "name": "Xanh Đậm",
+                        "image": "vn-11134207-820l4-megm9h242p6q9f",
+                        "display_indicator": 2,
+                        "name_tr": null
+                    },
+                    {
+                        "name": "Cam Vũ Trụ",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "display_indicator": 0,
+                        "name_tr": null
+                    },
+                    {
+                        "name": "Bạc",
+                        "image": "vn-11134207-820l4-megm9h2acumd01",
+                        "display_indicator": 2,
+                        "name_tr": null
+                    }
+                ],
+                "title_tr": null,
+                "selling_points": null
+            }
+        ],
+        "max_quantity": 395,
+        "product_shipping": null,
+        "gallery_image": "vn-11134207-820l4-megm9h2a4f7k62",
+        "shop_detailed": {
+            "display_fbs_logo": false,
+            "fbs_display_type": 0
+        },
+        "top_banner": null,
+        "bottom_banner": null
+    }
+}

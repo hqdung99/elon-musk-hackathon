@@ -1,0 +1,585 @@
+{
+    "error": 0,
+    "error_message": "success",
+    "data": {
+        "cart_block_id_list": [
+            {
+                "block_id": "469248922",
+                "block_type": 0,
+                "shopids": [
+                    469248922
+                ],
+                "item_briefs": [
+                    {
+                        "itemid": 17181158498,
+                        "modelid": 117184977461,
+                        "item_group_id": "499198366134401",
+                        "shopid": 469248922,
+                        "price": null,
+                        "quantity": 1,
+                        "is_add_on_sub_item": null,
+                        "add_on_deal_id": null,
+                        "applied_promotion_id": null,
+                        "membership_offer_id": null
+                    },
+                    {
+                        "itemid": 4293068799,
+                        "modelid": 93074403662,
+                        "item_group_id": "499198366134401",
+                        "shopid": 469248922,
+                        "price": null,
+                        "quantity": 3,
+                        "is_add_on_sub_item": null,
+                        "add_on_deal_id": null,
+                        "applied_promotion_id": null,
+                        "membership_offer_id": null
+                    }
+                ],
+                "last_updated_time": 1793256487
+            }
+        ],
+        "shop_order_id_list": null,
+        "cart_blocks": [
+            {
+                "block_id": "469248922",
+                "block_info": {
+                    "block_id": "469248922",
+                    "block_name": "",
+                    "block_type": 0,
+                    "shopids": [
+                        469248922
+                    ],
+                    "redirect_url": "",
+                    "shipping_promo_drawer_entries": [],
+                    "shipping_promo_entrance_text": [],
+                    "shipping_promotion_icon_type": 0,
+                    "shipping_promotion_icon_image": ""
+                },
+                "item_briefs": null,
+                "shops": [
+                    {
+                        "shopname": "Oniiz Việt Nam",
+                        "holiday_mode_on": false,
+                        "shopid": 469248922,
+                        "username": "oniizvietnam",
+                        "status": 1,
+                        "cb_option": 0,
+                        "show_official_shop_label": true,
+                        "portrait": "e4a9e3690e724c445a720b2e3a969409",
+                        "following_count": 17,
+                        "userid": 469268499,
+                        "is_shopee_verified": false,
+                        "has_welcome_package_item": null,
+                        "shop_tag": 1,
+                        "addin_time": 1793202843,
+                        "click_time": 0,
+                        "entrance_text": null,
+                        "drawer_entries": null,
+                        "has_ongoing_live": false,
+                        "live_session_id": null,
+                        "shipping_promotion_icon_type": null,
+                        "shipping_promotion_icon_image": null,
+                        "hide_chat_entry_point": false,
+                        "holiday_mode_type": 0,
+                        "holiday_mode_end_timestamp": 0,
+                        "shop_labels": null
+                    }
+                ],
+                "items": [
+                    {
+                        "add_on_deal_id": 499198366134401,
+                        "add_on_deal_info": {
+                            "add_on_deal_id": 499198366134401,
+                            "shop_id": null,
+                            "start_time": 1788327480,
+                            "end_time": 1793465940,
+                            "create_time": 1788323859,
+                            "update_time": 1788323859,
+                            "status": 1,
+                            "region": "VN",
+                            "sub_item_limit": 1,
+                            "sub_type": 1,
+                            "image_hash": "ef095a7f737ef5293ab0a2520180f142",
+                            "purchase_min_spend": 30000000000,
+                            "per_gift_num": 1,
+                            "total_gift_tier": 1,
+                            "shopid": 469248922
+                        },
+                        "addin_time": 1793202843,
+                        "bundle_deal_id": null,
+                        "bundle_deal_info": null,
+                        "can_use_wholesale": false,
+                        "catid": 100630,
+                        "condition": 1,
+                        "free_return_day": 0,
+                        "image": "vn-11134207-81ztc-mmsbu9c5xuyr7d",
+                        "is_add_on_sub_item": false,
+                        "is_wp_item": false,
+                        "item_group_id": "499198366134401",
+                        "item_stock": 191,
+                        "itemid": 4293068799,
+                        "model_name": "CLASSICAL",
+                        "modelid": 93074403662,
+                        "models": [],
+                        "msg_updated_new_value": null,
+                        "msg_updated_old_value": null,
+                        "name": "Bọt vệ sinh nam giới Oniiz Dung dịch tạo bọt hương nước hoa 100ml",
+                        "origin_cart_item_price": 12500000000,
+                        "price": 12500000000,
+                        "quantity": 3,
+                        "shopid": 469248922,
+                        "status": 1,
+                        "stock": 72901,
+                        "updated_field": null,
+                        "current_promotion_reserved_stock": 28,
+                        "normal_stock": 405152,
+                        "current_promotion_has_reserve_stock": true,
+                        "is_free_gift": false,
+                        "tier_variations": [
+                            {
+                                "name": "Chọn Hương",
+                                "options": [
+                                    "CLASSICAL",
+                                    "PERFUME",
+                                    "AMOROUS",
+                                    "Perfume & Classical",
+                                    "Classical & Amorous",
+                                    "Amorous & Perfume",
+                                    "BOX COMBO 3 HƯƠNG"
+                                ],
+                                "images": [
+                                    "vn-11134207-7ras8-mbp6399u4ak276",
+                                    "vn-11134207-7ras8-mbp63aqjz5nu48",
+                                    "vn-11134207-7ras8-mbp63c7jtlde2d",
+                                    "vn-11134207-7ras8-mbp63gnxawyy16",
+                                    "vn-11134207-7ras8-mbp63lwbn7u22c",
+                                    "vn-11134207-7ras8-mbp63p40xwfe2e",
+                                    "vn-11134207-81ztc-mqmwv7weztvk4d"
+                                ],
+                                "tier_property": null,
+                                "name_translation": null,
+                                "options_translation": null,
+                                "name_tr": "",
+                                "options_tr": [
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    ""
+                                ],
+                                "properties": []
+                            }
+                        ],
+                        "price_before_discount": 15000000000,
+                        "flag": 196610,
+                        "welcome_package_type": 0,
+                        "can_use_bundle_deal": false,
+                        "currency": "VND",
+                        "promotion_type": 2,
+                        "deep_discount_campaign_period": null,
+                        "deep_discount_campaign_text_pc": null,
+                        "deep_discount_campaign_text_mobile": null,
+                        "deep_discount_campaign_start_time": null,
+                        "is_in_preview": false,
+                        "exclusive_price_label": null,
+                        "is_default_model_item": false,
+                        "cart_item_change_time": 1793202928,
+                        "item_discount_real": null,
+                        "is_pre_order": null,
+                        "applied_promotion_id": 519846467555617,
+                        "is_wholesale_price": false,
+                        "checkout": false,
+                        "need_refresh_update_item": null,
+                        "total_can_buy_quantity": 72901,
+                        "extra_discount_label": null,
+                        "is_streaming_price": null,
+                        "campaign_image": "vn-11134258-81ztc-mukkdtb86tqg62",
+                        "cart_item_type": 4,
+                        "sub_item_raw_quantity": null,
+                        "package_type": 2,
+                        "membership_offer_id": null,
+                        "is_spaylater_item": null,
+                        "is_prescription_item": null,
+                        "channel_exclusive_flag": 0,
+                        "show_channel_exclusive_label": null,
+                        "is_free_return": false,
+                        "item_category_ids": [
+                            100630,
+                            100660,
+                            100879
+                        ],
+                        "live_streaming_price_label": null,
+                        "show_add_from_live_label": null,
+                        "show_add_from_video_label": null,
+                        "campaign_image_description": null,
+                        "stream_info": {
+                            "streamer_id_live_stream": null,
+                            "streamer_id_short_video": null
+                        },
+                        "cart_item_labels": [
+                            {
+                                "label_id": 2,
+                                "contents": [
+                                    {
+                                        "text_content": {
+                                            "value": "Flash Sale kết thúc lúc {{datetime}}",
+                                            "attributes": [
+                                                {
+                                                    "key": "datetime",
+                                                    "value": 1793260800,
+                                                    "format": 1,
+                                                    "style": null
+                                                }
+                                            ]
+                                        },
+                                        "color": "#EE4D2D",
+                                        "type": "flash_sale_ongoing",
+                                        "icon": 0,
+                                        "extra_info": null
+                                    }
+                                ]
+                            },
+                            {
+                                "label_id": 1,
+                                "contents": [
+                                    {
+                                        "text_content": {
+                                            "value": "0% SPayLater (đến 6 kỳ)",
+                                            "attributes": []
+                                        },
+                                        "color": "#EE4D2D",
+                                        "type": "badge_label_146",
+                                        "icon": 0,
+                                        "extra_info": null
+                                    }
+                                ]
+                            }
+                        ],
+                        "display_old_price": 15000000000,
+                        "display_final_price": 12500000000,
+                        "cart_item_label": {
+                            "cart_custom_label": {
+                                "price_discount_icon": 0
+                            }
+                        },
+                        "spaylater_label_text": null,
+                        "show_free_return_label": false,
+                        "show_change_of_mind_label": false,
+                        "virtual_sku_info": null,
+                        "should_hide_variation_dropdown": false,
+                        "model_name_tr": "",
+                        "name_tr": "",
+                        "user_path": 1,
+                        "item_quantity": null,
+                        "has_multiple_models": true,
+                        "tms_tracker_item_info": {
+                            "item_vouchers": [],
+                            "discount_promotions": [
+                                {
+                                    "discount_promotion_type": 312,
+                                    "discount_promotion_id": 519846467555617
+                                }
+                            ],
+                            "pix_discounts": [],
+                            "smart_bundle": null
+                        },
+                        "model": {
+                            "item_id": null,
+                            "model_id": null,
+                            "price": 12500000000,
+                            "price_before_discount": 15000000000,
+                            "name": "CLASSICAL",
+                            "tier_index": [
+                                0
+                            ],
+                            "exclusive_price_label": null,
+                            "status": 1,
+                            "normal_stock": 72901,
+                            "stock": 28,
+                            "extinfo": {
+                                "image": "vn-11134207-7ras8-mbp6399u4ak276"
+                            },
+                            "name_translation": null,
+                            "itemid": 4293068799,
+                            "modelid": 93074403662
+                        },
+                        "is_restricted_item": null,
+                        "wholesale_tier_list": null
+                    },
+                    {
+                        "add_on_deal_id": 499198366134401,
+                        "add_on_deal_info": {
+                            "add_on_deal_id": 499198366134401,
+                            "shop_id": null,
+                            "start_time": 1788327480,
+                            "end_time": 1793465940,
+                            "create_time": 1788323859,
+                            "update_time": 1788323859,
+                            "status": 1,
+                            "region": "VN",
+                            "sub_item_limit": 1,
+                            "sub_type": 1,
+                            "image_hash": "ef095a7f737ef5293ab0a2520180f142",
+                            "purchase_min_spend": 30000000000,
+                            "per_gift_num": 1,
+                            "total_gift_tier": 1,
+                            "shopid": 469248922
+                        },
+                        "addin_time": 1793256487,
+                        "bundle_deal_id": null,
+                        "bundle_deal_info": null,
+                        "can_use_wholesale": false,
+                        "catid": 100630,
+                        "condition": 1,
+                        "free_return_day": 0,
+                        "image": "vn-11134207-81ztc-mpox0toalukicc",
+                        "is_add_on_sub_item": true,
+                        "is_wp_item": false,
+                        "item_group_id": "499198366134401",
+                        "item_stock": 29029,
+                        "itemid": 17181158498,
+                        "model_name": "The Paris 4ml",
+                        "modelid": 117184977461,
+                        "models": [],
+                        "msg_updated_new_value": null,
+                        "msg_updated_old_value": null,
+                        "name": "Nước hoa nam giới cao cấp Oniiz - The Paris Minisize 4ml",
+                        "origin_cart_item_price": 0,
+                        "price": 9900000000,
+                        "quantity": 1,
+                        "shopid": 469248922,
+                        "status": 10,
+                        "stock": 29029,
+                        "updated_field": null,
+                        "current_promotion_reserved_stock": 0,
+                        "normal_stock": 29029,
+                        "current_promotion_has_reserve_stock": false,
+                        "is_free_gift": false,
+                        "tier_variations": [
+                            {
+                                "name": "Chọn hương",
+                                "options": [
+                                    "The Paris 4ml"
+                                ],
+                                "images": [
+                                    "vn-11134207-81ztc-mpox118dvhmo97"
+                                ],
+                                "tier_property": null,
+                                "name_translation": null,
+                                "options_translation": null,
+                                "name_tr": "",
+                                "options_tr": [
+                                    ""
+                                ],
+                                "properties": []
+                            }
+                        ],
+                        "price_before_discount": 15000000000,
+                        "flag": 196608,
+                        "welcome_package_type": 0,
+                        "can_use_bundle_deal": false,
+                        "currency": "VND",
+                        "promotion_type": 2,
+                        "deep_discount_campaign_period": null,
+                        "deep_discount_campaign_text_pc": null,
+                        "deep_discount_campaign_text_mobile": null,
+                        "deep_discount_campaign_start_time": null,
+                        "is_in_preview": false,
+                        "exclusive_price_label": null,
+                        "is_default_model_item": false,
+                        "cart_item_change_time": 1793256487,
+                        "item_discount_real": null,
+                        "is_pre_order": null,
+                        "applied_promotion_id": 912473646612480,
+                        "is_wholesale_price": false,
+                        "checkout": false,
+                        "need_refresh_update_item": null,
+                        "total_can_buy_quantity": 29029,
+                        "extra_discount_label": null,
+                        "is_streaming_price": null,
+                        "campaign_image": "vn-11134258-81ztc-mukkdtb86tqg62",
+                        "cart_item_type": 5,
+                        "sub_item_raw_quantity": 1,
+                        "package_type": 2,
+                        "membership_offer_id": null,
+                        "is_spaylater_item": null,
+                        "is_prescription_item": null,
+                        "channel_exclusive_flag": 0,
+                        "show_channel_exclusive_label": null,
+                        "is_free_return": false,
+                        "item_category_ids": [
+                            100630,
+                            100661
+                        ],
+                        "live_streaming_price_label": null,
+                        "show_add_from_live_label": null,
+                        "show_add_from_video_label": null,
+                        "campaign_image_description": null,
+                        "stream_info": {
+                            "streamer_id_live_stream": null,
+                            "streamer_id_short_video": null
+                        },
+                        "cart_item_labels": [
+                            {
+                                "label_id": 3,
+                                "contents": [
+                                    {
+                                        "text_content": {
+                                            "value": "Giá chỉ có trên Live là {{streamingPrice}}",
+                                            "attributes": [
+                                                {
+                                                    "key": "streamingPrice",
+                                                    "value": 7900000000,
+                                                    "format": 2,
+                                                    "style": null
+                                                }
+                                            ]
+                                        },
+                                        "color": "#EE4D2D",
+                                        "type": "live_streaming_teaser",
+                                        "icon": 0,
+                                        "extra_info": {
+                                            "live_streaming_session_id": "42990249",
+                                            "similar_cheaper_info": null
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "label_id": 1,
+                                "contents": [
+                                    {
+                                        "text_content": {
+                                            "value": "0% SPayLater (đến 6 kỳ)",
+                                            "attributes": []
+                                        },
+                                        "color": "#EE4D2D",
+                                        "type": "badge_label_146",
+                                        "icon": 0,
+                                        "extra_info": null
+                                    }
+                                ]
+                            }
+                        ],
+                        "display_old_price": 15000000000,
+                        "display_final_price": 9900000000,
+                        "cart_item_label": {
+                            "cart_custom_label": {
+                                "price_discount_icon": 0
+                            }
+                        },
+                        "spaylater_label_text": null,
+                        "show_free_return_label": false,
+                        "show_change_of_mind_label": false,
+                        "virtual_sku_info": null,
+                        "should_hide_variation_dropdown": true,
+                        "model_name_tr": "",
+                        "name_tr": "",
+                        "user_path": 1,
+                        "item_quantity": null,
+                        "has_multiple_models": false,
+                        "tms_tracker_item_info": {
+                            "item_vouchers": [],
+                            "discount_promotions": [
+                                {
+                                    "discount_promotion_type": 301,
+                                    "discount_promotion_id": 912473646612480
+                                }
+                            ],
+                            "pix_discounts": [],
+                            "smart_bundle": null
+                        },
+                        "model": {
+                            "item_id": null,
+                            "model_id": null,
+                            "price": null,
+                            "price_before_discount": 15000000000,
+                            "name": "The Paris 4ml",
+                            "tier_index": [
+                                0
+                            ],
+                            "exclusive_price_label": null,
+                            "status": 1,
+                            "normal_stock": 29029,
+                            "stock": 29029,
+                            "extinfo": {
+                                "image": "vn-11134207-81ztc-mpox118dvhmo97"
+                            },
+                            "name_translation": null,
+                            "itemid": 17181158498,
+                            "modelid": 117184977461
+                        },
+                        "is_restricted_item": null,
+                        "wholesale_tier_list": null
+                    }
+                ]
+            }
+        ],
+        "shop_orders": null,
+        "packaged_item_infos": [
+            {
+                "avail_sub_amount": 0,
+                "package_id": "499198366134401",
+                "meet_min_spend": false,
+                "show_promo_bar": true,
+                "purchase_type": 1,
+                "package_type": 2,
+                "next_tier": {
+                    "min_purchase": 30000000000,
+                    "avail_sub_amount": 1
+                },
+                "banner_text": {
+                    "description": "Mua tối thiểu {{min_spend}} để nhận quà",
+                    "attributes": [
+                        {
+                            "key": "min_spend",
+                            "value": 30000000000,
+                            "format_currency": 1,
+                            "format": 6,
+                            "text": null,
+                            "attributes": null
+                        }
+                    ],
+                    "banner_type": 1
+                },
+                "shop_id": 469248922
+            }
+        ],
+        "packaged_bundle_deal_infos": null,
+        "coin_min_redeem": 1,
+        "top_banner": {
+            "banner_message": "",
+            "banner_type": 0,
+            "banner_ext": {
+                "fsv_url": "",
+                "free_shipping_quota_setting": null
+            }
+        },
+        "clean_up_panel_entrance": null,
+        "rn_toggle": 1,
+        "pagination_info": {
+            "item_limit": 20
+        },
+        "translation_status": 0,
+        "cart_state": {
+            "similar_cheaper_cart_items": null,
+            "is_subsequent_load": true,
+            "session_id": "1793259773_4120577269618842934",
+            "shipping_orders": [],
+            "shipment_group_infos": [],
+            "order_id": null,
+            "initial_session_timestamp": 1793259773,
+            "block_ids_with_threshold_hit": null,
+            "teleconsult_order_id": null,
+            "bds_with_smart_bundle": []
+        },
+        "cart_session_id": "1793259773_4120577269618842934",
+        "session_cart_info": {
+            "cart_session_expiry_time": 0
+        },
+        "should_hide_sensitive_fields": false,
+        "banner_text": null
+    }
+}

@@ -1,0 +1,983 @@
+{
+    "bff_meta": null,
+    "error": null,
+    "error_msg": null,
+    "data": {
+        "filter_configuration": null,
+        "sub_errs": [
+            36801207
+        ],
+        "bff_ab_test_sign": null,
+        "search_tracking": "{\"ab_sign\":[96777,704347,657763,161416,30450,40271,90996,79677,80713,97782,450312,450299,40283,79144,97793,97796,450319,450280,702039,62519,428060,62528,97855,91709,374113,374209,378764,378775,81096,97764,450292,80819,450273,452578,452606,452387,452493,452516,452531,452562,701014,40261,80709,81091,97819,97828,731016,489477,747160,718742,643839,448382,115054,485812,583188,591242,740673,740031,746769,355915,663372,661371,478380,731165,734458,696522,143713,628655,290048,290066,329368,496338,290033,290074,450358,450364,344196,692834,695748,704347,96777,445982,520570,528475,520125,554276,706581,711468,608471,581022,703074,759547,618224,762272,754378,693807,706615]}",
+        "filter_configuration_v2": {
+            "filter_groups": [
+                {
+                    "name": "LOCATIONS",
+                    "filters": [],
+                    "logic": null,
+                    "display_name": "Nơi Bán",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 9,
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "new_dynamic_data": [
+                        {
+                            "value": "Thành phố Hà Nội",
+                            "name": "Thành phố Hà Nội",
+                            "display_name": "Thành phố Hà Nội",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Thành phố Hồ Chí Minh",
+                            "name": "Thành phố Hồ Chí Minh",
+                            "display_name": "Thành phố Hồ Chí Minh",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Bắc Ninh",
+                            "name": "Tỉnh Bắc Ninh",
+                            "display_name": "Tỉnh Bắc Ninh",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Cao Bằng",
+                            "name": "Tỉnh Cao Bằng",
+                            "display_name": "Tỉnh Cao Bằng",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Điện Biên",
+                            "name": "Tỉnh Điện Biên",
+                            "display_name": "Tỉnh Điện Biên",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Thành phố Hải Phòng",
+                            "name": "Thành phố Hải Phòng",
+                            "display_name": "Thành phố Hải Phòng",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Hưng Yên",
+                            "name": "Tỉnh Hưng Yên",
+                            "display_name": "Tỉnh Hưng Yên",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Lai Châu",
+                            "name": "Tỉnh Lai Châu",
+                            "display_name": "Tỉnh Lai Châu",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Lạng Sơn",
+                            "name": "Tỉnh Lạng Sơn",
+                            "display_name": "Tỉnh Lạng Sơn",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Lào Cai",
+                            "name": "Tỉnh Lào Cai",
+                            "display_name": "Tỉnh Lào Cai",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Ninh Bình",
+                            "name": "Tỉnh Ninh Bình",
+                            "display_name": "Tỉnh Ninh Bình",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Phú Thọ",
+                            "name": "Tỉnh Phú Thọ",
+                            "display_name": "Tỉnh Phú Thọ",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Quảng Ninh",
+                            "name": "Tỉnh Quảng Ninh",
+                            "display_name": "Tỉnh Quảng Ninh",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Sơn La",
+                            "name": "Tỉnh Sơn La",
+                            "display_name": "Tỉnh Sơn La",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Thái Nguyên",
+                            "name": "Tỉnh Thái Nguyên",
+                            "display_name": "Tỉnh Thái Nguyên",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Thanh Hóa",
+                            "name": "Tỉnh Thanh Hóa",
+                            "display_name": "Tỉnh Thanh Hóa",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Tuyên Quang",
+                            "name": "Tỉnh Tuyên Quang",
+                            "display_name": "Tỉnh Tuyên Quang",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Thành phố Đà Nẵng",
+                            "name": "Thành phố Đà Nẵng",
+                            "display_name": "Thành phố Đà Nẵng",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Đắk Lắk",
+                            "name": "Tỉnh Đắk Lắk",
+                            "display_name": "Tỉnh Đắk Lắk",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Gia Lai",
+                            "name": "Tỉnh Gia Lai",
+                            "display_name": "Tỉnh Gia Lai",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Hà Tĩnh",
+                            "name": "Tỉnh Hà Tĩnh",
+                            "display_name": "Tỉnh Hà Tĩnh",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Thành phố Huế",
+                            "name": "Thành phố Huế",
+                            "display_name": "Thành phố Huế",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Khánh Hòa",
+                            "name": "Tỉnh Khánh Hòa",
+                            "display_name": "Tỉnh Khánh Hòa",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Lâm Đồng",
+                            "name": "Tỉnh Lâm Đồng",
+                            "display_name": "Tỉnh Lâm Đồng",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Nghệ An",
+                            "name": "Tỉnh Nghệ An",
+                            "display_name": "Tỉnh Nghệ An",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Quảng Ngãi",
+                            "name": "Tỉnh Quảng Ngãi",
+                            "display_name": "Tỉnh Quảng Ngãi",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Quảng Trị",
+                            "name": "Tỉnh Quảng Trị",
+                            "display_name": "Tỉnh Quảng Trị",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh An Giang",
+                            "name": "Tỉnh An Giang",
+                            "display_name": "Tỉnh An Giang",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Cà Mau",
+                            "name": "Tỉnh Cà Mau",
+                            "display_name": "Tỉnh Cà Mau",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Thành phố Cần Thơ",
+                            "name": "Thành phố Cần Thơ",
+                            "display_name": "Thành phố Cần Thơ",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Đồng Nai",
+                            "name": "Tỉnh Đồng Nai",
+                            "display_name": "Tỉnh Đồng Nai",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Đồng Tháp",
+                            "name": "Tỉnh Đồng Tháp",
+                            "display_name": "Tỉnh Đồng Tháp",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Tây Ninh",
+                            "name": "Tỉnh Tây Ninh",
+                            "display_name": "Tỉnh Tây Ninh",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Tỉnh Vĩnh Long",
+                            "name": "Tỉnh Vĩnh Long",
+                            "display_name": "Tỉnh Vĩnh Long",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "Nước ngoài",
+                            "name": "Nước ngoài",
+                            "display_name": "Nước ngoài",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        }
+                    ],
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "search_info": null
+                },
+                {
+                    "name": "FACET",
+                    "filters": [],
+                    "logic": null,
+                    "display_name": "Theo Danh Mục",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "new_dynamic_data": [
+                        {
+                            "value": "11036062",
+                            "name": "Phone Cases, Covers, & Skins",
+                            "display_name": "Ốp lưng, bao da, miếng dán mặt lưng cho Điện thoại",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "11036032",
+                            "name": "Apple",
+                            "display_name": "Apple",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        }
+                    ],
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "search_info": null
+                },
+                {
+                    "name": "SHIPPING_OPTIONS_V2",
+                    "filters": [
+                        {
+                            "name": "INSTANT_DELIVERY",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Hỏa Tốc",
+                            "icon_url": "https://cf.shopee.vn/file/sg-11134019-825b7-mqhefqefiknibc",
+                            "schedule_settings": null,
+                            "value": "INSTANT_DELIVERY"
+                        },
+                        {
+                            "name": "FAST",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Nhanh",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "FAST"
+                        }
+                    ],
+                    "logic": null,
+                    "display_name": "Đơn Vị Vận Chuyển",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": null,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "search_info": null
+                },
+                {
+                    "name": "BRANDS",
+                    "filters": [],
+                    "logic": null,
+                    "display_name": "Thương Hiệu",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "new_dynamic_data": [
+                        {
+                            "value": "1189223",
+                            "name": "Apple",
+                            "display_name": "Apple",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "1801567",
+                            "name": "JURSUE",
+                            "display_name": "JURSUE",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        },
+                        {
+                            "value": "6455122",
+                            "name": "Beisi",
+                            "display_name": "Beisi",
+                            "highlight": null,
+                            "icon_url": null,
+                            "hide_display_name": null,
+                            "width": null,
+                            "height": null,
+                            "should_record_instant_intent": null,
+                            "tracking": null,
+                            "data": null
+                        }
+                    ],
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "search_info": null
+                },
+                {
+                    "name": "PRICE_RANGE",
+                    "filters": [],
+                    "logic": null,
+                    "display_name": "Khoảng Giá",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 4,
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "search_info": null
+                },
+                {
+                    "name": "SHOP_TYPE",
+                    "filters": [
+                        {
+                            "name": "OFFICIAL_MALL",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Shopee Mall",
+                            "icon_url": "",
+                            "schedule_settings": null,
+                            "value": "OFFICIAL_MALL"
+                        },
+                        {
+                            "name": "PREFERRED",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Shop Yêu thích",
+                            "icon_url": "",
+                            "schedule_settings": null,
+                            "value": "PREFERRED"
+                        },
+                        {
+                            "name": "service_by_shopee_product_label_filter",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Shopee Xử Lý",
+                            "icon_url": "https://cf.shopee.vn/file/sg-11134019-8258t-mqhefqfs66toe2",
+                            "schedule_settings": null,
+                            "value": "service_by_shopee_product_label_filter"
+                        },
+                        {
+                            "name": "PREFERRED_PLUS",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Shop Yêu Thích +",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "PREFERRED_PLUS"
+                        }
+                    ],
+                    "logic": null,
+                    "display_name": "Loại Shop",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": null,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "search_info": null
+                },
+                {
+                    "name": "CONDITION",
+                    "filters": [
+                        {
+                            "name": "USED_ITEM",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Đã sử dụng",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "USED_ITEM"
+                        },
+                        {
+                            "name": "NEW_ITEM",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Mới",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "NEW_ITEM"
+                        }
+                    ],
+                    "logic": null,
+                    "display_name": "Tình Trạng",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 2,
+                    "is_dynamic": null,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "search_info": null
+                },
+                {
+                    "name": "PAYMENT_OPTIONS",
+                    "filters": [
+                        {
+                            "name": "INSTALLMENT",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "0% TRẢ GÓP",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "INSTALLMENT"
+                        }
+                    ],
+                    "logic": null,
+                    "display_name": "Các lựa chọn thanh toán",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": null,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "search_info": null
+                },
+                {
+                    "name": "RATING",
+                    "filters": [],
+                    "logic": null,
+                    "display_name": "Đánh Giá",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 2,
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "search_info": null
+                },
+                {
+                    "name": "SERVICE_AND_PROMOTION",
+                    "filters": [
+                        {
+                            "name": "WITH_DISCOUNT",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Đang giảm giá",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "WITH_DISCOUNT"
+                        },
+                        {
+                            "name": "PRE_ORDER",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Hàng có sẵn",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "PRE_ORDER"
+                        },
+                        {
+                            "name": "WHOLESALE",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Mua giá bán buôn bán sỉ",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "WHOLESALE"
+                        },
+                        {
+                            "name": "HAS_LOWEST_PRICE_GUARANTEE",
+                            "type": null,
+                            "key_type": null,
+                            "key_value": null,
+                            "display_name": "Gì Cũng Rẻ",
+                            "icon_url": null,
+                            "schedule_settings": null,
+                            "value": "HAS_LOWEST_PRICE_GUARANTEE"
+                        }
+                    ],
+                    "logic": null,
+                    "display_name": "Dịch Vụ & Khuyến Mãi",
+                    "collapse_settings": {
+                        "start_offset": 0,
+                        "display_limit": 0
+                    },
+                    "ui_type": 1,
+                    "is_dynamic": null,
+                    "dynamic_data": null,
+                    "new_dynamic_data": null,
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "search_info": null
+                }
+            ],
+            "extra_filter_info": {
+                "filter_algorithm": "",
+                "cc_installment_info": {
+                    "is_cc_installment_payment_eligible": true,
+                    "is_non_cc_installment_payment_eligible": true
+                },
+                "dynamic_filter_tag_info": null,
+                "dynamic_shortcut_single_row_num": null
+            },
+            "filter_shortcuts": [
+                {
+                    "name": "INSTANT_DELIVERY",
+                    "type": null,
+                    "key_type": null,
+                    "key_value": null,
+                    "display_name": "Hỏa Tốc",
+                    "icon_url": "https://cf.shopee.vn/file/sg-11134019-8258l-mqhefqifq7lue6",
+                    "is_dynamic": false,
+                    "dynamic_data": null,
+                    "ui_info": {
+                        "selected_color": "#26AA99",
+                        "ui_type": 2
+                    },
+                    "flat": null,
+                    "value": "INSTANT_DELIVERY",
+                    "new_dynamic_data": null,
+                    "group_name": "SHIPPING_OPTIONS_V2",
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "hide_display_name": true,
+                    "width": 1844,
+                    "height": 512,
+                    "default_selection_index": 0,
+                    "search_info": null
+                },
+                {
+                    "name": "OFFICIAL_MALL",
+                    "type": null,
+                    "key_type": null,
+                    "key_value": null,
+                    "display_name": "Shopee Mall",
+                    "icon_url": "",
+                    "is_dynamic": false,
+                    "dynamic_data": null,
+                    "ui_info": {
+                        "selected_color": "",
+                        "ui_type": 2
+                    },
+                    "flat": null,
+                    "value": "OFFICIAL_MALL",
+                    "new_dynamic_data": null,
+                    "group_name": "SHOP_TYPE",
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "hide_display_name": null,
+                    "width": null,
+                    "height": null,
+                    "default_selection_index": 0,
+                    "search_info": null
+                },
+                {
+                    "name": "service_by_shopee_product_label_filter",
+                    "type": null,
+                    "key_type": null,
+                    "key_value": null,
+                    "display_name": "Shopee Xử Lý",
+                    "icon_url": "https://cf.shopee.vn/file/sg-11134019-8258t-mqhefqfs66toe2",
+                    "is_dynamic": false,
+                    "dynamic_data": null,
+                    "ui_info": {
+                        "selected_color": "",
+                        "ui_type": 2
+                    },
+                    "flat": null,
+                    "value": "service_by_shopee_product_label_filter",
+                    "new_dynamic_data": null,
+                    "group_name": "SHOP_TYPE",
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "hide_display_name": null,
+                    "width": null,
+                    "height": null,
+                    "default_selection_index": 0,
+                    "search_info": null
+                },
+                {
+                    "name": "PREFERRED",
+                    "type": null,
+                    "key_type": null,
+                    "key_value": null,
+                    "display_name": "Shop Yêu thích",
+                    "icon_url": "",
+                    "is_dynamic": false,
+                    "dynamic_data": null,
+                    "ui_info": {
+                        "selected_color": "",
+                        "ui_type": 2
+                    },
+                    "flat": null,
+                    "value": "PREFERRED",
+                    "new_dynamic_data": null,
+                    "group_name": "SHOP_TYPE",
+                    "rewrite_info": null,
+                    "dynamic_group_id": null,
+                    "hide_display_name": null,
+                    "width": null,
+                    "height": null,
+                    "default_selection_index": 0,
+                    "search_info": null
+                },
+                {
+                    "name": "RATING",
+                    "type": null,
+                    "key_type": null,
+                    "key_value": null,
+                    "display_name": "Đánh Giá",
+                    "icon_url": "",
+                    "is_dynamic": true,
+                    "dynamic_data": null,
+                    "ui_info": {
+                        "selected_color": "",
+                        "ui_type": 2
+                    },
+                    "flat": null,
+                    "value": "RATING",
+                    "new_dynamic_data": null,
+                    "group_name": "RATING",
+                    "rewrite_info": null,
+                    "dynamic_group_id": "",
+                    "hide_display_name": null,
+                    "width": null,
+                    "height": null,
+                    "default_selection_index": 0,
+                    "search_info": null
+                }
+            ],
+            "filter_panel_recommends": null,
+            "local_filter": null
+        }
+    }
+}

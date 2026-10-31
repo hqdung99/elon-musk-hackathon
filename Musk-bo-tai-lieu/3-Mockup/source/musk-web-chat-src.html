@@ -1,0 +1,696 @@
+<title>Musk Web Chat</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: chat 1 cột ở giữa, rail "Yêu cầu của bạn" chỉ đọc bên phải (>=1040px). Mọi bước nằm trong chat, mỗi card đúng 1 nút chính. */
+:root{--g:#0E7C63;--gd:#095846;--gh:#095846;--gl:#E4F2EE;--ink:#1c1f1e;--mut:#667070;--line:#dde2e0;--bg:#f3f5f3;--card:#ffffff;--tint:#f6fbf9;--on:#ffffff;
+--warn:#FFF3DC;--warnt:#855400;--bad:#FDEBE8;--badt:#b3261e;--ok:#0E7C63;--info:#EAF0FB;--infot:#2c4f93;--shadow:0 1px 2px rgba(20,30,28,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--g:#1a8f73;--gd:#8fe3cb;--gh:#157a62;--gl:#1c3a33;--ink:#e8ecea;--mut:#9aa6a2;--line:#2c3532;--bg:#121614;--card:#1b211f;--tint:#18221f;--warn:#3a2f14;--warnt:#f0c36d;--bad:#3d1f1c;--badt:#f5a39d;--ok:#5fd0b2;--info:#1d2a44;--infot:#a9c2f5;color-scheme:dark}}
+:root[data-theme="dark"]{--g:#1a8f73;--gd:#8fe3cb;--gh:#157a62;--gl:#1c3a33;--ink:#e8ecea;--mut:#9aa6a2;--line:#2c3532;--bg:#121614;--card:#1b211f;--tint:#18221f;--warn:#3a2f14;--warnt:#f0c36d;--bad:#3d1f1c;--badt:#f5a39d;--ok:#5fd0b2;--info:#1d2a44;--infot:#a9c2f5;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Be Vietnam Pro",-apple-system,system-ui,"Segoe UI",sans-serif;display:flex;flex-direction:column}
+button{font:inherit;color:inherit}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-left,0px)) 10px max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--g);color:var(--on);display:grid;place-items:center;font-weight:700;flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}.hd small{color:var(--mut);font-size:12px}
+.status{margin-left:auto;display:flex;flex-direction:column;gap:5px;min-width:260px}
+.status .t{font-size:12.5px;font-weight:600}.status .t span{color:var(--mut);font-weight:400}
+.bar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.bar i{height:4px;border-radius:2px;background:var(--line)}.bar i.on{background:var(--g)}
+.tag{font-size:11px;padding:3px 9px;border-radius:10px;background:var(--warn);color:var(--warnt);white-space:nowrap}
+.main{flex:1;min-height:0;display:flex}
+#feed{flex:1;min-width:0;overflow:auto;padding:22px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.col{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+aside{width:292px;flex:none;border-left:1px solid var(--line);background:var(--card);padding:18px 18px;overflow:auto;display:none}
+@media(min-width:1040px){aside{display:block}}
+aside h3{margin:0 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);font-weight:600}
+aside dl{margin:10px 0 0;display:grid;gap:10px}aside dt{font-size:11.5px;color:var(--mut)}aside dd{margin:0;font-size:14px}
+aside .as{color:var(--warnt);font-size:12px}
+aside .ver{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)}
+.u{align-self:flex-end;background:var(--g);color:var(--on);padding:9px 14px;border-radius:16px 16px 4px 16px;max-width:82%}
+.m{display:flex;gap:10px;align-items:flex-start}.m>.logo{width:28px;height:28px;font-size:13px;border-radius:9px;margin-top:2px}
+.mb{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
+.bub{background:var(--card);border:1px solid var(--line);padding:10px 14px;border-radius:4px 16px 16px 16px;align-self:flex-start;max-width:92%}
+.bub ul{margin:6px 0 0;padding-left:18px}.bub li{margin:2px 0}
+.diff{background:var(--info);color:var(--infot);border-radius:12px;padding:9px 13px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.card.old{opacity:.55}.card.old .btn,.card.old .chip,.card.old .opt,.card.old .cc{pointer-events:none}
+.card h4{margin:0 0 2px;font-size:15.5px}.card .hint{color:var(--mut);font-size:13px;margin-bottom:10px}
+.oldtag{font-size:12px;color:var(--mut);margin-bottom:8px}
+.q+.q{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.q h5{margin:0 0 8px;font-size:14.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:6px 13px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;font-size:14px}
+.chip:hover{border-color:var(--g)}.chip.sel{background:var(--gl);border-color:var(--g);font-weight:600}
+.chip.sug{border-style:dashed;color:var(--gd)}
+.dot{width:12px;height:12px;border-radius:50%;border:1px solid #0003}
+.opts{display:grid;gap:8px}
+.opt{border:1px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer;background:var(--card);text-align:left;display:block;width:100%}
+.opt:hover{border-color:var(--g)}.opt.sel{background:var(--gl);border-color:var(--g)}
+.opt b{display:flex;gap:8px;align-items:center;font-size:14.5px}.opt span{color:var(--mut);font-size:13px;display:block}
+.opt.sug b{color:var(--gd)}
+.sugtag{font-size:11px;background:var(--gl);color:var(--gd);padding:1px 8px;border-radius:9px;font-weight:600}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.btn{border:1px solid var(--g);background:var(--g);color:var(--on);border-radius:10px;padding:9px 18px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--gh)}.btn.o{background:transparent;color:var(--gd);font-weight:500}.btn.o:hover{background:var(--gl)}
+.btn.lnk{border:0;background:none;color:var(--gd);padding:9px 6px;text-decoration:underline;font-weight:500}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.quick{display:flex;gap:8px;flex-wrap:wrap}.quick .chip{font-size:13px}
+.pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;background:var(--bad);color:var(--badt);display:inline-block}
+.pill.g{background:var(--gl);color:var(--gd)}.pill.w{background:var(--warn);color:var(--warnt)}.pill.i{background:var(--info);color:var(--infot)}.pill.n{background:var(--line);color:var(--mut)}
+.dec{font-size:12px;font-weight:700;letter-spacing:.04em;background:var(--g);color:var(--on);padding:2px 10px;border-radius:10px}
+.dec.ask{background:var(--warnt)}
+.rec{display:grid;grid-template-columns:190px 1fr;gap:18px}
+.rec img.pi{width:100%;aspect-ratio:1/1.05;object-fit:cover;border-radius:10px;background:var(--line);display:block}
+.pr{font-size:27px;font-weight:700;line-height:1.15;margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.sub{font-size:13px;color:var(--mut)}
+ul.ck{list-style:none;padding:0;margin:10px 0;display:grid;gap:4px;font-size:14px}
+ul.ck .y{color:var(--ok)}ul.ck .w{color:var(--warnt)}
+.rt{font-size:13.5px;margin:6px 0}
+.pb{border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin-top:10px;font-size:13px}
+.pb .h{font-size:11.5px;color:var(--mut);margin-bottom:4px}
+.pb .r{display:grid;grid-template-columns:104px 1fr auto;gap:10px;align-items:center;padding:3px 0}.pb .r .n{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mut)}.pb .r .pill{justify-self:start}
+.asm{margin-top:10px;font-size:13px;color:var(--mut)}.asm b{color:var(--ink);font-weight:500}
+details{margin-top:10px}summary{cursor:pointer;color:var(--gd);font-weight:600;font-size:14px;list-style:none}summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";}details[open]>summary::before{content:"▾ "}
+.dbody{margin-top:10px;display:grid;gap:12px;font-size:13.5px}
+.dbody h6{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:500;font-size:12px}
+.tw{overflow-x:auto}
+.photos{display:flex;gap:8px}.photos img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.quote{border-left:3px solid var(--line);padding:2px 0 2px 10px;font-size:13.5px}.quote.w{border-color:#d9a21b;background:var(--warn);border-radius:0 8px 8px 0;padding:6px 10px}
+.quote small{color:var(--mut);display:block}
+.cmp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.cmp.two{grid-template-columns:repeat(2,minmax(0,1fr))}.cc .why{font-size:13px;color:var(--ink);background:var(--tint);border-radius:8px;padding:8px 10px}
+@media(max-width:700px){.cmp,.cmp.two,.rec{grid-template-columns:1fr}}
+.cc{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:var(--card);display:flex;flex-direction:column;gap:8px;min-width:0}
+.cc.sel{border-color:var(--g);background:var(--tint)}
+.cc.fade{background:transparent;border-style:dashed;opacity:.8;cursor:default}
+.cc h5{margin:4px 0 0;font-size:14.5px}
+.cc .c{font-size:13px}.cc .c small{display:block;color:var(--mut);font-size:11.5px}
+.cc .p{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.ok{color:var(--ok)}.wn{color:var(--warnt)}.bd{color:var(--badt)}
+.nb{margin-top:12px;font-size:13.5px}.nb ul{margin:4px 0 0;padding-left:18px;color:var(--mut)}.nb li{margin:2px 0}
+.cart{display:flex;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line)}.cart img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+.tot{display:flex;align-items:baseline;gap:10px;margin:12px 0 2px}.tot .pr{margin:0}
+.blk{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:14px}
+.blk.v{background:var(--tint)}.blk.sale{background:var(--warn);color:var(--warnt);border-color:transparent}
+.blk h6{margin:0 0 4px;font-size:14.5px}
+.blk .small{font-size:12.5px;color:var(--mut)}
+.blk ol{margin:6px 0;padding-left:20px}
+.codes{display:grid;gap:8px;margin:8px 0}
+.code{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);font-size:13px}
+.code input{margin-top:3px;width:16px;height:16px;accent-color:var(--g)}
+.code b{font-size:13.5px}
+.okline{color:var(--ok);font-weight:600;font-size:14px}
+.ckl{display:grid;gap:8px;margin:10px 0}
+.ckl label{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}.ckl input{margin-top:4px;width:16px;height:16px;accent-color:var(--g)}
+.note{font-size:12.5px;color:var(--mut)}
+.credits{font-size:11px;color:var(--mut);padding:14px 0 6px}.credits a{color:var(--mut)}
+footer{background:var(--card);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.fw{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.in{display:flex;gap:8px}.in input{flex:1;min-width:0;border:1px solid var(--line);border-radius:22px;padding:10px 16px;font:inherit;outline:none;background:var(--card);color:var(--ink)}
+.in input:focus{border-color:var(--g)}.in button{width:42px;border-radius:50%;border:0;background:var(--g);color:var(--on);font-size:18px;cursor:pointer}
+:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.sugtag{white-space:nowrap}.opt b{flex-wrap:wrap}
+@media(max-width:560px){.ln{grid-template-columns:48px 1fr}.ln img{width:48px;height:48px}.ln .p{grid-column:2}.ln.warn{grid-template-columns:1fr}.seg{order:3}body{font-size:14.5px}.m>.logo{display:none}.m{gap:0}.card{padding:14px}.status{min-width:0;width:100%;margin-left:0}.tag{white-space:normal}.u{max-width:92%}.bub{max-width:100%}.actions{flex-direction:column;align-items:stretch}.actions .btn{width:100%;text-align:center}.pr{font-size:24px}.tot .pr{font-size:24px}.rec img.pi{aspect-ratio:16/10}.pb .r{grid-template-columns:1fr auto}.pb .r .pill{grid-column:1/-1}.quick{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}.quick .chip{flex:none}.code{flex-wrap:wrap}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:13px}.seg button.on{background:var(--gl);color:var(--gd);font-weight:600}
+.ln{display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}.ln img{width:60px;height:60px;border-radius:8px;object-fit:cover}.ln b{font-size:14.5px}.ln .p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}.ln.warn{background:var(--warn);color:var(--warnt);border-radius:10px;padding:12px;border-bottom:0;margin:6px 0}.ln.warn b{color:var(--warnt)}.ln.warn .btn.o{color:var(--gd);background:var(--card)}
+.sz{font-size:12.5px;color:var(--mut);margin-top:3px}
+.bud{margin-top:12px}.bt{display:flex;justify-content:space-between;gap:10px;font-size:13px}.bbar{height:6px;background:var(--line);border-radius:3px;margin-top:4px;overflow:hidden}.bbar i{display:block;height:100%;background:var(--g)}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}.typing i{width:6px;height:6px;border-radius:50%;background:var(--mut);animation:b 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{opacity:.3}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.typing i{animation:none}}
+</style>
+
+<header>
+ <div class="logo">M</div>
+ <div class="hd"><b>Musk</b><small>Tư vấn mua sắm trên Shopee</small></div>
+ <div class="seg" role="group" aria-label="Chọn ngành hàng"><button data-cat="iphone" class="on">iPhone</button><button data-cat="baby">Đồ cho bé</button></div>
+ <div class="status" aria-live="polite"><div class="t" id="stt">Bước 1/5 · <span>Hỏi nhu cầu</span></div><div class="bar" id="bar"><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+ <span class="tag">Bản mẫu · shop, giá, đánh giá là dữ liệu giả lập</span>
+</header>
+<div class="main">
+ <div id="feed"><div class="col" id="col"></div></div>
+ <aside aria-label="Yêu cầu của bạn">
+  <h3>Yêu cầu của bạn</h3>
+  <div class="sub">Musk dùng các điều kiện này để chọn. Muốn đổi, bấm "Sửa yêu cầu" trong chat.</div>
+  <dl id="mission"></dl>
+  <div class="ver" id="ver"></div>
+ </aside>
+</div>
+<footer><div class="fw"><div class="quick" id="quick"></div><div class="in"><input id="inp" placeholder="Nhắn cho Musk…" aria-label="Nhắn cho Musk"><button id="send" aria-label="Gửi">→</button></div></div></footer>
+
+<script>
+const IMG={box:'{{IMG_BOX}}',about:'{{IMG_ABOUT}}',back:'{{IMG_BACK}}',pink:'{{IMG_PINK}}'};
+const col=document.getElementById('col'),feed=document.getElementById('feed'),quick=document.getElementById('quick');
+const vnd=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'đ';
+const tr=n=>(n/1e6).toFixed(2).replace('.',',').replace(/,?0$/,'')+' tr';
+const k=n=>Math.round(n/1000)+'k';
+const $e=h=>{const d=document.createElement('div');d.innerHTML=h.trim();return d.firstElementChild};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const COLORS=[['Đen','#222'],['Trắng','#eee'],['Hồng','#f0bcc8'],['Xanh mòng két','#6aa9a4'],['Xanh lưu ly','#5864d6']];
+const SH={
+ C:{id:'C',name:'Sông Hàn Digital',tier:'Mall',list:18190000,vs:150000,vm:200000,final:17840000,eta:'3–4 ngày',days:4,wh:'Apple 12 tháng',whs:'ok',
+    raw:4.9,flt:4.8,n:'3,1k',removed:'96/3.100',sold:'9,6k',age:'4 năm',chat:'Trả lời 97%, trong vài phút',loc:'Đà Nẵng',vat:'Có xuất VAT',ret:'Đổi trả 15 ngày',
+    quote:{t:'Hàng chính hãng VN/A, check IMEI khớp vỏ hộp. Giao 3 ngày hơi lâu.',w:'ph***ng.t · ★5 · 20/10',warn:false}},
+ B:{id:'B',name:'Bến Nghé Mobile',tier:'Mall',list:18690000,vs:300000,vm:200000,final:18190000,eta:'1–2 ngày',days:2,wh:'Apple 12 tháng',whs:'ok',
+    raw:4.9,flt:4.9,n:'5,4k',removed:'chưa thấy dấu hiệu',sold:'12k',age:'6 năm',chat:'Trả lời 99%, trong vài phút',loc:'TP.HCM',vat:'Có xuất VAT',ret:'Đổi trả 15 ngày',
+    quote:{t:'Đặt tối nhận trưa hôm sau, seal nguyên, IMEI khớp với hộp.',w:'ng***c · ★5 · 18/10',warn:false}},
+ A:{id:'A',name:'Phố Táo 247',tier:'Thường',list:17490000,vs:200000,vm:0,final:17290000,eta:'2–3 ngày',days:3,wh:'Shop 6 tháng',whs:'bad',
+    raw:4.9,flt:4.5,n:'1,0k',removed:'212/1.034',sold:'3,3k',age:'1 năm',chat:'Trả lời 88%, trong vài giờ',loc:'Hà Nội',vat:'Chưa rõ, hỏi shop',ret:'Theo shop',
+    quote:{t:'Máy đã kích hoạt sẵn từ trước, bảo hành Apple tính từ tháng trước rồi.',w:'tr***ng · ★2 · 12/10',warn:true}}
+};
+const S={color:null,colorAuto:false,source:null,sourceAuto:false,fast:false,riskOK:false,balanced:false,tie:null,stale:false,note:null,personal:null,version:0,step:1,cur:null,hist:[]};
+/* Quyết định đã chốt: ghi chú sale hiện khi sale còn <= D_max của ngành (iPhone 21 ngày, PRD decision-engine 6.2) và người mua không cần gấp; bước So sánh nằm trong "Bước 2/5"; không hỏi "khi nào cần máy". */
+const SALE={name:'11.11',days:17,dmax:21};
+const S0=JSON.stringify(S);
+const SRC={vna:'Máy mới, chính hãng VN/A',imp:'Hàng nhập quốc tế',like:'Máy cũ like-new'};
+const srcOf=()=>S.source||'vna';
+
+function setStep(n,label){S.step=n;document.getElementById('stt').innerHTML=`Bước ${n}/5 · <span>${label}</span>`;document.querySelectorAll('#bar i').forEach((x,i)=>x.classList.toggle('on',i<n))}
+function scrollEnd(){setTimeout(()=>{feed.scrollTop=feed.scrollHeight},40)}
+function user(t){const e=$e(`<div class="u"></div>`);e.textContent=t;col.append(e);scrollEnd()}
+async function bot(html,delay=420){
+  const t=$e(`<div class="m"><div class="logo">M</div><div class="mb"><div class="bub"><span class="typing"><i></i><i></i><i></i></span></div></div></div>`);
+  col.append(t);scrollEnd();await wait(delay);
+  const mb=t.querySelector('.mb');mb.innerHTML=html;scrollEnd();return t}
+function supersede(el){if(!el)return;const c=el.querySelector('.card');if(c){c.classList.add('old');c.prepend($e(`<div class="oldtag">Phiên bản cũ · đã được thay thế, không còn dùng để duyệt</div>`))}}
+function setQuick(a){quick.innerHTML='';a.forEach(([t,f])=>{const b=$e(`<button class="chip"></button>`);b.textContent=t;b.onclick=()=>{user(t);f()};quick.append(b)})}
+function mission(){
+ if(CAT==='baby')return missionBaby();
+ const as=(v,a)=>v+(a?' <span class="as">(Musk giả định)</span>':'');
+ const c=S.color?as(S.color==='any'?'Xanh lưu ly (rẻ nhất)':S.color,S.colorAuto):'Chưa chọn';
+ const s=S.source||S.sourceAuto?as(SRC[srcOf()],S.sourceAuto):'Chưa chọn';
+ document.getElementById('mission').innerHTML=`<div><dt>Sản phẩm</dt><dd>iPhone 16 · 128GB</dd></div><div><dt>Màu</dt><dd>${c}</dd></div><div><dt>Loại máy</dt><dd>${s}</dd></div><div><dt>Ngân sách</dt><dd>Tới 19 triệu</dd></div><div><dt>Bảo hành</dt><dd>${srcOf()==='vna'?'Apple chính hãng (bắt buộc)':'Theo shop'}</dd></div><div><dt>Nhận hàng</dt><dd>${S.fast?'Trong 2 ngày (bắt buộc)':'Không giới hạn'}</dd></div><div><dt>Ưu tiên</dt><dd>${S.balanced?'Cân bằng giá và tốc độ':'Giá rẻ nhất trong shop đạt yêu cầu'}</dd></div><div><dt>Voucher của bạn</dt><dd>${S.personal?'Đã thêm '+S.personal.code:'Chưa thêm'}</dd></div>`;
+ document.getElementById('ver').textContent=S.version?`Phiên bản đề xuất: v${S.version}`:'Chưa có đề xuất'}
+
+/* ---------- Lượt hỏi (≤3 câu, có "Musk gợi ý", không hỏi lại điều đã có) ---------- */
+function questionCard(edit){
+  const pc=S.color,ps=S.source;
+  const colorChips=COLORS.map(([n,c])=>`<button class="chip ${pc===n?'sel':''}" data-q="color" data-v="${n}"><i class="dot" style="background:${c}"></i>${n}</button>`).join('')+
+   `<button class="chip sug ${pc==='any'?'sel':''}" data-q="color" data-v="any">Màu nào cũng được, lấy rẻ nhất</button>`;
+  const srcOpts=[['vna','Mới, chính hãng VN/A','Bảo hành Apple tại VN. Musk gợi ý cho người mới.',1],['imp','Hàng nhập quốc tế','Rẻ hơn, bảo hành do shop.'],['like','Máy cũ like-new','Rẻ nhất, cần kiểm tra kỹ.']].map(([v,t,d,sg])=>
+   `<button class="opt ${ps===v?'sel':''}" data-q="source" data-v="${v}"><b>${t}${sg?'<span class="sugtag">Musk gợi ý</span>':''}</b><span>${d}</span></button>`).join('')+
+   `<button class="opt sug ${ps==='auto'?'sel':''}" data-q="source" data-v="auto"><b>Chưa biết, Musk gợi ý giúp</b><span>Musk chọn máy mới VN/A cho an toàn và nói rõ đã giả định gì.</span></button>`;
+  const del=edit?`<div class="q"><h5>3 · Bạn cần nhận hàng khi nào?</h5><div class="chips"><button class="chip ${!S.fast?'sel':''}" data-q="fast" data-v="no">Không gấp</button><button class="chip ${S.fast?'sel':''}" data-q="fast" data-v="yes">Trong 2 ngày</button><button class="chip sug" data-q="fast" data-v="no">Chưa biết, Musk gợi ý giúp</button></div></div>`:'';
+  return `<div class="card qc" data-edit="${edit?1:0}"><h4>${edit?'Sửa yêu cầu':'Musk cần 2 điều để chọn đúng máy'}</h4><div class="hint">${edit?'Chọn lại điều bạn muốn đổi. Musk tính lại và nói rõ cái gì thay đổi.':'iPhone 16 128GB, ngân sách tới 19 triệu. Chưa chắc thì chọn “Musk gợi ý”, mình sẽ giải thích.'}</div>
+   <div class="q"><h5>1 · Bạn thích màu nào?</h5><div class="chips">${colorChips}</div><div class="note" style="margin-top:6px">Màu ảnh hưởng giá và tồn kho trên Shopee.</div></div>
+   <div class="q"><h5>2 · Loại máy bạn muốn?</h5><div class="opts">${srcOpts}</div></div>${del}
+   <div class="actions"><button class="btn go" disabled>${edit?'Cập nhật đề xuất':'Tiếp tục'}</button><button class="btn lnk skip">Bỏ qua, dùng mặc định</button></div></div>`}
+function bindQuestions(el,edit){
+  const card=el.querySelector('.qc'),go=card.querySelector('.go');
+  const draft={color:S.color,source:S.source,fast:S.fast};
+  const ready=()=>{go.disabled=!(draft.color&&draft.source)};
+  card.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{
+    const q=b.dataset.q,v=b.dataset.v;card.querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+    if(q==='color')draft.color=v; if(q==='source')draft.source=v; if(q==='fast')draft.fast=(v==='yes'); ready()});
+  ready();
+  const finish=(skip)=>{
+    const prevC=S.color,prevS=S.source;
+    let colorAuto=false,srcAuto=false;
+    let c=draft.color,s=draft.source;
+    if(!c){c='any';colorAuto=true} if(!s){s='auto';srcAuto=true}
+    if(c==='any')colorAuto=true; if(s==='auto'){srcAuto=true;s='vna'}
+    S.color=c;S.colorAuto=colorAuto;S.source=s;S.sourceAuto=srcAuto;S.fast=!!draft.fast;S.riskOK=(S.riskOK&&s===prevS)&&s!=='vna';
+    card.classList.add('old');card.querySelectorAll('button').forEach(b=>b.disabled=true);
+    user(skip?'Bỏ qua, dùng mặc định':`${c==='any'?'Màu nào cũng được':c} · ${s==='vna'&&srcAuto?'Chưa biết, Musk gợi ý':SRC[s]}${S.fast?' · nhận trong 2 ngày':''}`);
+    afterAnswers(edit);
+  };
+  go.onclick=()=>finish(false);card.querySelector('.skip').onclick=()=>finish(true);
+}
+
+/* ---------- Decision (giả lập engine) ---------- */
+function decide(){
+  const src=srcOf();
+  let shop,kind='BUY';
+  if(src!=='vna'&&!S.riskOK){return {kind:'ASK',shop:SH.C,alt:SH.A}}
+  if(src!=='vna')shop=SH.A; else if(S.balanced&&!S.fast&&!S.tie)return {kind:'TIE',shop:SH.C,final:SH.C.final,a:SH.C,b:SH.B}; else shop=S.fast?SH.B:(S.tie?SH[S.tie]:SH.C);
+  const save=personalSaving(shop);
+  return {kind,shop,final:shop.final-save,save}
+}
+function personalSaving(shop){if(!S.personal||shop.tier!=='Mall')return 0;return Math.min(Math.round(shop.list*.08),300000)}
+function diffMsg(prev,next){
+  if(!prev)return null;
+  if(next.kind==='TIE')return 'Bạn ưu tiên cân bằng giá và tốc độ, nên Musk đưa ra hai lựa chọn ngang nhau để bạn quyết định.';
+  if(prev.kind==='TIE'&&next.kind==='BUY')return `Bạn chọn ${next.shop.name} (${next.shop.id==='C'?'rẻ hơn, giao chậm hơn':'nhận sớm hơn, giá cao hơn'}). Giá cuối ${vnd(next.final)}.`;
+  if(prev.kind==='ASK'&&next.kind==='BUY')return `Bạn đã chấp nhận rủi ro nên Musk xét thêm ${next.shop.name}: ${vnd(next.final)}.`;
+  if(next.kind==='ASK')return `Bạn đổi loại máy sang "${SRC[srcOf()]}". Musk cần bạn xác nhận một rủi ro trước khi đề xuất.`;
+  if(prev.kind==='ASK')return null;
+  if(prev.shop.id!==next.shop.id){
+    const d=next.final-prev.final,sg=d>=0?'+':'−';
+    let why=prev.shop.id==='A'?`vì bạn quay lại máy mới VN/A (cần bảo hành Apple)${S.fast?' và nhận trong 2 ngày':''}`:S.fast?`vì bạn cần nhận trong 2 ngày (${prev.shop.name} giao ${prev.shop.eta})`:`vì bạn đổi sang ${SRC[srcOf()].toLowerCase()}`;
+    return `Đổi từ ${prev.shop.name} sang ${next.shop.name} ${why}. Giá cuối ${sg}${k(Math.abs(d))}.`}
+  if(next.save&&!prev.save)return `Vẫn là ${next.shop.name}; giá cuối giảm còn ${tr(next.final)} nhờ voucher của bạn.`;
+  return `Vẫn là ${next.shop.name}; giá cuối ${vnd(next.final)}.`}
+
+/* ---------- Card đề xuất (trạng thái 2) ---------- */
+function proposalCard(d){
+  const s=d.shop,colorName=S.color==='any'||!S.color?'Xanh lưu ly':S.color;
+  const asm=[];asm.push(`<b>128GB</b>`);asm.push(`<b>${colorName}</b>${S.colorAuto?' (rẻ nhất, Musk chọn)':''}`);asm.push(`<b>${SRC[srcOf()]}</b>${S.sourceAuto?' (Musk giả định)':''}`);
+  const other=S.fast?SH.C:SH.B;
+  let reasons='',trade='';
+  if(s.id==='C'){
+    reasons=`<li class="y">✓ Rẻ nhất trong các lựa chọn đạt yêu cầu</li><li class="y">✓ Bảo hành Apple 12 tháng, đã xác minh</li>`;
+    trade=`<li class="w">! Đổi lại: giao ${s.eta}, chậm hơn ${SH.B.name} 2 ngày. Nếu cần nhận sớm, ${SH.B.name} ${tr(SH.B.final)} (+350k).</li>`}
+  if(s.id==='B'){
+    reasons=`<li class="y">✓ Lựa chọn đạt yêu cầu duy nhất giao trong 2 ngày</li><li class="y">✓ Bảo hành Apple 12 tháng, đã xác minh</li>`;
+    trade=`<li class="w">! Đổi lại: giá cuối +350k so với ${SH.C.name} (giao ${SH.C.eta}).</li>`}
+  if(s.id==='A'){
+    reasons=`<li class="y">✓ Rẻ hơn ${SH.C.name} 550k</li>`;
+    trade=`<li class="bd">✕ Chỉ bảo hành shop 6 tháng, không phải bảo hành Apple.</li><li class="bd">✕ 9 người mua nói máy đã kích hoạt sẵn khi bán “mới”.</li>`}
+  const probs=s.id==='A'?
+   [['Sản phẩm','Máy đã kích hoạt sẵn','9','60%'],['Dịch vụ shop','Chậm trả lời khi đổi trả','4','27%']]:
+   [['Giao hàng','Giao chậm 3–5 ngày',s.id==='C'?'12':'5',s.id==='C'?'80%':'71%',s.id==='C'],['Giao hàng','Hộp móp khi giao',s.id==='C'?'3':'2',s.id==='C'?'20%':'29%']];
+  const ptag=t=>t==='Sản phẩm'?'bad':t==='Dịch vụ shop'?'w':'n';
+  const ptxt=probs.map(p=>`<div class="r"><span class="pill ${p[0]==='Sản phẩm'?'':p[0]==='Dịch vụ shop'?'w':'n'}">${p[0]}</span><span>${p[1]}${p[4]?' <span class="pill i">Mới xuất hiện</span>':''}</span><span class="n">${p[2]} lượt · ${p[3]}</span></div>`).join('');
+  const rating=s.id==='A'?`★ ${String(s.raw).replace('.',',')} (gốc) → ${String(s.flt).replace('.',',')} sau khi loại ${s.removed} đánh giá nghi seeding`:
+    s.id==='C'?`★ 4,9 (gốc) → 4,8 sau khi loại ${s.removed} đánh giá nghi seeding`:`★ 4,9 (gốc) → 4,9 · ${s.removed} · ${s.n} đánh giá`;
+  const coupon=S.personal&&d.save?`đã gồm voucher shop, voucher Mall và voucher của bạn (${S.personal.code}, hạn ${S.personal.exp})`:s.tier==='Mall'&&s.vm?'đã gồm voucher shop, voucher Mall và phí ship':'đã gồm voucher shop và phí ship';
+  const head=d.kind==='BUY'?`Musk chọn ${s.name} (${s.tier}): ${tr(d.final)}, ${coupon.replace('đã gồm','đã gồm')}.`:'';
+  return `<div class="card pc" data-id="${s.id}"><div class="rec">
+   <img class="pi" src="${IMG.box}" alt="iPhone 16 128GB trong hộp, ảnh minh họa">
+   <div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${S.stale?'<span class="dec ask">HỎI LẠI</span>':'<span class="dec">MUA</span>'}<span class="pill ${s.tier==='Mall'?'i':'n'}">${s.tier==='Mall'?'Mall':'Shop thường'}</span>${S.version>1?`<span class="pill i">v${S.version} · đã cập nhật</span>`:''}</div>
+    ${S.stale?`<div class="blk sale" style="margin:10px 0 0"><b>Giá quan sát lúc 09:30 ngày 22/10 (3 ngày trước), có thể đã đổi.</b> Giá trị đơn hàng trên 5 triệu nên Musk cần cập nhật giá trước khi bạn duyệt.</div>`:''}<h4 style="margin:8px 0 0;font-size:17px">${head}</h4>
+    <div class="pr">${vnd(d.final)}</div><div class="sub">giá cuối, ${coupon}</div>
+    <ul class="ck">${reasons}${trade}</ul>
+    <div class="rt">${rating}</div>
+    <div class="pb"><div class="h">Vấn đề hay gặp (đánh giá 1–3★, 90 ngày gần nhất)</div>${ptxt}</div>
+    <div class="asm">Giả định, có thể sửa: ${asm.join(' · ')} · ${S.fast?'nhận trong 2 ngày':'không giới hạn thời gian nhận'}</div>
+    <details><summary>Vì sao Musk chọn shop này?</summary>${whyBody(s)}</details>
+    <div class="note" style="margin-top:10px">${S.stale?'Giá quan sát lúc 09:30 ngày 22/10.':'Giá quan sát lúc 09:30 hôm nay.'} Có thể rẻ hơn nếu dùng Xu hoặc ưu đãi thẻ — Musk chưa tính.</div>
+    <div class="actions">${S.stale?'<button class="btn" data-act="refresh">Cập nhật giá</button>':'<button class="btn" data-act="approve">Duyệt giỏ này</button>'}<button class="btn o" data-act="compare">So sánh 2 lựa chọn khác</button><button class="btn lnk" data-act="edit">Sửa yêu cầu</button></div>
+   </div></div></div>`}
+function whyBody(s){
+  const photos=s.id==='A'?'':`<div class="photos"><img src="${IMG.about}" alt="Ảnh người mua: màn hình thông tin máy"><img src="${IMG.back}" alt="Ảnh người mua: mặt sau máy"><img src="${IMG.pink}" alt="Ảnh người mua: máy trong hộp"></div>`;
+  const ev=s.id==='C'?`Bảo hành Apple: <b>đã xác minh</b> (shop Mall có nhãn ủy quyền; 3 đánh giá có ảnh hộp ghi VN/A trong 60 ngày).`:s.id==='B'?`Bảo hành Apple: <b>đã xác minh</b> (shop Mall ủy quyền, ${'4'} đánh giá có ảnh hộp ghi VN/A trong 60 ngày).`:`Bảo hành Apple: <b class="bd">không có</b> (chỉ shop bảo hành 6 tháng).`;
+  const seed=s.id==='C'?`<div><h6>Rating đã lọc seeding</h6>Shop hiện 4,9★ trên 3,1k đánh giá. Musk bỏ 96 đánh giá <b>nghi</b> seeding.<div class="tw"><table><tr><th>Dấu hiệu</th><th>Số đánh giá</th></tr><tr><td>Đợt 5★ ngắn, đăng dồn trong 48 giờ</td><td>61</td></tr><tr><td>Nội dung giống nhau</td><td>28</td></tr><tr><td>Nhắc quà/xu</td><td>7</td></tr></table></div></div>`:
+   s.id==='A'?`<div><h6>Rating đã lọc seeding</h6>Shop hiện 4,9★ trên 1,0k đánh giá. Musk bỏ 212/1.034 đánh giá <b>nghi</b> seeding (đợt 5★ ngắn dồn dập, nội dung giống nhau).</div>`:`<div><h6>Rating đã lọc seeding</h6>4,9★ trên 5,4k đánh giá, chưa thấy dấu hiệu seeding bất thường.</div>`;
+  return `<div class="dbody"><div>${ev}</div>${seed}<div><h6>Người mua nói gì</h6><div class="quote ${s.quote.warn?'w':''}">“${s.quote.t}”<small>${s.quote.w}</small></div></div>${photos?`<div><h6>Ảnh người mua chụp</h6>${photos}</div>`:''}
+   <div><h6>Shop</h6>${s.tier==='Mall'?'Shopee Mall':'Không phải Mall'} · Shop ${s.age} · ${s.chat} · ${s.ret} · ${s.vat}</div>
+   <div><h6>Giá cuối</h6><div class="tw"><table><tr><td>Giá niêm yết (${S.color&&S.color!=='any'?S.color:'Xanh lưu ly'}: còn hàng)</td><td>${vnd(s.list)}</td></tr><tr><td>Voucher shop</td><td>−${vnd(s.vs)}</td></tr>${s.vm?`<tr><td>Voucher Mall</td><td>−${vnd(s.vm)}</td></tr>`:''}<tr><th>Giá cuối</th><th>${vnd(s.final)}</th></tr></table></div><div class="note">Voucher công khai đang chạy. Giá thật là giá ở trang thanh toán Shopee.</div></div>
+   <div class="note">Độ chắc chắn của bằng chứng: ${s.id==='A'||S.stale?'thấp':'trung bình'} · Nguồn: trang sản phẩm và trang đánh giá công khai trên Shopee, quan sát 09:30 hôm nay.</div></div>`}
+
+/* ---------- So sánh (trạng thái 3) ---------- */
+function compareCard(d){
+  const win=d.shop,second=win.id==='C'?SH.B:SH.C,cols=[win,second,SH.A];
+  const sel={id:win.id};
+  const cell=(s)=>{
+    const fade=s.id==='A';
+    const dp=s.final-win.final;
+    return `<div class="cc ${fade?'fade':''} ${!fade&&s.id===win.id?'sel':''}" data-id="${s.id}">
+     ${fade?'<span class="pill">Rẻ hơn nhưng bị loại</span>':s.id===win.id?'<span class="pill g">Musk chọn</span>':'<span class="pill n">Lựa chọn khác</span>'}
+     <h5>${s.name}</h5><span class="sub">${s.tier==='Mall'?'Shopee Mall':'Shop thường'}</span>
+     <div class="c"><small>Giá cuối</small><span class="p">${tr(s.final)}</span>${s.id===win.id?'':`<small class="${dp<0?'ok':''}">${dp<0?'Rẻ hơn '+k(-dp):'+'+k(dp)}</small>`}${s.final===Math.min(...cols.map(x=>x.final))?'':''}</div>
+     <div class="c"><small>Bảo hành</small><span class="${s.whs==='ok'?'ok':'bd'}">${s.whs==='ok'?'✓ Apple 12 tháng, đã xác minh':'Bảo hành shop 6 tháng'}</span></div>
+     <div class="c"><small>Nhận hàng</small>${s.eta}</div>
+     <div class="c"><small>Đánh giá</small>★ ${String(s.raw).replace('.',',')} → ${String(s.flt).replace('.',',')} · ${s.n} · ${s.sold} đã bán</div>
+     <div class="c"><small>Người mua nói</small><div class="quote ${s.quote.warn?'w':''}">“${s.quote.t}”<small>${s.quote.w}</small></div></div>
+    </div>`};
+  const hid=win.id==='C'?'C':'B';
+  return `<div class="card cmpc"><h4>Musk so sánh giúp bạn</h4><div class="hint">Cột đầu là lựa chọn của Musk. Bấm một cột đạt yêu cầu để đổi chọn. Cột mờ là shop rẻ hơn nhưng đã bị loại.</div>
+   <div class="cmp">${cols.map(cell).join('')}</div>
+   <details><summary>Xem so sánh chi tiết</summary><div class="dbody"><div class="tw"><table><tr><th></th><th>${win.name}</th><th>${second.name}</th><th>${SH.A.name}</th></tr>
+    <tr><td>Mã vùng · tình trạng</td><td>VN/A · mới (đã xác minh)</td><td>VN/A · mới (đã xác minh)</td><td>Không ghi rõ · “mới”, có cảnh báo đã kích hoạt</td></tr>
+    <tr><td>Tuổi shop · phản hồi chat</td>${cols.map(s=>`<td>${s.age} · ${s.chat}</td>`).join('')}</tr>
+    <tr><td>Đổi trả · VAT</td>${cols.map(s=>`<td>${s.ret} · ${s.vat}</td>`).join('')}</tr>
+    <tr><td>Kho gửi</td>${cols.map(s=>`<td>${s.loc}</td>`).join('')}</tr>
+    <tr><td>Voucher đã tính</td>${cols.map(s=>`<td>Shop −${k(s.vs)}${s.vm?`, Mall −${k(s.vm)}`:''}</td>`).join('')}</tr>
+    <tr><td>Lưu ý</td><td>Giao chậm lặp lại (12 lượt)</td><td>Chưa có lưu ý nặng</td><td class="bd">Đã kích hoạt sẵn (9 lượt)</td></tr>
+    <tr><td>Độ chắc chắn bằng chứng</td><td>Trung bình</td><td>Trung bình</td><td>Thấp</td></tr></table></div></div></details>
+   <div class="nb"><b>Không chọn vì</b><ul>
+    <li><b>${SH.A.name}</b> ${tr(SH.A.final)}: chỉ bảo hành shop 6 tháng; 9 người mua nói máy đã kích hoạt sẵn.</li>
+    <li><b>Siêu Sale Phone 99</b> 17,29 tr: không ghi bảo hành; shop mới mở 3 tháng.</li>
+    <li><b>Hải Âu iStore</b> 18,29 tr: chưa chắc, bảo hành Apple do shop tự nói, chưa có bằng chứng.</li>
+    <li>2 sản phẩm không đúng loại bạn cần (iPhone 16 Plus, máy like-new 99%).</li></ul></div>
+   <div class="actions"><button class="btn" data-act="pick">Chọn ${win.name}</button><button class="btn o" data-act="back">Quay lại đề xuất</button></div></div>`}
+
+/* ---------- HỎI LẠI: hai lựa chọn ngang nhau (decision-engine 5.6) ---------- */
+function tieCard(d){
+  const col=(s,why)=>`<div class="cc" data-id="${s.id}"><span class="pill n">${s.id==='C'?'Rẻ hơn':'Nhận sớm hơn'}</span><h5>${s.name}</h5><span class="sub">Shopee Mall</span>
+   <div class="c"><small>Giá cuối</small><span class="p">${tr(s.final)}</span><small>${s.id==='C'?'Rẻ nhất':'+350k'}</small></div>
+   <div class="c"><small>Nhận hàng</small>${s.eta}</div><div class="c"><small>Bảo hành</small><span class="ok">✓ Apple 12 tháng, đã xác minh</span></div><div class="c"><small>Đánh giá</small>★ ${String(s.raw).replace('.',',')} → ${String(s.flt).replace('.',',')} · ${s.n}</div>
+   <div class="why"><b>Chọn cái này nếu bạn</b> ${why}</div><button class="btn o" data-pick="${s.id}">Chọn ${s.name}</button></div>`;
+  return `<div class="card"><div style="display:flex;gap:8px;align-items:center"><span class="dec ask">HỎI LẠI</span><span class="sub">Chọn 1 trong 2</span></div>
+  <h4 style="margin:8px 0 4px;font-size:17px">Hai lựa chọn ngang nhau: rẻ hơn 350k hay nhận sớm hơn 2 ngày?</h4>
+  <div class="sub">Cả hai đều là shop Mall có bảo hành Apple đã xác minh. Kết quả đổi theo việc bạn ưu tiên giá hay tốc độ, nên Musk chưa chọn thay bạn.</div>
+  <div class="cmp two" style="margin-top:12px">${col(d.a,'muốn tiết kiệm 350k và chờ được 3–4 ngày.')}${col(d.b,'cần máy sớm hơn 2 ngày và chấp nhận trả thêm 350k.')}</div>
+  <div class="note" style="margin-top:10px">Nút Duyệt chỉ hiện sau khi bạn chọn.</div></div>`}
+
+/* ---------- HỎI LẠI: xác nhận rủi ro ---------- */
+function askCard(d){return `<div class="card"><div style="display:flex;gap:8px;align-items:center"><span class="dec ask">HỎI LẠI</span><span class="sub">Cần bạn xác nhận một rủi ro</span></div>
+  <h4 style="margin:8px 0 4px;font-size:17px">Có lựa chọn rẻ hơn 550k, nhưng không có bảo hành Apple.</h4>
+  <div class="sub">Bạn chọn “${SRC[srcOf()]}”. Shop rẻ nhất là ${SH.A.name} (${tr(SH.A.final)}, shop thường).</div>
+  <ul class="ck"><li class="bd">✕ Chỉ bảo hành shop 6 tháng, không phải bảo hành Apple.</li><li class="bd">✕ 9 người mua nói máy đã kích hoạt sẵn khi bán “mới”.</li><li class="y">✓ Phương án an toàn: ${SH.C.name} (Mall) ${tr(SH.C.final)}, bảo hành Apple đã xác minh.</li></ul>
+  <div class="actions"><button class="btn" data-act="safe">Dùng phương án an toàn</button><button class="btn o" data-act="risk">Chấp nhận rủi ro, xem ${SH.A.name}</button></div></div>`}
+
+/* ---------- Duyệt (trạng thái 4) ---------- */
+function approveCard(d){
+  const s=d.shop,colorName=S.color==='any'||!S.color?'Xanh lưu ly':S.color;
+  const save=d.save||0,final=d.final;
+  const coupon=save?`đã gồm voucher shop, voucher Mall và voucher của bạn (${S.personal.code}, hạn ${S.personal.exp})`:'đã gồm voucher shop, voucher Mall và phí ship';
+  const voucher=S.personal?`<div class="blk v"><h6 class="okline">✓ Đã dùng voucher của bạn: ${S.personal.code}</h6><div class="small">Tiết kiệm thêm ${vnd(save)}. Nhớ chọn mã <b>${S.personal.code}</b> khi thanh toán trên Shopee. Ảnh gốc đã được xoá sau khi đọc.</div><div class="actions" style="margin-top:8px"><button class="btn lnk" data-act="delvoucher">Xoá voucher đã lưu</button></div></div>`:
+   `<div class="blk v" id="vbox"><h6>Bạn có mã giảm giá riêng trên Shopee?</h6><div class="small" style="font-size:13.5px;color:var(--ink)">Musk chỉ thấy mã công khai. Mã bạn đã lưu trong Shopee (Tôi → Kho Voucher) có thể giúp rẻ hơn.</div>
+    <div class="actions" style="margin-top:8px"><button class="btn o" data-act="vstart">Chụp Kho Voucher để Musk tính lại</button><button class="btn lnk" data-act="vskip">Bỏ qua</button></div>
+    <div class="small" style="margin-top:6px">Musk không cần mật khẩu Shopee. Ảnh được xoá sau khi đọc.</div></div>`;
+  const sale=(S.fast||SALE.days>SALE.dmax)?'':`<div class="blk sale"><b>11.11 còn 17 ngày.</b> Các năm trước, sản phẩm tương tự thường có thêm mã giảm vào ngày này, nhưng Musk không chắc giá sẽ thấp hơn. Musk chưa có dữ liệu giá để so sánh. Nếu không gấp, bạn có thể chờ xem.</div>`;
+  return `<div class="card ac" data-v="${S.version}"><h4>Duyệt giỏ hàng</h4><div class="hint">Kiểm tra một lần rồi chốt. Musk không đặt hàng thay bạn, bạn thanh toán trên Shopee.</div>
+   <div class="cart"><img src="${IMG.box}" alt="iPhone 16"><div><b>iPhone 16 128GB · ${colorName}</b><div class="sub">${s.name} (${s.tier}) · ${SRC[srcOf()]} · giao ${s.eta}</div></div></div>
+   <div class="tot"><span class="pr">${vnd(final)}</span><span class="sub">giá cuối</span></div>
+   <div class="sub">${coupon}.</div>
+   <div class="note">Có thể rẻ hơn nếu dùng Xu hoặc ưu đãi thẻ — Musk chưa tính.</div>
+   ${voucher}
+   <div class="blk"><h6>Phụ kiện</h6>Hộp iPhone 16 chỉ có cáp USB-C, không có củ sạc. Bạn đã có củ sạc USB-C chưa? Nếu chưa, hãy mua riêng.
+     <div class="small" style="margin-top:4px">AppleCare+ là gói bảo hành mở rộng mua riêng, Musk không tính vào giá.</div></div>
+   ${sale}
+   <div class="actions"><button class="btn" data-act="buy">Mua ngay</button><button class="btn o" data-act="remind">Nhắc tôi trước 11.11</button></div></div>`}
+
+/* ---------- Thanh toán (5) & sau khi nhận ---------- */
+function payCard(d){
+  const s=d.shop;
+  const vs=[`Voucher shop −${vnd(s.vs)} (đơn từ ${s.id==='B'?'18':'15'} tr)`].concat(s.vm?[`Voucher Mall −${vnd(s.vm)}`]:[]).concat(S.personal&&d.save?[`Voucher của bạn: mã ${S.personal.code} −${vnd(d.save)}`]:[]);
+  return `<div class="card pay"><h4>Đặt hàng trên Shopee</h4><div class="hint">Mở sản phẩm, chọn đúng mã và kiểm tra trước khi bấm “Đặt hàng”.</div>
+   <div class="cart"><img src="${IMG.box}" alt="iPhone 16"><div><b>iPhone 16 128GB · ${S.color==='any'||!S.color?'Xanh lưu ly':S.color}</b><div class="sub">${s.name} · ${vnd(d.final)}</div></div></div>
+   <div class="blk"><h6>Mã cần chọn ở trang thanh toán</h6><ul style="margin:4px 0 0;padding-left:18px">${vs.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   <div class="blk"><h6>Kiểm tra trước khi bấm “Đặt hàng”</h6><div class="ckl"><label><input type="checkbox"> Đúng màu ${S.color==='any'||!S.color?'Xanh lưu ly':S.color} và dung lượng 128GB</label><label><input type="checkbox"> Giá ở trang thanh toán khớp ${vnd(d.final)}. Nếu chênh nhiều, quay lại hỏi Musk</label><label><input type="checkbox"> Đã chọn đủ các mã ở trên</label></div></div>
+   <div class="actions"><button class="btn" data-act="shopee">Mở trên Shopee ↗</button><button class="btn o" data-act="placed">Đánh dấu đã đặt</button></div>
+   <div class="note" style="margin-top:8px">Bạn thanh toán trên Shopee. Musk không giữ tiền hay mật khẩu. Giá thật là giá ở màn thanh toán Shopee.</div></div>`}
+function afterCard(){return `<div class="card aft"><h4>Khi nhận máy, kiểm tra trước đã</h4><div class="hint">Chưa bấm “Đã nhận hàng” trên Shopee trước khi kiểm tra xong.</div>
+  <div class="ckl"><label><input type="checkbox"> Quay video mở hộp, từ lúc còn nguyên seal</label><label><input type="checkbox"> Kiểm tra seal còn nguyên</label><label><input type="checkbox"> So IMEI trên hộp với IMEI trong Cài đặt (hoặc bấm *#06#)</label><label><input type="checkbox"> Kiểm tra bảo hành trên trang Apple</label></div>
+  <div class="actions"><button class="btn" data-act="checked">Đã kiểm tra xong</button><button class="btn o" data-act="issue">Báo vấn đề</button></div></div>`}
+
+/* ---------- Luồng ---------- */
+async function afterAnswers(edit){
+  mission();
+  if(!edit&&(S.colorAuto||S.sourceAuto)){
+    const parts=[];if(S.sourceAuto)parts.push('Musk chọn máy <b>mới, chính hãng VN/A</b> cho an toàn.');if(S.colorAuto)parts.push('Màu: Musk lấy màu <b>rẻ nhất còn hàng</b> (Xanh lưu ly).');
+    await bot(`<div class="bub">${parts.join(' ')}<ul><li><b>VN/A</b> là máy phân phối chính hãng tại Việt Nam, bảo hành Apple.</li><li>Hộp chỉ có cáp, <b>không có củ sạc</b>.</li><li>Máy like-new rẻ hơn máy mới nhưng cần kiểm tra kỹ.</li></ul></div>`)}
+  await propose(edit)}
+async function propose(){
+  const prev=S.cur;const d=decide();S.version+=1;S.cur=d;S.hist.push(d);mission();
+  const dm=S.note||diffMsg(prev,d);S.note=null;
+  if(S.lastProp)supersede(S.lastProp);
+  if(d.kind==='TIE'){setStep(2,'Cần bạn chọn');if(dm)await bot(`<div class="diff">${dm}</div>`,300);S.lastProp=await bot(tieCard(d),520);S.lastProp.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{user('Chọn '+SH[b.dataset.pick].name);S.tie=b.dataset.pick;propose()});setQuick([]);return}
+  if(d.kind==='ASK'){setStep(2,'Cần bạn xác nhận');if(dm)await bot(`<div class="diff">${dm}</div>`,300);S.lastProp=await bot(askCard(d));bindAsk(S.lastProp);setQuick([]);return}
+  setStep(2,'Đề xuất');
+  if(dm)await bot(`<div class="diff">${dm}</div>`,300);
+  S.lastProp=await bot(proposalCard(d),520);bindProposal(S.lastProp,d);
+  setQuick([['Cần nhận trong 2 ngày',()=>{S.fast=true;mission();propose()}],['Mình muốn cân bằng giá và tốc độ',()=>{S.balanced=true;S.tie=null;mission();propose()}],['Người mua chê gì?',why],['Rẻ hơn được không?',cheaper],['Mô phỏng: giá quan sát 3 ngày trước',()=>{S.stale=true;S.note='Giá của '+d.shop.name+' được quan sát cách đây 3 ngày. Musk cần cập nhật giá trước khi bạn duyệt.';propose()}]].filter(([t])=>!(S.fast&&t.startsWith('Cần nhận'))&&!(S.balanced&&t.startsWith('Mình muốn'))&&!(S.stale&&t.startsWith('Mô phỏng'))))}
+function bindAsk(el){el.querySelector('[data-act="safe"]').onclick=()=>{user('Dùng phương án an toàn');S.source='vna';S.sourceAuto=true;S.riskOK=false;propose()};
+  el.querySelector('[data-act="risk"]').onclick=()=>{user('Chấp nhận rủi ro, xem '+SH.A.name);S.riskOK=true;propose()}}
+function bindProposal(el,d){
+  const ap=el.querySelector('[data-act="approve"]');if(ap)ap.onclick=()=>{user('Duyệt giỏ này');approve()};
+  const rf=el.querySelector('[data-act="refresh"]');if(rf)rf.onclick=async()=>{user('Cập nhật giá');await bot('<div class="bub">Đang lấy lại giá và voucher từ Shopee…</div>',900);S.stale=false;S.note=`Giá đã cập nhật lúc 09:30 hôm nay. ${d.shop.name} vẫn ${vnd(d.final)}, đã gồm voucher công khai đang chạy.`;propose()};
+  el.querySelector('[data-act="compare"]').onclick=async()=>{user('So sánh 2 lựa chọn khác');setStep(2,'So sánh');const t=await bot(compareCard(d),520);bindCompare(t,d);setQuick([])};
+  el.querySelector('[data-act="edit"]').onclick=async()=>{user('Sửa yêu cầu');const t=await bot(questionCard(true),400);bindQuestions(t,true);setQuick([])}}
+function bindCompare(el,d){
+  let pick=d.shop.id;
+  el.querySelectorAll('.cc:not(.fade)').forEach(c=>c.onclick=()=>{pick=c.dataset.id;el.querySelectorAll('.cc').forEach(x=>x.classList.toggle('sel',x===c));el.querySelector('[data-act="pick"]').textContent='Chọn '+SH[pick].name});
+  el.querySelector('[data-act="pick"]').onclick=()=>{
+    user('Chọn '+SH[pick].name);
+    if(pick!==d.shop.id){const prev=S.cur;const nd={kind:'BUY',shop:SH[pick],final:SH[pick].final-personalSaving(SH[pick]),save:personalSaving(SH[pick])};S.cur=nd;S.hist.push(nd);S.version+=1;mission();supersede(S.lastProp);
+      bot(`<div class="diff">Đổi từ ${prev.shop.name} sang ${nd.shop.name} theo lựa chọn của bạn. Giá cuối ${nd.final-prev.final>=0?'+':'−'}${k(Math.abs(nd.final-prev.final))}${nd.shop.days>prev.shop.days?'':', nhận hàng sớm hơn'}.</div>`,300).then(()=>approve())}
+    else approve()};
+  el.querySelector('[data-act="back"]').onclick=()=>{user('Quay lại đề xuất');scrollEnd();setStep(2,'Đề xuất');bot('<div class="bub">Đây là đề xuất của Musk ở trên. Bấm “Duyệt giỏ này” khi bạn đã sẵn sàng.</div>',250)}}
+async function approve(){
+  setStep(3,'Duyệt');setQuick([]);const d=S.cur;
+  S.lastApprove=await bot(approveCard(d),500);bindApprove(S.lastApprove,d)}
+function bindApprove(el,d){
+  const q=a=>el.querySelector(`[data-act="${a}"]`);
+  q('buy').onclick=async()=>{user('Mua ngay');setStep(4,'Thanh toán');const t=await bot(payCard(d),450);bindPay(t,d);setQuick([])};
+  q('remind').onclick=function(){this.textContent='✓ Sẽ nhắc trước 11.11';this.disabled=true;bot('<div class="bub">Musk lưu giỏ này và sẽ nhắc 1 ngày trước 11.11 cùng sáng ngày sale. Khi nhắc, Musk tính lại giá trước.</div>',300)};
+  const vs=q('vstart'),sk=q('vskip'),dv=q('delvoucher');
+  if(sk)sk.onclick=()=>{el.querySelector('#vbox').remove()};
+  if(dv)dv.onclick=()=>{S.personal=null;user('Xoá voucher đã lưu');bot('<div class="bub">Đã xoá voucher đã lưu. Giá quay về giá công khai.</div>',250).then(()=>{S.version+=1;S.cur=decide();S.cur.kind='BUY';mission();supersede(el.closest('.m'));approve()})};
+  if(vs)vs.onclick=()=>{
+    const box=el.querySelector('#vbox');
+    box.innerHTML=`<h6>Chụp Kho Voucher để Musk tính lại</h6><ol><li>Mở app Shopee → <b>Tôi</b> → <b>Kho Voucher</b>.</li><li>Chụp màn hình danh sách mã (có thể chụp 2–3 ảnh).</li><li>Tải ảnh lên đây.</li></ol>
+     <div class="actions"><label class="btn o" for="vfile" style="display:inline-block">Tải ảnh lên</label><input type="file" id="vfile" accept="image/*" multiple hidden><button class="btn lnk" id="vsample">Dùng ảnh mẫu để xem thử</button></div>
+     <div class="small">Musk không cần mật khẩu Shopee. Ảnh được xoá sau khi đọc. Tên, số điện thoại, số dư ví lọt vào ảnh sẽ bị bỏ qua.</div>`;
+    const read=async()=>{box.innerHTML=`<h6>Musk đang đọc ảnh…</h6><span class="typing"><i></i><i></i><i></i></span>`;await wait(1100);
+      box.innerHTML=`<h6>Musk đọc được 2 mã. Bạn xác nhận giúp trước khi tính lại</h6>
+       <div class="codes"><label class="code"><input type="checkbox" class="cb" data-c="SHOPEE8" checked><span><b>SHOPEE8</b> · Voucher Mall<br>Giảm 8%, tối đa 300.000đ · đơn từ 10 triệu · hạn 31/10</span></label>
+       <label class="code"><input type="checkbox" class="cb" data-c="HOANXU"><span><b>HOANXU</b> · Hoàn Xu<br><span class="wn">Musk đọc chưa chắc — kiểm tra lại.</span> Hoàn Xu không trừ vào giá cuối nên Musk không tính.</span></label></div>
+       <div class="actions"><button class="btn o" id="vok">Xác nhận và tính lại</button><button class="btn lnk" id="vcancel">Hủy</button></div>
+       <div class="small">Voucher có thể đã hết lượt dù còn hạn. Giá cuối thật là giá ở màn thanh toán Shopee.</div>`;
+      box.querySelector('#vcancel').onclick=()=>{el.querySelector('#vbox').innerHTML='<h6>Bạn có mã giảm giá riêng trên Shopee?</h6><div class="small">Đã bỏ qua. Musk không nhắc lại trong phiên này.</div>'};
+      box.querySelector('#vok').onclick=()=>{
+        const on=[...box.querySelectorAll('.cb')].filter(x=>x.checked&&x.dataset.c==='SHOPEE8');
+        if(!on.length){box.querySelector('.small').textContent='Chưa có mã nào Musk dùng được để tính lại. Chọn SHOPEE8 hoặc bấm Hủy.';return}
+        S.personal={code:'SHOPEE8',exp:'31/10'};user('Xác nhận mã SHOPEE8');
+        const prev=S.cur;const nd=decide();S.cur=nd;S.hist.push(nd);S.version+=1;mission();
+        supersede(el.closest('.m'));
+        bot(`<div class="diff">${diffMsg(prev,nd)} Dùng thêm mã của bạn: tiết kiệm thêm ${vnd(nd.save)}. Nhớ chọn mã <b>SHOPEE8</b> khi thanh toán trên Shopee.</div>`,300).then(()=>approve())}};
+    box.querySelector('#vfile').onchange=read;box.querySelector('#vsample').onclick=read}}
+function bindPay(el,d){
+  el.querySelector('[data-act="shopee"]').onclick=function(){this.textContent='Bản mẫu: sẽ mở Shopee ↗'};
+  el.querySelector('[data-act="placed"]').onclick=async()=>{user('Đánh dấu đã đặt');setStep(5,'Sau khi nhận');await bot('<div class="bub">Đã ghi nhận. Khi hàng về, mở lại Musk để kiểm tra trước khi bấm “Đã nhận hàng” trên Shopee.</div>',300);setQuick([['Mô phỏng: hàng đã giao',async()=>{const t=await bot(afterCard(),450);bindAfter(t);setQuick([])}]])}}
+function bindAfter(el){
+  el.querySelector('[data-act="checked"]').onclick=()=>{const all=[...el.querySelectorAll('input')].every(i=>i.checked);user('Đã kiểm tra xong');bot(all?'<div class="bub">Xong rồi. Bạn có thể bấm “Đã nhận hàng” trên Shopee. Cần mua thêm gì, nhắn cho Musk nhé.</div>':'<div class="bub">Bạn chưa tick hết mục kiểm tra. Nếu chưa kiểm tra seal và IMEI, hãy làm trước khi bấm “Đã nhận hàng” trên Shopee.</div>',300)};
+  el.querySelector('[data-act="issue"]').onclick=()=>{user('Báo vấn đề');bot('<div class="bub">Giữ nguyên hộp, video mở hộp và ảnh IMEI. Đừng bấm “Đã nhận hàng” trên Shopee. Vào Shopee → Đơn mua → chọn Trả hàng/Hoàn tiền và gửi kèm video.</div>',300)}}
+async function why(){const s=S.cur.shop;await bot(`<div class="card"><h4>Người mua phàn nàn gì (1–3★, 90 ngày gần nhất)</h4>${s.id==='A'?`<ul class="ck"><li><span class="pill">Sản phẩm</span> Máy đã kích hoạt sẵn · <b>9 lượt</b> (60%)</li><li><span class="pill w">Dịch vụ shop</span> Chậm trả lời khi đổi trả · <b>4 lượt</b> (27%)</li></ul>`:`<ul class="ck"><li><span class="pill n">Giao hàng</span> Giao chậm 3–5 ngày · <b>${s.id==='C'?12:5} lượt</b> <span class="pill i">Mới xuất hiện</span></li><li><span class="pill n">Giao hàng</span> Hộp móp khi giao · <b>${s.id==='C'?3:2} lượt</b></li><li><span class="pill">Sản phẩm</span> Lỗi máy, hàng giả · <b class="ok">0 lượt</b></li></ul>`}
+ <div class="quote ${s.quote.warn?'w':''}">${s.id==='A'?`“${s.quote.t}”<small>${s.quote.w}</small>`:'“Máy ổn nhưng giao 5 ngày, hộp ngoài hơi móp. Shop có xin lỗi và tặng ốp.”<small>h***an · ★3 · 14/10 · Shop đã trả lời</small>'}</div><div class="note" style="margin-top:6px">Shop trả lời 11/15 đánh giá thấp.</div></div>`)}
+async function cheaper(){await bot(`<div class="bub">${SH.C.name} đang là giá thấp nhất trong các shop có bảo hành Apple đã xác minh. Shop rẻ hơn là ${SH.A.name} (${tr(SH.A.final)}) nhưng chỉ bảo hành shop và có người mua nói máy đã kích hoạt sẵn. Voucher riêng của bạn có thể giúp rẻ hơn, Musk hỏi ở bước Duyệt.</div>`)}
+function send(){const i=document.getElementById('inp'),v=i.value.trim();if(!v)return;i.value='';user(v);
+ if(CAT==='baby'){const l=v.toLowerCase();if(!B.cur){bot('<div class="bub">Bạn trả lời giúp câu hỏi ở trên bằng cách bấm nút nhé.</div>',300);return}
+  if(/12[,.]5/.test(l)){B.kg=12.5;B.sizeOv=null;bbPropose();return}if(/9 tháng/.test(l)){B.age=9;B.milk=null;bbPropose();return}if(/3 bịch/.test(l)){B.qty=3;bbPropose();return}
+  bot('<div class="bub">Bản mẫu hiểu các câu như “bé 12,5 kg”, “bé 9 tháng”, “3 bịch tã”. Bạn cũng có thể bấm nút trong chat.</div>',300);return}
+ const l=v.toLowerCase();
+ if(/2 ngày|gấp|nhanh/.test(l)&&S.cur){S.fast=true;mission();propose();return}
+ if(/cân bằng|ngang nhau/.test(l)&&S.cur){S.balanced=true;S.tie=null;mission();propose();return}
+ if(/chê|phàn nàn|review|đánh giá/.test(l)&&S.cur){why();return}
+ if(/rẻ hơn|giảm/.test(l)&&S.cur){cheaper();return}
+ bot('<div class="bub">Bản mẫu hiểu các câu như “cần nhận trong 2 ngày”, “người mua chê gì”, “rẻ hơn được không”. Bạn cũng có thể bấm thẻ và nút trong chat.</div>',300)}
+document.getElementById('send').onclick=send;document.getElementById('inp').onkeydown=e=>{if(e.key==='Enter')send()};
+async function startIphone(){
+  mission();
+  user('Mua iPhone 16 128GB, tầm 19 triệu');
+  const t=await bot(questionCard(false),600);bindQuestions(t,false);
+  col.append($e(`<div class="credits">Ảnh minh họa từ Wikimedia Commons (CC BY-SA 4.0 / CC0): <a href="https://commons.wikimedia.org/wiki/File:IPhone_16_packaging_(2025-12-01).jpg" target="_blank" rel="noopener">Olgierd Rudak</a>, <a href="https://commons.wikimedia.org/wiki/File:About_iPhone_16_Ultramarine.jpg" target="_blank" rel="noopener">メイド理世</a>. Ảnh được thu nhỏ. Tên shop, giá, đánh giá là dữ liệu giả lập.</div>`));
+  // tự chạy kịch bản khi mở bằng #rec | #cmp | #buy | #risk (dùng để chụp ảnh)
+  const h=location.hash.slice(1);if(h){const c=(sel)=>document.querySelector(sel);await wait(300);
+    c('[data-q="color"][data-v="Xanh lưu ly"]').click();c('[data-q="source"][data-v="auto"]').click();c('.qc .go').click();await wait(1800);
+    if(h==='cmp'||h==='buy'||h==='buy2'||h==='pay'){if(h==='cmp'){document.querySelector('[data-act="compare"]').click();await wait(900)}}
+    if(h==='tie'){[...document.querySelectorAll('#quick .chip')].find(b=>b.textContent.includes('cân bằng')).click();await wait(1800)}
+    if(h==='stale'){[...document.querySelectorAll('#quick .chip')].find(b=>b.textContent.includes('3 ngày')).click();await wait(1800)}
+    if(h==='buy'||h==='buy2'||h==='pay'){document.querySelector('[data-act="approve"]').click();await wait(900)}
+    if(h==='buy2'){document.querySelector('[data-act="vstart"]').click();await wait(200);document.getElementById('vsample').click();await wait(1500);document.getElementById('vok').click();await wait(1300)}
+    if(h==='pay'){document.querySelector('.ac:not(.old) [data-act="buy"]').click();await wait(900)}
+    await wait(200);feed.scrollTop=feed.scrollHeight}
+}
+/* ===================== ĐỒ EM BÉ (case 1: giỏ nhiều món) ===================== */
+let CAT='iphone';
+const BI={diap:'{{IMG_DIAP}}',form:'{{IMG_FORM}}',wipe:'{{IMG_WIPE}}'};
+const B0=JSON.stringify({kg:11,age:14,rash:null,rashAuto:false,qty:2,stale:false,qOut:false,sizeOv:null,milk:null,personal:null,budget:1500000,version:0,cur:null,note:null,lastProp:null,lastApprove:null,placed:[false,false]});
+let B=JSON.parse(B0);
+const BS={K:{name:'Mẹ Mây Official',tier:'Mall',rate:'4,9',n:'18,4k',age:'4 năm'},L:{name:'Nhà Cún Con',tier:'Yêu thích',rate:'4,8',n:'6,2k',age:'2 năm'},P:{name:'Kho Sỉ Bé Bi',tier:'Thường',rate:'4,5',n:'310',age:'2 tháng'},Q:{name:'Sữa Ngon Chính Hãng',tier:'Mall',rate:'4,9',n:'9,7k',age:'3 năm'}};
+const VOUCH={K:{min:800000,v:60000},Q:{min:500000,v:20000}};
+const PACK={L:68,XL:62},RANGE={L:'8–15 kg',XL:'12–17 kg'};
+const OFF={tan:{L:{K:359000,L:349000},XL:{K:359000,L:349000}},sua:{GU:{Q:535000,K:549000},INF:{Q:569000}},khan:{K:89000,L:69000}};
+const BQ={tan:{K:['Bịch còn seal, date tới 2028. Giao 2 ngày.','lan***h · ★5 · 16/10'],L:['Giá tốt, đóng thùng cẩn thận.','t***y · ★5 · 12/10']},
+ sua:{Q:['Hộp có tem nhà phân phối, hạn 06/2027.','mi***a · ★5 · 19/10'],K:['Giao nhanh nhưng hộp hơi móp, shop không ghi hạn dùng.','h***g · ★4 · 08/10']},
+ khan:{K:['Khăn dày, không mùi, bé không bị kích ứng.','q***n · ★5 · 17/10'],L:['Khăn mỏng hơn loại cũ nhưng dùng ổn.','v***i · ★4 · 05/10']}};
+const kgStr=()=>String(B.kg).replace('.',',');
+const bbSize=()=>B.sizeOv||(B.kg>=12?'XL':'L');
+function bbMilk(){if(B.milk==='drop')return 'drop';if(B.age<12)return B.milk==='INF'?'INF':'ask';if(B.qOut)return B.milk==='K'?'K':'unk';return 'GU'}
+function bbPrice(kind,shop,size,ms){return kind==='tan'?OFF.tan[size][shop]:kind==='sua'?OFF.sua[ms==='INF'?'INF':'GU'][shop]:OFF.khan[shop]}
+function bbTotal(pick,size,ms,personal){
+  const o={};const add=(s,a)=>{o[s]=(o[s]||0)+a};
+  add(pick.tan,bbPrice('tan',pick.tan,size)*B.qty);if(pick.sua)add(pick.sua,bbPrice('sua',pick.sua,size,ms));add(pick.khan,bbPrice('khan',pick.khan));
+  let total=0;const det=Object.entries(o).map(([s,sub])=>{const vc=VOUCH[s];const vd=vc&&sub>=vc.min?vc.v:0;const ship=sub>=300000?0:15000;total+=sub-vd+ship;return {shop:s,sub,vd,ship,pv:0,net:sub-vd+ship}});
+  let pv=0;if(personal){const b=det.filter(d=>d.sub>=700000).sort((a,c)=>c.sub-a.sub)[0];if(b){pv=30000;b.pv=30000;b.net-=30000;total-=30000}}
+  return {total,det,pv,shops:det.length}}
+function bbSolve(){
+  const size=bbSize(),ms=bbMilk(),su=(ms==='GU'||ms==='INF')?'Q':ms==='K'?'K':null;let best=null;
+  for(const t of ['K','L'])for(const kh of ['K','L']){const r=bbTotal({tan:t,khan:kh,sua:su},size,ms,B.personal);r.pick={tan:t,khan:kh,sua:su};if(!best||r.total<best.total||(r.total===best.total&&r.shops<best.shops))best=r}
+  const g=bbTotal({tan:'L',khan:'L',sua:su},size,ms,B.personal);
+  best.saving=Math.max(0,g.total-best.total);best.size=size;best.ms=ms;best.qty=B.qty;return best}
+function bbDecide(){
+  const r=bbSolve();
+  if(r.ms==='ask'||r.ms==='unk')return {kind:'ASKMILK',r};
+  if(r.total>B.budget){const q=B.qty;B.qty=q-1;const alt=bbSolve();B.qty=q;return {kind:'ASKBUDGET',r,alt,over:r.total-B.budget}}
+  return {kind:'BUY',r}}
+function missionBaby(){
+  const s=bbSize(),rash=B.rash==='yes'?'Có':B.rash==='no'?'Không'+(B.rashAuto?' <span class="as">(Musk giả định)</span>':''):'Chưa hỏi';
+  document.getElementById('mission').innerHTML=`<div><dt>Hồ sơ bé</dt><dd>${B.age} tháng · ${kgStr()} kg</dd></div><div><dt>Size tã</dt><dd>Bobby tã quần ${s} (${RANGE[s]})</dd></div><div><dt>Thương hiệu quen</dt><dd>Bobby</dd></div><div><dt>Bé có bị hăm</dt><dd>${rash}</dd></div><div><dt>Quy tắc của bạn</dt><dd style="font-size:13px">Sữa chỉ mua shop Mall<br>Không mua shop dưới 6 tháng<br>Sữa còn hạn từ 6 tháng</dd></div><div><dt>Ngân sách tháng</dt><dd>${vnd(B.budget)}</dd></div><div><dt>Voucher của bạn</dt><dd>${B.personal?'Đã thêm '+B.personal.code:'Chưa thêm'}</dd></div>`;
+  document.getElementById('ver').textContent=B.version?`Phiên bản đề xuất: v${B.version}`:'Chưa có đề xuất'}
+
+/* ---------- hỏi (tối đa 1 câu, có "Musk gợi ý") ---------- */
+function bbIntro(){const s=bbSize();
+ return `<div class="bub">Theo hồ sơ, bé ${B.age} tháng, ${kgStr()} kg. Musk sẽ lấy:<ul><li><b>Tã quần Bobby size ${s}</b> (${RANGE[s]}), 2 bịch ≈ 3–4 tuần.</li><li><b>Sữa Meiji Growing Up 800g</b> (12–36 tháng), 1 hộp ≈ 10–14 ngày.</li><li><b>Khăn ướt không mùi</b> 100 tờ.</li></ul>Chỉ một câu:</div>
+ <div class="card qc"><h4>Bé có đang bị hăm không?</h4><div class="hint">Nếu có, Musk chỉ chọn khăn không mùi, không cồn và giữ dòng tã bé đã dùng.</div><div class="chips"><button class="chip" data-r="yes">Có</button><button class="chip" data-r="no">Không</button><button class="chip sug" data-r="auto">Chưa biết, Musk gợi ý giúp</button></div>
+ <div class="actions"><button class="btn go" disabled>Tiếp tục</button><button class="btn lnk skip">Bỏ qua, dùng mặc định</button></div></div>`}
+function bbBindQ(el){
+  const card=el.querySelector('.qc'),go=card.querySelector('.go');let pick=null;
+  card.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{card.querySelectorAll('[data-r]').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');pick=b.dataset.r;go.disabled=false});
+  const fin=(skip)=>{card.classList.add('old');card.querySelectorAll('button').forEach(b=>b.disabled=true);
+    if(!pick||pick==='auto'){B.rash='no';B.rashAuto=true}else{B.rash=pick;B.rashAuto=false}
+    user(skip?'Bỏ qua, dùng mặc định':pick==='yes'?'Có':pick==='no'?'Không':'Chưa biết, Musk gợi ý giúp');
+    missionBaby();bbPropose()};
+  go.onclick=()=>fin(false);card.querySelector('.skip').onclick=()=>fin(true)}
+
+/* ---------- đề xuất giỏ (trạng thái 2) ---------- */
+function bbLines(d){const r=d.r,s=r.size,ms=r.ms;const L=[];
+  const pt=bbPrice('tan',r.pick.tan,s)*r.qty,pl=bbPrice('tan','L',s),pk=bbPrice('tan','K',s);
+  const gom=r.pick.tan==='K'&&pk>pl&&r.det.find(x=>x.shop==='K').vd>0;
+  L.push({k:'tan',img:BI.diap,t:`Tã quần Bobby ${s}${PACK[s]} × ${r.qty}`,sub:`${BS[r.pick.tan].name} · ${vnd(Math.round(bbPrice('tan',r.pick.tan,s)/PACK[s]))}/miếng`,why:gom?`Đắt hơn ${BS.L.name} ${k(pk-pl)}/bịch nhưng gom cùng đơn để dùng voucher ${k(60000)}.`:'Giá thấp nhất trong các shop đạt yêu cầu.',p:pt,
+    sz:`Size ${s} (${RANGE[s]}) ${B.sizeOv?'theo lựa chọn của bạn':B.kg>=12?`vì bé ${kgStr()} kg đang ở vùng giao giữa L (8–15 kg) và XL (12–17 kg), Musk chọn size lớn hơn để dùng được lâu`:`theo cân nặng ${kgStr()} kg`}.`});
+  if(r.pick.sua){const sh=r.pick.sua,pr=bbPrice('sua',sh,s,ms);L.push({k:'sua',img:BI.form,t:`Sữa Meiji ${ms==='INF'?'Infant (0–12 tháng)':'Growing Up'} 800g × 1`,sub:`${BS[sh].name} · ${vnd(Math.round(pr/8))}/100g`,why:ms==='K'?'Chưa chắc: shop không ghi hạn sữa. Khi nhận, kiểm tra hạn dưới đáy hộp và từ chối nếu dưới 6 tháng.':`Shop Mall, hạn ${ms==='INF'?'05/2027':'06/2027'} (người mua chụp tem nhà phân phối).`,p:pr})}
+  L.push({k:'khan',img:BI.wipe,t:'Khăn ướt không mùi 100 tờ × 1',sub:`${BS[r.pick.khan].name} · ${vnd(bbPrice('khan',r.pick.khan)/100)}/tờ`,why:r.pick.khan===r.pick.tan?'Gom cùng đơn tã.':'Giá thấp nhất trong các shop đạt yêu cầu.',p:bbPrice('khan',r.pick.khan)});
+  return L}
+function bbRow(l){return `<div class="ln"><img src="${l.img}" alt=""><div><b>${l.t}</b><div class="sub">${l.sub}</div><div style="font-size:13.5px;margin-top:3px">${l.why}</div>${l.sz?`<div class="sz">${l.sz} <button class="btn lnk" style="padding:0 4px;font-size:12.5px" data-act="size">Đổi sang ${bbSize()==='L'?'XL':'L'}</button></div>`:''}<button class="btn lnk" style="padding:4px 0;font-size:13px" data-cmp="${l.k}">So sánh các shop</button></div><div class="p">${vnd(l.p)}</div></div>`}
+function bbExcluded(d){const s=d.r.size,o=s==='L'?'XL':'L';
+  return `${B.qOut?`<li><b>${BS.Q.name}</b> (sữa 535k): <span class="bd">hết hàng</span>.</li>`:''}<li><b>${BS.P.name}</b> (tã 289k): shop mới mở 2 tháng; người mua nhắc hàng cận date.</li><li><b>${BS.P.name}</b> (khăn 59k): shop mới mở 2 tháng; 14 người mua nói khăn khô, có mùi lạ.</li><li><b>${BS.L.name}</b> (sữa 499k): không phải Mall, hạn chỉ còn 12/2026 (dưới 6 tháng).</li><li><b>${BS.P.name}</b> (sữa 459k): hàng xách tay, shop mới mở 2 tháng, không phải Mall.</li>${d.r.ms==='K'?'':`<li><b>${BS.K.name}</b> (sữa 549k): <span class="wn">chưa chắc</span>, shop không ghi hạn sữa. ${B.qOut?'Musk hỏi bạn vì đây là shop còn hàng duy nhất.':'Musk không hỏi vì giá cao hơn và không thể thắng.'}</li>`}<li>3 sản phẩm không đúng loại bạn cần (tã dán ${s}68, tã quần ${o}${PACK[o]}, Meiji ${d.r.ms==='INF'?'Growing Up':'Infant 0–12 tháng'}).</li>`}
+function bbOrders(r){return r.det.map((o,i)=>{const items=[];if(r.pick.tan===o.shop)items.push(`tã ${r.size}${PACK[r.size]} × ${r.qty}`);if(r.pick.sua===o.shop)items.push('sữa Meiji 800g');if(r.pick.khan===o.shop)items.push('khăn ướt');return `<tr><td><b>${BS[o.shop].name}</b><br><span class="note">${items.join(' + ')}</span></td><td>${vnd(o.sub)}</td><td>${o.vd?'−'+vnd(o.vd):'—'}${o.pv?'<br>−'+vnd(o.pv)+' (mã của bạn)':''}</td><td>${o.ship?vnd(o.ship):'Miễn phí'}</td><td><b>${vnd(o.net)}</b></td></tr>`}).join('')}
+function bbCart(d){
+  const r=d.r,ask=d.kind==='ASKMILK',lines=bbLines(d).map(bbRow).join('');
+  const milkRow=ask&&r.ms==='unk'?`<div class="ln warn" style="grid-template-columns:1fr"><div><b>Sữa Meiji Growing Up 800g · chưa chắc</b><div style="font-size:13.5px;margin:4px 0 8px">${BS.Q.name} đã hết hàng. Shop còn lại là ${BS.K.name} (${vnd(549000)}) nhưng không ghi hạn sữa, nên Musk chưa xác nhận được hạn dùng từ 6 tháng. Bạn muốn đợi hay mua và kiểm tra khi nhận?</div><div class="actions" style="margin-top:0"><button class="btn o" data-act="acceptK">Mua của ${BS.K.name} và tự kiểm tra khi nhận</button><button class="btn o" data-act="wait">Đợi, bỏ sữa khỏi giỏ lúc này</button></div></div></div>`:
+  ask?`<div class="ln warn" style="grid-template-columns:1fr"><div><b>Sữa Meiji Growing Up 800g · chưa chốt</b><div style="font-size:13.5px;margin:4px 0 8px">Growing Up dành cho bé 12–36 tháng, bé mới ${B.age} tháng. Musk không tự đổi sữa. Nếu bé có dị ứng đạm sữa bò hoặc vấn đề tiêu hoá, hãy hỏi bác sĩ trước.</div><div class="actions" style="margin-top:0"><button class="btn o" data-act="inf">Xem sữa Meiji Infant 0–12 tháng (${vnd(569000)})</button><button class="btn o" data-act="drop">Bỏ sữa khỏi giỏ</button></div></div></div>`:
+  r.ms==='drop'?`<div class="note" style="margin:8px 0">Giỏ chưa có sữa${B.qOut?'. Musk sẽ nhắc bạn khi '+BS.Q.name+' có hàng lại':''}. Nhắn “thêm lại sữa” khi bạn muốn.</div>`:'';
+  const pct=Math.min(100,Math.round(r.total/B.budget*100));
+  const tag=ask?'<span class="dec ask">HỎI LẠI</span>':'<span class="dec">MUA</span>';
+  const head=ask?`Giỏ chưa chốt xong: cần bạn quyết định món sữa.`:`Musk gom giỏ cho bé: ${vnd(r.total)}.`;
+  const vtxt=r.pv?'đã gồm voucher, mã của bạn và phí ship':'đã gồm voucher và phí ship';
+  return `<div class="card bc">${B.stale?`<div class="blk sale" style="margin:0 0 10px"><b>Giá quan sát lúc 09:30 ngày 22/10 (3 ngày trước), có thể đã đổi.</b> Giỏ dưới 5 triệu nên bạn vẫn duyệt được, nhưng Musk khuyên cập nhật giá trước.<div class="actions" style="margin-top:8px"><button class="btn o" data-act="refresh">Cập nhật giá</button></div></div>`:''}<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${tag}${B.version>1?`<span class="pill i">v${B.version} · đã cập nhật</span>`:''}</div>
+  <h4 style="margin:8px 0 0;font-size:17px">${head}</h4>
+  <div class="pr">${vnd(r.total)}</div><div class="sub">${ask?'chưa gồm món sữa, ':''}giá cuối, ${vtxt}. Giá từng dòng bên dưới chưa trừ voucher.</div>
+  ${r.saving>=10000?`<div class="okline" style="margin-top:6px">Tiết kiệm ${vnd(r.saving)} nhờ gom đơn.</div>`:''}
+  <div style="margin-top:6px">${lines}${milkRow}</div>
+  <div class="bud"><div class="bt"><span>Ngân sách tháng</span><b>${vnd(r.total)} / ${vnd(B.budget)}</b></div><div class="bbar"><i style="width:${pct}%"></i></div></div>
+  <div class="asm">Giả định, có thể sửa: bé <b>${B.age} tháng, ${kgStr()} kg</b> · <b>Bobby ${r.size}</b> · bé ${B.rash==='yes'?'<b>hay bị hăm</b>':'<b>không hăm</b>'}${B.rashAuto?' (Musk giả định)':''}. Bảng size tã theo nguồn bên thứ ba, Musk ưu tiên bảng trong listing nếu có.</div>
+  <details><summary>Musk tính giỏ này thế nào?</summary><div class="dbody"><div class="tw"><table><tr><th>Đơn</th><th>Tiền hàng</th><th>Voucher</th><th>Ship</th><th>Thành tiền</th></tr>${bbOrders(r)}</table></div><div class="note">Giỏ mở thành ${r.det.length} đơn trên Shopee vì mua ở ${r.det.length} shop. Gom đơn giúp đạt mức voucher của shop.</div></div></details>
+  <details><summary>Không chọn vì</summary><div class="dbody"><ul style="margin:0;padding-left:18px;color:var(--mut)">${bbExcluded(d)}</ul></div></details>
+  <div class="note" style="margin-top:10px">${B.stale?'Giá quan sát lúc 09:30 ngày 22/10. Độ chắc chắn của bằng chứng: thấp.':'Giá quan sát lúc 09:30 hôm nay.'} Có thể rẻ hơn nếu dùng Xu hoặc ưu đãi thẻ — Musk chưa tính.</div>
+  <div class="actions"><button class="btn" data-act="approve" ${ask?'disabled':''}>Duyệt giỏ này</button><button class="btn lnk" data-act="edit">Sửa yêu cầu</button></div>${ask?'<div class="note">Chọn một cách xử lý món sữa trước khi duyệt.</div>':''}</div>`}
+function bbBudgetCard(d){return `<div class="card"><div style="display:flex;gap:8px;align-items:center"><span class="dec ask">HỎI LẠI</span><span class="sub">Giỏ vượt ngân sách tháng</span></div>
+  <h4 style="margin:8px 0 4px;font-size:17px">Giỏ ${vnd(d.r.total)}, vượt ngân sách tháng ${vnd(d.over)}. Bớt 1 bịch tã?</h4>
+  <div class="sub">Ngân sách tháng của bạn là ${vnd(B.budget)}. Với ${B.qty} bịch tã, sữa 1 hộp và khăn ướt, giỏ ở mức ${vnd(d.r.total)}.</div>
+  <ul class="ck"><li class="y">✓ Bớt 1 bịch tã (còn ${B.qty-1} bịch): giỏ còn ${vnd(d.alt.total)}, trong ngân sách.</li><li class="w">! Giữ nguyên ${B.qty} bịch: bạn cần nới ngân sách tháng lên ${vnd(d.r.total)}.</li></ul>
+  <div class="actions"><button class="btn" data-act="less">Bớt 1 bịch tã</button><button class="btn o" data-act="keep">Giữ ${B.qty} bịch, nới ngân sách</button></div></div>`}
+function bbDiff(prev,d){if(!prev)return null;const a=prev.r,b=d.r,out=[];
+  if(a.size!==b.size)out.push(`Đổi tã từ size ${a.size} sang ${b.size} ${B.sizeOv?'theo lựa chọn của bạn':`vì bé ${kgStr()} kg (${RANGE[b.size]})`}.`);
+  if(a.qty!==b.qty)out.push(`Số bịch tã ${a.qty} → ${b.qty}.`);
+  if(a.ms!==b.ms){if(b.ms==='unk')out.push(`${BS.Q.name} hết hàng và ${BS.K.name} không ghi hạn sữa, nên Musk chưa chốt món sữa.`);else if(b.ms==='K')out.push(`Bạn chọn mua sữa của ${BS.K.name} và tự kiểm tra hạn khi nhận.`);else if(b.ms==='ask')out.push(`Bé ${B.age} tháng chưa hợp Meiji Growing Up (12–36 tháng), nên Musk chưa chốt món sữa.`);else if(b.ms==='INF')out.push('Đã chuyển sang Meiji Infant 0–12 tháng theo lựa chọn của bạn.');else if(b.ms==='drop')out.push('Đã bỏ sữa khỏi giỏ.');else out.push('Sữa quay lại Meiji Growing Up.')}
+  if(prev.kind==='ASKBUDGET'&&d.kind==='BUY'&&!out.length)out.push('Giỏ đã trong ngân sách tháng.');
+  if(a.total!==b.total)out.push(`Tổng giỏ ${vnd(a.total)} → ${vnd(b.total)}.`);else if(out.length)out.push(`Giá cuối vẫn ${vnd(b.total)}.`);
+  return out.length?out.slice(0,2).join(' '):null}
+async function bbPropose(){
+  const prev=B.cur,d=bbDecide();B.version++;B.cur=d;missionBaby();
+  const dm=B.note||bbDiff(prev,d);B.note=null;if(B.lastProp)supersede(B.lastProp);
+  if(dm)await bot(`<div class="diff">${dm}</div>`,300);
+  if(d.kind==='ASKBUDGET'){setStep(2,'Cần bạn quyết định');B.lastProp=await bot(bbBudgetCard(d),520);bbBind(B.lastProp,d);setQuick([]);return}
+  setStep(2,'Đề xuất');B.lastProp=await bot(bbCart(d),560);bbBind(B.lastProp,d);
+  setQuick([...(B.kg<12?[['Bé vừa lên 12,5 kg',()=>{B.kg=12.5;B.sizeOv=null;bbPropose()}]]:[]),...(B.age>=12?[['Bé mới 9 tháng',()=>{B.age=9;B.milk=null;B.qOut=false;bbPropose()}]]:[]),...(B.qty<3?[['Thêm 1 bịch tã',()=>{B.qty=3;bbPropose()}]]:[]),...(d.r.ms==='GU'&&!B.qOut?[['Mô phỏng: Sữa Ngon hết hàng',()=>{B.qOut=true;B.milk=null;bbPropose()}]]:[]),...(d.r.ms==='drop'?[['Thêm lại sữa',()=>{B.milk=null;bbPropose()}]]:[]),...(!B.stale?[['Mô phỏng: giá quan sát 3 ngày trước',()=>{B.stale=true;B.note='Giá của giỏ này được quan sát cách đây 3 ngày. Musk khuyên cập nhật giá trước khi bạn duyệt.';bbPropose()}]]:[]),['Rẻ hơn được không?',async()=>{await bot(`<div class="bub">Musk đã chọn tổ hợp rẻ nhất trong các shop đạt yêu cầu. Cách rẻ hơn là gom đơn để đạt voucher shop (đang áp dụng) hoặc dùng voucher riêng trong Shopee, Musk hỏi ở bước Duyệt.</div>`)}]])}
+function bbBind(el,d){const q=a=>el.querySelector(`[data-act="${a}"]`);
+  if(q('approve'))q('approve').onclick=()=>{user('Duyệt giỏ này');bbApprove()};
+  if(q('edit'))q('edit').onclick=async()=>{user('Sửa yêu cầu');const t=await bot(bbEditCard(),420);bbBindEdit(t);setQuick([])};
+  if(q('size'))q('size').onclick=()=>{const o=bbSize()==='L'?'XL':'L';user('Đổi sang '+o);B.sizeOv=o;bbPropose()};
+  if(q('acceptK'))q('acceptK').onclick=()=>{user('Mua của '+BS.K.name+', tự kiểm tra khi nhận');B.milk='K';bbPropose()};
+  if(q('wait'))q('wait').onclick=()=>{user('Đợi, bỏ sữa khỏi giỏ lúc này');B.milk='drop';B.note='Đã bỏ sữa khỏi giỏ. Musk sẽ nhắc bạn khi '+BS.Q.name+' có hàng lại.';bbPropose()};
+  if(q('refresh'))q('refresh').onclick=async()=>{user('Cập nhật giá');await bot('<div class="bub">Đang lấy lại giá và voucher từ Shopee…</div>',900);B.stale=false;B.note=`Giá đã cập nhật lúc 09:30 hôm nay. Giỏ vẫn ${vnd(d.r.total)}, đã gồm voucher công khai đang chạy.`;bbPropose()};
+  if(q('inf'))q('inf').onclick=()=>{user('Xem sữa Meiji Infant');B.milk='INF';bbPropose()};
+  if(q('drop'))q('drop').onclick=()=>{user('Bỏ sữa khỏi giỏ');B.milk='drop';bbPropose()};
+  if(q('less'))q('less').onclick=()=>{user('Bớt 1 bịch tã');B.qty-=1;bbPropose()};
+  if(q('keep'))q('keep').onclick=()=>{user('Giữ '+B.qty+' bịch, nới ngân sách');B.budget=d.r.total;bbPropose()};
+  el.querySelectorAll('[data-cmp]').forEach(b=>b.onclick=async()=>{user('So sánh '+(b.dataset.cmp==='tan'?'tã':b.dataset.cmp==='sua'?'sữa':'khăn ướt'));await bot(bbCompare(b.dataset.cmp,d),480);setQuick([])})}
+function bbCompare(kind,d){const s=d.r.size,ms=d.r.ms;let cols,rows;
+  const cell=(sh,price,unit,extra)=>({sh,price,unit,extra});
+  if(kind==='tan'){cols=[['K',bbPrice('tan','K',s),vnd(Math.round(bbPrice('tan','K',s)/PACK[s]))+'/miếng','Gom cùng đơn để đạt voucher 60k'],['L',bbPrice('tan','L',s),vnd(Math.round(bbPrice('tan','L',s)/PACK[s]))+'/miếng','Không có voucher shop']];}
+  else if(kind==='sua'){const qo=B.qOut&&ms!=='INF';cols=[['Q',qo?null:bbPrice('sua','Q',s,ms),qo?'—':vnd(Math.round(bbPrice('sua','Q',s,ms)/8))+'/100g',qo?'Hết hàng':'Voucher 20k cho đơn từ 500k'],...(ms==='GU'||ms==='K'||ms==='unk'?[['K',549000,vnd(Math.round(549000/8))+'/100g','Chưa chắc: không ghi hạn sữa']]:[])]}
+  else cols=[['K',89000,'890đ/tờ','Gom cùng đơn tã'],['L',69000,'690đ/tờ','Không có voucher shop']];
+  const q=sh=>BQ[kind][sh]||['Chưa có đánh giá đủ thông tin','—'];
+  const th=cols.map(c=>`<th>${BS[c[0]].name}</th>`).join('');
+  const row=(lab,f)=>`<tr><td>${lab}</td>${cols.map(f).join('')}</tr>`;
+  return `<div class="card"><h4>So sánh ${kind==='tan'?'tã quần Bobby '+s+PACK[s]:kind==='sua'?'sữa Meiji 800g':'khăn ướt không mùi'}</h4><div class="hint">Các shop đạt yêu cầu và shop chưa chắc. Shop không đạt đã nằm ở mục “Không chọn vì”.</div>
+  <div class="tw"><table><tr><th></th>${th}</tr>${row('Giá',c=>`<td>${c[1]?`<b>${vnd(c[1])}</b>`:'<span class="bd">Hết hàng</span>'}</td>`)}${row('Đơn giá chuẩn hóa',c=>`<td>${c[2]}</td>`)}${kind==='sua'?row('Hạn dùng',c=>`<td class="${c[0]==='K'?'bd':''}">${c[0]==='K'?'Không ghi':c[1]?(ms==='INF'?'05/2027':'06/2027'):'—'}</td>`):''}${row('Shop',c=>`<td>${BS[c[0]].tier} · ${BS[c[0]].age}<br>★ ${BS[c[0]].rate} · ${BS[c[0]].n}</td>`)}${row('Người mua nói',c=>`<td>“${q(c[0])[0]}”<br><span class="note">${q(c[0])[1]}</span></td>`)}${row('Ghi chú',c=>`<td>${c[3]}</td>`)}</table></div></div>`}
+function bbEditCard(){const ch=(g,v,lab,on)=>`<button class="chip ${on?'sel':''}" data-g="${g}" data-v="${v}">${lab}</button>`;
+  return `<div class="card eb"><h4>Sửa yêu cầu</h4><div class="hint">Chọn lại điều bạn muốn đổi. Musk tính lại và nói rõ cái gì thay đổi.</div>
+  <div class="q"><h5>Cân nặng của bé</h5><div class="chips">${ch('kg',11,'11 kg',B.kg===11)}${ch('kg',12.5,'12,5 kg',B.kg===12.5)}</div></div>
+  <div class="q"><h5>Tuổi của bé</h5><div class="chips">${ch('age',14,'14 tháng',B.age===14)}${ch('age',9,'9 tháng',B.age===9)}</div></div>
+  <div class="q"><h5>Số bịch tã</h5><div class="chips">${ch('qty',2,'2 bịch',B.qty===2)}${ch('qty',3,'3 bịch',B.qty===3)}</div></div>
+  <div class="q"><h5>Bé có đang bị hăm không?</h5><div class="chips">${ch('rash','yes','Có',B.rash==='yes')}${ch('rash','no','Không',B.rash==='no')}</div></div>
+  <div class="actions"><button class="btn go">Cập nhật giỏ</button></div></div>`}
+function bbBindEdit(el){const d={kg:B.kg,age:B.age,qty:B.qty,rash:B.rash};
+  el.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const g=b.dataset.g;el.querySelectorAll(`[data-g="${g}"]`).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');d[g]=g==='kg'||g==='age'||g==='qty'?Number(b.dataset.v):b.dataset.v});
+  el.querySelector('.go').onclick=()=>{el.querySelector('.card').classList.add('old');const kgc=d.kg!==B.kg,agec=d.age!==B.age;B.kg=d.kg;B.age=d.age;B.qty=d.qty;if(d.rash!==B.rash){B.rash=d.rash;B.rashAuto=false}if(kgc)B.sizeOv=null;if(agec){B.milk=null;B.qOut=false}user(`Bé ${B.age} tháng, ${kgStr()} kg · ${B.qty} bịch tã`);bbPropose()}}
+
+/* ---------- Duyệt (4) ---------- */
+function bbApproveCard(d){const r=d.r,days=`${Math.round(r.qty*PACK[r.size]/6)}–${Math.round(r.qty*PACK[r.size]/5)} ngày`;
+  const rows=bbLines(d).map(l=>`<div class="ln" style="padding:8px 0"><img src="${l.img}" alt="" style="width:44px;height:44px"><div><b style="font-size:14px">${l.t}</b><div class="sub">${l.sub}</div></div><div class="p">${vnd(l.p)}</div></div>`).join('');
+  const voucher=B.personal?`<div class="blk v"><h6 class="okline">✓ Đã dùng voucher của bạn: ${B.personal.code}</h6><div class="small">Tiết kiệm thêm ${vnd(r.pv)}. Nhớ chọn mã <b>${B.personal.code}</b> ở đơn ${BS[r.det.find(x=>x.pv).shop].name} khi thanh toán trên Shopee. Ảnh gốc đã được xoá sau khi đọc.</div><div class="actions" style="margin-top:8px"><button class="btn lnk" data-act="delvoucher">Xoá voucher đã lưu</button></div></div>`:
+  `<div class="blk v" id="vbox"><h6>Bạn có mã giảm giá riêng trên Shopee?</h6><div class="small" style="font-size:13.5px;color:var(--ink)">Musk chỉ thấy mã công khai. Mã bạn đã lưu trong Shopee (Tôi → Kho Voucher) có thể giúp rẻ hơn.</div><div class="actions" style="margin-top:8px"><button class="btn o" data-act="vstart">Chụp Kho Voucher để Musk tính lại</button><button class="btn lnk" data-act="vskip">Bỏ qua</button></div><div class="small" style="margin-top:6px">Musk không cần mật khẩu Shopee. Ảnh được xoá sau khi đọc.</div></div>`;
+  return `<div class="card ac"><h4>Duyệt giỏ hàng</h4><div class="hint">Kiểm tra một lần rồi chốt. Musk không đặt hàng thay bạn, bạn thanh toán trên Shopee.</div>${rows}
+  <div class="tot"><span class="pr">${vnd(r.total)}</span><span class="sub">giá cuối</span></div><div class="sub">${r.pv?'đã gồm voucher, mã của bạn và phí ship':'đã gồm voucher và phí ship'}. Giỏ mở thành ${r.det.length} đơn trên Shopee.</div>
+  ${r.saving>=10000?`<div class="okline" style="margin-top:4px">Tiết kiệm ${vnd(r.saving)} nhờ gom đơn.</div>`:''}
+  <div class="note">Có thể rẻ hơn nếu dùng Xu hoặc ưu đãi thẻ — Musk chưa tính.</div>${voucher}
+  <div class="blk"><b>Về thời điểm mua.</b> Musk không biết bạn còn bao nhiêu tã ở nhà nên không khuyên chờ giảm giá. ${r.qty} bịch tã ${r.size}${PACK[r.size]} dùng khoảng ${days}. ${SALE.name} còn ${SALE.days} ngày: Musk chưa có dữ liệu giá để so sánh, nên không hứa sẽ rẻ hơn.</div>
+  <div class="actions"><button class="btn" data-act="buy">Mua ngay</button><button class="btn o" data-act="remind">Nhắc tôi trước ${SALE.name}</button></div></div>`}
+async function bbApprove(){setStep(3,'Duyệt');setQuick([]);const d=B.cur;B.lastApprove=await bot(bbApproveCard(d),500);bbBindApprove(B.lastApprove,d)}
+function bbBindApprove(el,d){const q=a=>el.querySelector(`[data-act="${a}"]`);
+  q('buy').onclick=async()=>{user('Mua ngay');setStep(4,'Thanh toán');B.placed=d.r.det.map(()=>false);const t=await bot(bbPayCard(d),450);bbBindPay(t,d);setQuick([])};
+  q('remind').onclick=function(){this.textContent='✓ Sẽ nhắc trước '+SALE.name;this.disabled=true;bot('<div class="bub">Musk lưu giỏ này và sẽ nhắc 1 ngày trước 11.11 cùng sáng ngày sale. Khi nhắc, Musk tính lại giá trước.</div>',300)};
+  const dv=q('delvoucher');if(dv)dv.onclick=()=>{B.personal=null;user('Xoá voucher đã lưu');B.note='Đã xoá voucher đã lưu. Giá quay về giá công khai.';supersede(el.closest('.m'));B.cur=bbDecide();B.cur.kind='BUY';B.version++;missionBaby();bot(`<div class="diff">${B.note}</div>`,250).then(()=>{B.note=null;bbApprove()})};
+  q('vskip')&&(q('vskip').onclick=()=>el.querySelector('#vbox').remove());
+  if(q('vstart'))q('vstart').onclick=()=>{const box=el.querySelector('#vbox');
+    box.innerHTML=`<h6>Chụp Kho Voucher để Musk tính lại</h6><ol><li>Mở app Shopee → <b>Tôi</b> → <b>Kho Voucher</b>.</li><li>Chụp màn hình danh sách mã (có thể chụp 2–3 ảnh).</li><li>Tải ảnh lên đây.</li></ol><div class="actions"><label class="btn o" for="bfile" style="display:inline-block">Tải ảnh lên</label><input type="file" id="bfile" accept="image/*" multiple hidden><button class="btn lnk" id="bsample">Dùng ảnh mẫu để xem thử</button></div><div class="small">Musk không cần mật khẩu Shopee. Ảnh được xoá sau khi đọc. Tên, số điện thoại, số dư ví lọt vào ảnh sẽ bị bỏ qua.</div>`;
+    const read=async()=>{box.innerHTML='<h6>Musk đang đọc ảnh…</h6><span class="typing"><i></i><i></i><i></i></span>';await wait(1100);
+      box.innerHTML=`<h6>Musk đọc được 2 mã. Bạn xác nhận giúp trước khi tính lại</h6><div class="codes"><label class="code"><input type="checkbox" class="cb" data-c="SANBE30" checked><span><b>SANBE30</b> · Voucher Shopee<br>Giảm 30.000đ · đơn từ 700.000đ · hạn 31/10</span></label><label class="code"><input type="checkbox" class="cb" data-c="HOANXU"><span><b>HOANXU</b> · Hoàn Xu<br><span class="wn">Musk đọc chưa chắc — kiểm tra lại.</span> Hoàn Xu không trừ vào giá cuối nên Musk không tính.</span></label></div><div class="actions"><button class="btn o" id="bok">Xác nhận và tính lại</button><button class="btn lnk" id="bcancel">Hủy</button></div><div class="small">Mỗi lần thanh toán chỉ dùng được một voucher sàn. Voucher có thể đã hết lượt dù còn hạn. Giá cuối thật là giá ở màn thanh toán Shopee.</div>`;
+      box.querySelector('#bcancel').onclick=()=>{el.querySelector('#vbox').innerHTML='<h6>Bạn có mã giảm giá riêng trên Shopee?</h6><div class="small">Đã bỏ qua. Musk không nhắc lại trong phiên này.</div>'};
+      box.querySelector('#bok').onclick=()=>{const on=[...box.querySelectorAll('.cb')].filter(x=>x.checked&&x.dataset.c==='SANBE30');if(!on.length){box.querySelector('.small').textContent='Chưa có mã nào Musk dùng được để tính lại. Chọn SANBE30 hoặc bấm Hủy.';return}
+        B.personal={code:'SANBE30',exp:'31/10'};user('Xác nhận mã SANBE30');const prev=B.cur;const nd=bbDecide();B.cur=nd;B.version++;missionBaby();supersede(el.closest('.m'));
+        bot(`<div class="diff">Vẫn là giỏ ${BS[nd.r.pick.tan].name} + ${BS.Q.name}; giá cuối giảm còn ${vnd(nd.r.total)} nhờ voucher của bạn (tiết kiệm thêm ${vnd(nd.r.pv)}). Nhớ chọn mã <b>SANBE30</b> ở đơn ${BS[nd.r.det.find(x=>x.pv).shop].name} khi thanh toán trên Shopee.</div>`,300).then(()=>bbApprove())}};
+    box.querySelector('#bfile').onchange=read;box.querySelector('#bsample').onclick=read}}
+
+/* ---------- Thanh toán (5) và sau khi nhận ---------- */
+function bbPayCard(d){const r=d.r;
+  const orders=r.det.map((o,i)=>{const items=[];if(r.pick.tan===o.shop)items.push(`Tã quần Bobby ${r.size}${PACK[r.size]} × ${r.qty}`);if(r.pick.sua===o.shop)items.push(`Sữa Meiji ${r.ms==='INF'?'Infant':'Growing Up'} 800g × 1`);if(r.pick.khan===o.shop)items.push('Khăn ướt không mùi 100 tờ × 1');
+    const checks=[];if(r.pick.tan===o.shop)checks.push(`Đúng size ${r.size}${PACK[r.size]}, dạng tã quần`);if(r.pick.sua===o.shop)checks.push('Đúng Meiji '+(r.ms==='INF'?'Infant':'Growing Up')+' 800g, bản bán tại Việt Nam'+(r.ms==='K'?'. Shop không ghi hạn: kiểm tra hạn dưới đáy hộp khi nhận, cần từ 6 tháng':''));if(r.pick.khan===o.shop)checks.push('Đúng khăn ướt không mùi 100 tờ');
+    const codes=[o.vd?`Voucher shop −${vnd(o.vd)} (đơn từ ${k(VOUCH[o.shop].min)})`:null,o.pv?`Voucher của bạn: mã ${B.personal.code} −${vnd(o.pv)}`:null].filter(Boolean);
+    return `<div class="blk" data-o="${i}"><div style="display:flex;gap:8px;align-items:center"><b>Đơn ${i+1} · ${BS[o.shop].name}</b><span class="pill n st">Chưa đặt</span><span style="margin-left:auto;font-weight:700">${vnd(o.net)}</span></div>
+     <ul style="margin:6px 0;padding-left:18px">${items.map(x=>`<li>${x}</li>`).join('')}</ul>${codes.length?`<div class="small"><b>Mã cần chọn:</b> ${codes.join(' · ')}</div>`:'<div class="small">Không có mã cần chọn cho đơn này.</div>'}
+     <div class="ckl">${checks.map(x=>`<label><input type="checkbox"> ${x}</label>`).join('')}<label><input type="checkbox"> Giá ở trang thanh toán khớp ${vnd(o.net)}. Nếu chênh nhiều, quay lại hỏi Musk</label></div></div>`}).join('');
+  return `<div class="card pay"><h4>Đặt hàng trên Shopee</h4><div class="hint">Giỏ mở thành ${r.det.length} đơn vì mua ở ${r.det.length} shop. Đặt lần lượt từng đơn, chọn đúng mã và kiểm tra trước khi bấm “Đặt hàng”.</div>${B.stale?'<div class="blk sale" style="margin:0 0 10px">Giá Musk quan sát đã cũ (22/10). Giá trên Shopee có thể khác, hãy kiểm tra giá cuối ở trang thanh toán.</div>':''}${orders}
+  <div class="actions"><button class="btn" data-act="open">Mở đơn 1 trên Shopee ↗</button><button class="btn o" data-act="placed">Đánh dấu đơn 1 đã đặt</button></div><div class="note" style="margin-top:8px">Bạn thanh toán trên Shopee. Musk không giữ tiền hay mật khẩu. Giá thật là giá ở màn thanh toán Shopee.</div></div>`}
+function bbBindPay(el,d){const n=d.r.det.length,cur=()=>B.placed.findIndex(x=>!x);
+  const op=el.querySelector('[data-act="open"]'),pl=el.querySelector('[data-act="placed"]');
+  op.onclick=()=>{op.textContent='Bản mẫu: sẽ mở Shopee ↗'};
+  pl.onclick=async()=>{const i=cur();B.placed[i]=true;const blk=el.querySelector(`[data-o="${i}"]`);const st=blk.querySelector('.st');st.className='pill g st';st.textContent='Đã đặt';
+    const j=cur();
+    if(j===-1){op.disabled=pl.disabled=true;user('Đánh dấu đơn '+(i+1)+' đã đặt');setStep(5,'Sau khi nhận');await bot('<div class="bub">Đã ghi nhận cả '+n+' đơn. Khi hàng về, mở lại Musk để kiểm tra trước khi bấm “Đã nhận hàng” trên Shopee.</div>',300);setQuick([['Mô phỏng: hàng đã giao',async()=>{const t=await bot(bbAfterCard(d),450);bbBindAfter(t);setQuick([])}]])}
+    else{op.textContent=`Mở đơn ${j+1} trên Shopee ↗`;pl.textContent=`Đánh dấu đơn ${j+1} đã đặt`}}}
+function bbAfterCard(d){const r=d.r;return `<div class="card aft"><h4>Khi nhận hàng, kiểm tra trước đã</h4><div class="hint">Chưa bấm “Đã nhận hàng” trên Shopee trước khi kiểm tra xong.</div>
+  <div class="ckl"><label><input type="checkbox"> Tã: kiểm tra bao bì, ngày sản xuất và mã lô</label><label><input type="checkbox"> Sữa: kiểm tra hạn, tem niêm phong, lon không móp</label><label><input type="checkbox"> Khăn ướt: kiểm tra seal từng gói</label></div>
+  <div class="blk"><b>Lịch mua lại.</b> ${r.qty} bịch tã dùng khoảng ${Math.round(r.qty*PACK[r.size]/6)}–${Math.round(r.qty*PACK[r.size]/5)} ngày và 1 hộp sữa khoảng 10–14 ngày. Musk sẽ nhắc bạn mua sữa lại sau khoảng 10 ngày.</div>
+  <div class="actions"><button class="btn" data-act="checked">Đã kiểm tra xong</button><button class="btn o" data-act="issue">Báo vấn đề</button></div></div>`}
+function bbBindAfter(el){
+  el.querySelector('[data-act="checked"]').onclick=()=>{const all=[...el.querySelectorAll('input')].every(i=>i.checked);user('Đã kiểm tra xong');bot(all?'<div class="bub">Xong rồi. Bạn có thể bấm “Đã nhận hàng” trên Shopee. Musk sẽ nhắc mua lại khi gần hết.</div>':'<div class="bub">Bạn chưa tick hết mục kiểm tra. Hãy kiểm tra hạn sữa, seal và mã lô trước khi bấm “Đã nhận hàng” trên Shopee.</div>',300)};
+  el.querySelector('[data-act="issue"]').onclick=()=>{user('Báo vấn đề');bot('<div class="bub">Giữ nguyên hộp, ảnh hạn dùng/mã lô và video mở hộp. Đừng bấm “Đã nhận hàng” trên Shopee. Vào Shopee → Đơn mua → chọn Trả hàng/Hoàn tiền và gửi kèm ảnh.</div>',300)}}
+
+/* ---------- khởi động ---------- */
+async function startBaby(){
+  CAT='baby';missionBaby();setStep(1,'Hỏi nhu cầu');
+  user('Tã quần Bobby 2 bịch, sữa Meiji 1 hộp, khăn ướt.');
+  const t=await bot(bbIntro(),600);bbBindQ(t);
+  col.append($e(`<div class="credits">Ảnh minh họa từ Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Diapers_for_babies_and_toddlers,_Albert_Heijn_Winschoten_(2018)_01.jpg" target="_blank" rel="noopener">Donald Trung Quoc Don</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Infant_formula.jpg" target="_blank" rel="noopener">국립국어원</a> (CC BY-SA 2.0 KR), <a href="https://commons.wikimedia.org/wiki/File:Baby_wipes.jpg" target="_blank" rel="noopener">Headlock0225</a> (CC BY 4.0). Ảnh được thu nhỏ. Tên shop, giá, đánh giá là dữ liệu giả lập.</div>`));
+  const h=location.hash.slice(1);if(h.startsWith('baby')&&h!=='baby-manual'){const c=sel=>document.querySelector(sel),wt=ms=>new Promise(r=>setTimeout(r,ms));await wt(300);
+    c('[data-r="no"]').click();c('.qc .go').click();await wt(2200);
+    const chip=t=>[...document.querySelectorAll('#quick .chip')].find(b=>b.textContent.includes(t)).click();
+    if(h==='baby-xl'){chip('12,5 kg');await wt(2600)}
+    if(h==='baby-milk'){chip('9 tháng');await wt(2600)}
+    if(h==='baby-budget'){chip('Thêm 1 bịch');await wt(2600)}
+    if(h==='baby-stale'){chip('3 ngày trước');await wt(2600)}
+    if(h==='baby-oos'){chip('Sữa Ngon hết hàng');await wt(2600)}
+    if(h==='baby-oosK'){chip('Sữa Ngon hết hàng');await wt(2600);c('.bc:not(.old) [data-act="acceptK"]').click();await wt(2600)}
+    if(h==='baby-buy'||h==='baby-pay'||h==='baby-v'){c('.bc [data-act="approve"]').click();await wt(1200)}
+    if(h==='baby-v'){c('[data-act="vstart"]').click();await wt(200);document.getElementById('bsample').click();await wt(1500);document.getElementById('bok').click();await wt(2200)}
+    if(h==='baby-pay'){c('.ac:not(.old) [data-act="buy"]').click();await wt(1200)}
+    await wt(200);feed.scrollTop=feed.scrollHeight;if(h==='baby-stale'||h==='baby-oos'){const bc=[...document.querySelectorAll('.bc:not(.old)')].pop();feed.scrollTop+=bc.getBoundingClientRect().top-feed.getBoundingClientRect().top-12}}}
+function switchCat(cat){
+  col.innerHTML='';quick.innerHTML='';Object.keys(S).forEach(k2=>delete S[k2]);Object.assign(S,JSON.parse(S0));B=JSON.parse(B0);CAT=cat;
+  document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.cat===cat));
+  setStep(1,'Hỏi nhu cầu');
+  if(cat==='baby')startBaby();else{CAT='iphone';startIphone()}}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{if(b.dataset.cat!==CAT)switchCat(b.dataset.cat)});
+
+if(location.hash.slice(1).startsWith('baby')){document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x.dataset.cat==='baby'));startBaby()}else startIphone();
+</script>

@@ -1,0 +1,190 @@
+{
+    "error": 0,
+    "error_message": "success",
+    "data": {
+        "shoporders": null,
+        "can_use_coins": false,
+        "use_coins": false,
+        "coin_discount": 0,
+        "coin_info": {
+            "coin_earn": 0,
+            "coin_earn_before_return": null,
+            "coin_earn_by_voucher": 0,
+            "coin_offset": 0,
+            "coin_spend_rule_id": null,
+            "coin_used": 0
+        },
+        "coin_text": "Bạn chưa chọn sản phẩm",
+        "coin_detailed_text": "Vui lòng chọn sản phẩm để tính toán số Xu có thể dùng cho đơn hàng",
+        "invalid_message_code": 0,
+        "invalid_message": "",
+        "platform_vouchers": [],
+        "shop_vouchers": [
+            {
+                "shop_id": 469248922,
+                "promotionid": 1511384091103232,
+                "voucher_code": "ONII12345",
+                "reward_type": 0,
+                "is_applied": false,
+                "is_claimed_before": true,
+                "discount_value": 2500000000,
+                "discount_percentage": 0,
+                "discount_cap": 0,
+                "min_spend": 35000000000,
+                "current_spend": 0,
+                "coin_earned": 0,
+                "coin_percentage": 0,
+                "collect_time": 1793202895,
+                "invalid_message_code": 7,
+                "new_tag": "",
+                "new_voucher_available": false,
+                "is_auto_claimed_just_now": false,
+                "signature": "",
+                "signature_source": 0
+            }
+        ],
+        "ads_vouchers": [],
+        "free_shipping_voucher_info": {
+            "free_shipping_voucher_id": 0,
+            "free_shipping_voucher_code": "",
+            "disabled_reason": "",
+            "description": "",
+            "disabled_reason_code": 0
+        },
+        "total_payment": [
+            0
+        ],
+        "problematic_items": null,
+        "bundle_deals": [],
+        "bundle_deals_promotion_discount": null,
+        "shop_voucher_entrance": [
+            {
+                "shop_id": 469248922,
+                "entrance": {
+                    "description": "Voucher giảm đến {{discount}}",
+                    "attributes": [
+                        {
+                            "key": "discount",
+                            "value": 2500000000,
+                            "format_currency": 3,
+                            "format": 8,
+                            "text": "",
+                            "attributes": []
+                        }
+                    ],
+                    "entrance_level": 0,
+                    "entrance_type": 2,
+                    "icon": "sg-11134309-7rffy-m3g8pdwmylt108"
+                },
+                "block_id": "469248922",
+                "shop_ids": null
+            }
+        ],
+        "switch_fulfillment_source_text": null,
+        "discount_detail": {
+            "subtotal": {
+                "label": "Tổng tiền hàng",
+                "value": 0,
+                "coin_value": 0,
+                "format": "price",
+                "hint": 0,
+                "icon_type": 0
+            },
+            "total_saved": {
+                "label": "Tiết kiệm",
+                "value": 0,
+                "coin_value": 0,
+                "format": "price",
+                "hint": 0,
+                "icon_type": 0
+            },
+            "total": {
+                "label": "Tổng số tiền",
+                "value": 0,
+                "coin_value": 0,
+                "format": "price",
+                "hint": 0,
+                "icon_type": 0
+            },
+            "coin_earn": 0,
+            "breakdown": [],
+            "shipping_fee": {
+                "estimated_shipping_fee": {
+                    "label": "Phí Vận Chuyển",
+                    "value": 0,
+                    "coin_value": 0,
+                    "format": "price",
+                    "hint": 0,
+                    "icon_type": 0
+                },
+                "shipping_discount": {
+                    "label": "Giảm giá vận chuyển",
+                    "value": 0,
+                    "coin_value": 0,
+                    "format": "price",
+                    "hint": 0,
+                    "icon_type": 0
+                },
+                "buyer_paid_shipping_fee": {
+                    "label": "",
+                    "value": 0,
+                    "coin_value": 0,
+                    "format": "price",
+                    "hint": 0,
+                    "icon_type": 0
+                },
+                "show_shipping_fee": false
+            }
+        },
+        "tracking_code": 0,
+        "tracking_data": null,
+        "packaged_item_infos": [],
+        "platform_voucher_entrance": {
+            "text": "Chọn hoặc nhập mã",
+            "highlight": false,
+            "icon": "sg-11134309-7rffy-m3g8pdwmylt108",
+            "labels": [],
+            "disabled_reason": ""
+        },
+        "is_auto_applied_platform_voucher": false,
+        "packaged_bundle_deal_infos": [],
+        "coin_display_code": -1,
+        "override_manual_apply_platform_voucher": false,
+        "cart_blocks": [
+            {
+                "block_id": "469248922",
+                "block_type": 0,
+                "item_briefs": [],
+                "updated_items": []
+            }
+        ],
+        "cart_state": {
+            "similar_cheaper_cart_items": null,
+            "is_subsequent_load": true,
+            "session_id": "1793259773_4120577269618842934",
+            "shipping_orders": [],
+            "shipment_group_infos": [],
+            "order_id": null,
+            "initial_session_timestamp": 1793259773,
+            "block_ids_with_threshold_hit": [],
+            "teleconsult_order_id": null,
+            "bds_with_smart_bundle": []
+        },
+        "translation_status": 0,
+        "shipping_promo_banners": [],
+        "cart_session_id": "1793259773_4120577269618842934",
+        "upsell_platform_voucher": {
+            "upsell_platform_voucher_detail": null,
+            "upsell_platform_voucher_entrance": null,
+            "upsell_platform_voucher_error": {
+                "error_code": 0,
+                "error_message": ""
+            }
+        },
+        "pre_checkout_data": "{\"source_client_ids\":[10],\"promotion_data\":{\"platform_voucher\":{\"promotion_id\":0,\"voucher_code\":\"\",\"is_manual_applied\":true},\"fsv\":{\"promotion_id\":0,\"voucher_code\":\"\",\"is_manual_applied\":true},\"shop_vouchers\":[]}}",
+        "should_hide_sensitive_fields": false
+    },
+    "message_level": null,
+    "warn_message": "",
+    "popup_info": null
+}

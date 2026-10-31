@@ -1,0 +1,3480 @@
+{
+    "bff_meta": null,
+    "error": null,
+    "error_msg": null,
+    "data": {
+        "item": {
+            "item_id": 42568221380,
+            "shop_id": 308461157,
+            "item_status": "normal",
+            "status": 1,
+            "item_type": 0,
+            "reference_item_id": "",
+            "title": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+            "image": "vn-11134207-820l4-megm9h2a4f7k62",
+            "label_ids": [
+                1000265,
+                1000276,
+                1000275,
+                1000278,
+                1000277,
+                1000279,
+                1009763,
+                1007525,
+                1000267,
+                1000269,
+                1000271,
+                1000266,
+                1000268,
+                1000270,
+                1000272,
+                1000273,
+                1000274,
+                1000255,
+                1012191,
+                1014184,
+                1000257,
+                1000254,
+                1000260,
+                1000264,
+                1000259,
+                1000262,
+                1000256,
+                1000263,
+                1000258,
+                844931046478970,
+                299033343,
+                844931064601283,
+                2213728,
+                2243682,
+                299103349,
+                299108352,
+                1883614,
+                2288614,
+                844931086908638,
+                299138377,
+                998296089,
+                998291058,
+                700915020,
+                1718382932,
+                700970052,
+                2318666,
+                2328631,
+                299108452,
+                998331091,
+                701000042,
+                1400850079,
+                299153498,
+                2328717,
+                1400845181,
+                299138520,
+                998331113,
+                998326108,
+                299138596,
+                998326145,
+                2283786,
+                998326102,
+                1718392985,
+                822059849520140,
+                998326152,
+                2288597,
+                700960024,
+                2298814,
+                701000100,
+                1400850112,
+                998301215,
+                998301221,
+                1400850173,
+                1400850192,
+                998301249,
+                998301256,
+                998301258,
+                700960217,
+                1718413065,
+                700810080,
+                1000688,
+                1718388149,
+                1718388157,
+                2348631,
+                2348635,
+                2348641,
+                2348648,
+                299178315,
+                1400835230,
+                299178325,
+                2343610,
+                299178399,
+                701025084,
+                998351059,
+                998351061,
+                299108673,
+                998356002,
+                998356009,
+                1000300,
+                299108688,
+                299138685,
+                998356051,
+                701020022,
+                2283950,
+                298628334,
+                998291302,
+                998291317,
+                998291338,
+                1400895059,
+                1718447974,
+                998291358,
+                1400895088,
+                1400895092,
+                1400895102,
+                700960319,
+                2383578,
+                299253347,
+                2383635,
+                701000013,
+                2383651,
+                2383657,
+                2453650,
+                2453652,
+                299253367,
+                299253396,
+                299283335,
+                299283384,
+                2423660,
+                2288653,
+                700965053,
+                700515093,
+                998286031,
+                998146086,
+                829011927936514,
+                701060030,
+                998431007,
+                701060032,
+                1006856,
+                1009063,
+                2318605
+            ],
+            "is_adult": false,
+            "is_preview": false,
+            "flag": 720896,
+            "is_service_by_shopee": false,
+            "condition": 1,
+            "cat_id": 100013,
+            "has_low_fulfillment_rate": false,
+            "is_live_streaming_price": null,
+            "currency": "VND",
+            "brand": "Apple",
+            "brand_id": 1189223,
+            "show_discount": 6,
+            "ctime": 1757413309,
+            "item_rating": {
+                "rating_star": 4.962283737024221
+            },
+            "cb_option": 0,
+            "has_model_with_available_shopee_stock": false,
+            "shop_location": "Thành phố Hồ Chí Minh",
+            "attributes": [
+                {
+                    "name": "Dung lượng lưu trữ",
+                    "value": "256GB",
+                    "id": 100465,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 5162,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Loại bảo hành",
+                    "value": "Bảo hành nhà sản xuất",
+                    "id": 100370,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 2419,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Loại cáp điện thoại",
+                    "value": "Type C",
+                    "id": 100481,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 2790,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Lọai sim",
+                    "value": "Micro, Nano, Tiêu chuẩn",
+                    "id": 100504,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 2814,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Tên tổ chức chịu trách nhiệm sản xuất",
+                    "value": "Đang cập nhật",
+                    "id": 101067,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 6700,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Địa chỉ tổ chức chịu trách nhiệm sản xuất",
+                    "value": "Đang cập nhật",
+                    "id": 101068,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 6701,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Sản phẩm đặt theo yêu cầu",
+                    "value": "Không",
+                    "id": 101219,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 7222,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Tích hợp pin",
+                    "value": "Không",
+                    "id": 100526,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 2930,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "SIRIM Certified",
+                    "value": "No",
+                    "id": 101198,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 7058,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Kích thước (dài x rộng x cao)",
+                    "value": "150 x 71.9 x 8.8 mm",
+                    "id": 100942,
+                    "is_timestamp": false,
+                    "brand_option": null,
+                    "val_id": 0,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": null,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                }
+            ],
+            "rich_text_description": {
+                "paragraph_list": [
+                    {
+                        "type": 0,
+                        "text": "\t\tiPhone 17 Pro Max được coi là “vũ khí chiến lược” của iPhone 17 Series. Không chỉ là một chiếc điện thoại thông thường, mẫu iPhone cao cấp này còn thể hiện sự đổi mới và sáng tạo. Với nhiều cải tiến nổi bật về thiết kế, màn hình, hiệu suất, cũng như hệ thống camera và pin, iPhone 17 Pro Max mang lại trải nghiệm tuyệt vời cho người dùng. Dưới đây, hãy cùng Viettel Store tìm hiểu về những tính năng mới cũng như giá bán của iPhone 17 Pro Max.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 10001,
+                        "text": null,
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": 1
+                    },
+                    {
+                        "type": 0,
+                        "text": "\t\tMàn hình Super Retina XDR hiển thị sống động từng khoảnh khắc",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "iPhone 17 Pro Max được trang bị màn hình Super Retina XDR lớn tới 6,9 inch, mang lại trải nghiệm hiển thị sống động và chân thực. Màn hình này hỗ trợ độ phân giải cao và tích hợp công nghệ ProMotion tiên tiến, giúp tái tạo màu sắc rực rỡ, chi tiết sắc nét và độ tương phản ấn tượng.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Với không gian hiển thị rộng rãi, thiết bị dễ dàng đáp ứng nhu cầu từ xem phim, chơi game cho đến công việc đa nhiệm. Đặc biệt, khả năng hiển thị màu sắc chính xác là một trong những điểm mạnh nổi bật, rất phù hợp với những người làm trong lĩnh vực sáng tạo như nhiếp ảnh gia hay nhà thiết kế đồ họa.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4cphc454",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "\t\tChip A19 Pro hiệu năng mạnh mẽ",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Chip A19 Pro được chế tạo trên quy trình 3nm tiên tiến, mang đến hiệu suất mạnh mẽ và khả năng tiết kiệm năng lượng đáng kể. Nhờ vào sức mạnh này, iPhone 17 Pro Max có thể xử lý mượt mà các tác vụ nặng như chơi game đồ họa cao, dựng video 4K hay làm việc với các ứng dụng AI phức tạp.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Không chỉ tập trung vào hiệu suất, chip A19 Pro còn tối ưu hóa mức tiêu thụ điện năng, giúp kéo dài thời gian sử dụng thiết bị. Đây là một nâng cấp quan trọng, mang lại trải nghiệm ổn định và toàn diện cho người dùng.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4dolj7d5",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "\t\tCamera sắc nét, chân thực trong từng chi tiết",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Cụm ba camera phía sau của iPhone 17 Pro Max đều có độ phân giải 48MP, mang lại chất lượng hình ảnh xuất sắc với độ chi tiết cao và rõ nét trong mọi điều kiện ánh sáng. Tính năng chụp đêm, zoom quang học và góc chụp siêu rộng cũng đã được cải tiến, giúp người dùng dễ dàng ghi lại những khoảnh khắc đẹp một cách chuyên nghiệp.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Ngoài ra, mẫu điện thoại cao cấp này còn trang bị camera trước với độ phân giải 18MP, cho phép chụp ảnh selfie rõ ràng, chân thực và tự nhiên hơn.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4dq03na2",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Một trong những điểm đặc biệt nhất trên iPhone 17 Pro Max chính là tính năng Ghi hình kép, cho phép người dùng quay video đồng thời bằng cả camera trước và sau. Với khả năng này, bạn có thể vừa ghi lại khung cảnh xung quanh bằng camera chính, vừa lưu giữ khoảnh khắc cảm xúc của chính mình qua camera selfie.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Tính năng này đặc biệt hữu ích cho các vlogger, streamer hoặc những ai thường xuyên tạo nội dung trên mạng xã hội, khi không cần đến thiết bị hỗ trợ phức tạp mà vẫn có được video hai góc nhìn sống động. Bên cạnh đó, Apple còn tối ưu hóa thuật toán xử lý hình ảnh, giúp cả hai video đều đạt chất lượng sắc nét, màu sắc trung thực và âm thanh rõ ràng.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4dreo3e5",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "\t\tThời lượng pin kéo dài",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "iPhone 17 Pro Max sở hữu viên pin dung lượng lớn kết hợp với chip A19 Pro, mang lại thời gian sử dụng ấn tượng. Người dùng có thể thoải mái sử dụng thiết bị cả ngày mà không cần lo lắng về việc sạc pin. Hơn nữa, công nghệ sạc nhanh cũng đã được cải tiến, cho phép sạc nhanh lên đến 50% trong 20 phút, rất thuận tiện cho những ai có lịch trình bận rộn. Điều này khiến iPhone 17 Pro Max không chỉ mạnh mẽ mà còn vô cùng tiện lợi trong mọi hoàn cảnh.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4du7sz23",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "\t\tTính năng mới thông minh",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "iPhone 17 Pro Max mang đến bước tiến ấn tượng khi cung cấp dung lượng lưu trữ tối đa lên đến 2TB – con số vượt trội so với nhiều mẫu smartphone hiện nay. Với bộ nhớ khổng lồ này, người dùng có thể thoải mái lưu trữ hàng nghìn bức ảnh chất lượng cao, video 4K hay thậm chí là 8K, cùng kho nhạc, phim và ứng dụng nặng mà không lo đầy bộ nhớ.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 0,
+                        "text": "Với dung lượng “khủng” này, iPhone 17 Pro Max thực sự trở thành một chiếc “ổ cứng di động” cao cấp, đáp ứng trọn vẹn nhu cầu công việc lẫn giải trí mà vẫn duy trì hiệu năng mượt mà.",
+                        "img_id": null,
+                        "ratio": null,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4dvmdfbf",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    },
+                    {
+                        "type": 1,
+                        "text": null,
+                        "img_id": "vn-11134208-820l4-mehyoc4dst8je9",
+                        "ratio": 1,
+                        "description_type": 1,
+                        "empty_paragraph_count": null
+                    }
+                ],
+                "source_language": null
+            },
+            "invoice_option": null,
+            "is_category_failed": null,
+            "is_prescription_item": false,
+            "preview_info": null,
+            "show_prescription_feed": false,
+            "is_alcohol_product": false,
+            "is_infant_milk_formula_product": false,
+            "is_unavailable": false,
+            "is_partial_fulfilled": true,
+            "is_presale": false,
+            "is_presale_deposit_item": null,
+            "is_presale_deposit_made": null,
+            "description": "\t\tiPhone 17 Pro Max được coi là “vũ khí chiến lược” của iPhone 17 Series. Không chỉ là một chiếc điện thoại thông thường, mẫu iPhone cao cấp này còn thể hiện sự đổi mới và sáng tạo. Với nhiều cải tiến nổi bật về thiết kế, màn hình, hiệu suất, cũng như hệ thống camera và pin, iPhone 17 Pro Max mang lại trải nghiệm tuyệt vời cho người dùng. Dưới đây, hãy cùng Viettel Store tìm hiểu về những tính năng mới cũng như giá bán của iPhone 17 Pro Max.\n\n\t\tMàn hình Super Retina XDR hiển thị sống động từng khoảnh khắc\niPhone 17 Pro Max được trang bị màn hình Super Retina XDR lớn tới 6,9 inch, mang lại trải nghiệm hiển thị sống động và chân thực. Màn hình này hỗ trợ độ phân giải cao và tích hợp công nghệ ProMotion tiên tiến, giúp tái tạo màu sắc rực rỡ, chi tiết sắc nét và độ tương phản ấn tượng.\nVới không gian hiển thị rộng rãi, thiết bị dễ dàng đáp ứng nhu cầu từ xem phim, chơi game cho đến công việc đa nhiệm. Đặc biệt, khả năng hiển thị màu sắc chính xác là một trong những điểm mạnh nổi bật, rất phù hợp với những người làm trong lĩnh vực sáng tạo như nhiếp ảnh gia hay nhà thiết kế đồ họa.\n\n\n\t\tChip A19 Pro hiệu năng mạnh mẽ\nChip A19 Pro được chế tạo trên quy trình 3nm tiên tiến, mang đến hiệu suất mạnh mẽ và khả năng tiết kiệm năng lượng đáng kể. Nhờ vào sức mạnh này, iPhone 17 Pro Max có thể xử lý mượt mà các tác vụ nặng như chơi game đồ họa cao, dựng video 4K hay làm việc với các ứng dụng AI phức tạp.\nKhông chỉ tập trung vào hiệu suất, chip A19 Pro còn tối ưu hóa mức tiêu thụ điện năng, giúp kéo dài thời gian sử dụng thiết bị. Đây là một nâng cấp quan trọng, mang lại trải nghiệm ổn định và toàn diện cho người dùng.\n\n\n\t\tCamera sắc nét, chân thực trong từng chi tiết\nCụm ba camera phía sau của iPhone 17 Pro Max đều có độ phân giải 48MP, mang lại chất lượng hình ảnh xuất sắc với độ chi tiết cao và rõ nét trong mọi điều kiện ánh sáng. Tính năng chụp đêm, zoom quang học và góc chụp siêu rộng cũng đã được cải tiến, giúp người dùng dễ dàng ghi lại những khoảnh khắc đẹp một cách chuyên nghiệp.\nNgoài ra, mẫu điện thoại cao cấp này còn trang bị camera trước với độ phân giải 18MP, cho phép chụp ảnh selfie rõ ràng, chân thực và tự nhiên hơn.\n\n\nMột trong những điểm đặc biệt nhất trên iPhone 17 Pro Max chính là tính năng Ghi hình kép, cho phép người dùng quay video đồng thời bằng cả camera trước và sau. Với khả năng này, bạn có thể vừa ghi lại khung cảnh xung quanh bằng camera chính, vừa lưu giữ khoảnh khắc cảm xúc của chính mình qua camera selfie.\nTính năng này đặc biệt hữu ích cho các vlogger, streamer hoặc những ai thường xuyên tạo nội dung trên mạng xã hội, khi không cần đến thiết bị hỗ trợ phức tạp mà vẫn có được video hai góc nhìn sống động. Bên cạnh đó, Apple còn tối ưu hóa thuật toán xử lý hình ảnh, giúp cả hai video đều đạt chất lượng sắc nét, màu sắc trung thực và âm thanh rõ ràng.\n\n\n\t\tThời lượng pin kéo dài\niPhone 17 Pro Max sở hữu viên pin dung lượng lớn kết hợp với chip A19 Pro, mang lại thời gian sử dụng ấn tượng. Người dùng có thể thoải mái sử dụng thiết bị cả ngày mà không cần lo lắng về việc sạc pin. Hơn nữa, công nghệ sạc nhanh cũng đã được cải tiến, cho phép sạc nhanh lên đến 50% trong 20 phút, rất thuận tiện cho những ai có lịch trình bận rộn. Điều này khiến iPhone 17 Pro Max không chỉ mạnh mẽ mà còn vô cùng tiện lợi trong mọi hoàn cảnh.\n\n\n\t\tTính năng mới thông minh\niPhone 17 Pro Max mang đến bước tiến ấn tượng khi cung cấp dung lượng lưu trữ tối đa lên đến 2TB – con số vượt trội so với nhiều mẫu smartphone hiện nay. Với bộ nhớ khổng lồ này, người dùng có thể thoải mái lưu trữ hàng nghìn bức ảnh chất lượng cao, video 4K hay thậm chí là 8K, cùng kho nhạc, phim và ứng dụng nặng mà không lo đầy bộ nhớ.\nVới dung lượng “khủng” này, iPhone 17 Pro Max thực sự trở thành một chiếc “ổ cứng di động” cao cấp, đáp ứng trọn vẹn nhu cầu công việc lẫn giải trí mà vẫn duy trì hiệu năng mượt mà.\n\n\n",
+            "categories": [
+                {
+                    "catid": 100013,
+                    "display_name": "Điện Thoại & Phụ Kiện",
+                    "no_sub": false,
+                    "is_default_subcat": false
+                },
+                {
+                    "catid": 100073,
+                    "display_name": "Điện thoại",
+                    "no_sub": true,
+                    "is_default_subcat": false
+                }
+            ],
+            "fe_categories": [
+                {
+                    "catid": 11036030,
+                    "display_name": "Điện Thoại & Phụ Kiện",
+                    "no_sub": false,
+                    "is_default_subcat": false
+                },
+                {
+                    "catid": 11036031,
+                    "display_name": "Điện thoại",
+                    "no_sub": false,
+                    "is_default_subcat": false
+                },
+                {
+                    "catid": 11036032,
+                    "display_name": "Apple",
+                    "no_sub": true,
+                    "is_default_subcat": false
+                }
+            ],
+            "item_has_video": false,
+            "presale_dday_start_time": null,
+            "is_lowest_price_at_shopee": null,
+            "display_description_disclosure_rsku_redirection": null,
+            "display_similar_sold": null,
+            "title_type": 1,
+            "authorized_brand_name": null,
+            "is_sexual": false,
+            "models": [
+                {
+                    "item_id": 42568221380,
+                    "status": 1,
+                    "current_promotion_reserved_stock": null,
+                    "name": "Bạc",
+                    "promotion_id": 509423345291929,
+                    "price": 3719000000000,
+                    "price_stocks": [
+                        {
+                            "allocated_stock": null,
+                            "stock_breakdown_by_location": null,
+                            "promotion_type": 301
+                        },
+                        {
+                            "allocated_stock": null,
+                            "stock_breakdown_by_location": null,
+                            "promotion_type": 0
+                        }
+                    ],
+                    "current_promotion_has_reserve_stock": false,
+                    "normal_stock": null,
+                    "extinfo": {
+                        "tier_index": [
+                            2
+                        ],
+                        "is_pre_order": false,
+                        "estimated_days": 2,
+                        "sku_image": ""
+                    },
+                    "price_before_discount": 3799000000000,
+                    "model_id": 276504907702,
+                    "stock": null,
+                    "has_gimmick_tag": false,
+                    "key_measurement": null,
+                    "sold": null,
+                    "is_lowest_price_at_shopee": false,
+                    "name_tr": null,
+                    "is_clickable": false,
+                    "is_grayout": true,
+                    "has_stock": false
+                },
+                {
+                    "item_id": 42568221380,
+                    "status": 1,
+                    "current_promotion_reserved_stock": null,
+                    "name": "Xanh Đậm",
+                    "promotion_id": 0,
+                    "price": 3799000000000,
+                    "price_stocks": [
+                        {
+                            "allocated_stock": null,
+                            "stock_breakdown_by_location": null,
+                            "promotion_type": 0
+                        }
+                    ],
+                    "current_promotion_has_reserve_stock": false,
+                    "normal_stock": null,
+                    "extinfo": {
+                        "tier_index": [
+                            0
+                        ],
+                        "is_pre_order": false,
+                        "estimated_days": 2,
+                        "sku_image": ""
+                    },
+                    "price_before_discount": 0,
+                    "model_id": 276504907700,
+                    "stock": null,
+                    "has_gimmick_tag": false,
+                    "key_measurement": null,
+                    "sold": null,
+                    "is_lowest_price_at_shopee": false,
+                    "name_tr": null,
+                    "is_clickable": false,
+                    "is_grayout": true,
+                    "has_stock": false
+                },
+                {
+                    "item_id": 42568221380,
+                    "status": 1,
+                    "current_promotion_reserved_stock": null,
+                    "name": "Cam Vũ Trụ",
+                    "promotion_id": 509423345291929,
+                    "price": 3569000000000,
+                    "price_stocks": [
+                        {
+                            "allocated_stock": null,
+                            "stock_breakdown_by_location": null,
+                            "promotion_type": 301
+                        },
+                        {
+                            "allocated_stock": null,
+                            "stock_breakdown_by_location": null,
+                            "promotion_type": 0
+                        }
+                    ],
+                    "current_promotion_has_reserve_stock": false,
+                    "normal_stock": null,
+                    "extinfo": {
+                        "tier_index": [
+                            1
+                        ],
+                        "is_pre_order": false,
+                        "estimated_days": 2,
+                        "sku_image": ""
+                    },
+                    "price_before_discount": 3799000000000,
+                    "model_id": 276504907701,
+                    "stock": null,
+                    "has_gimmick_tag": false,
+                    "key_measurement": null,
+                    "sold": null,
+                    "is_lowest_price_at_shopee": false,
+                    "name_tr": null,
+                    "is_clickable": true,
+                    "is_grayout": false,
+                    "has_stock": true
+                }
+            ],
+            "tier_variations": [
+                {
+                    "name": "Màu Sắc",
+                    "options": [
+                        "Xanh Đậm",
+                        "Cam Vũ Trụ",
+                        "Bạc"
+                    ],
+                    "images": [
+                        "vn-11134207-820l4-megm9h242p6q9f",
+                        "vn-11134207-820l4-megm9h2a4f7k62",
+                        "vn-11134207-820l4-megm9h2acumd01"
+                    ],
+                    "properties": null,
+                    "type": 0,
+                    "summed_stocks": null,
+                    "display_indicators": [
+                        2,
+                        0,
+                        2
+                    ],
+                    "name_tr": null,
+                    "options_tr": null,
+                    "selling_points": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "selling_points_tr": null
+                }
+            ],
+            "size_chart": null,
+            "size_chart_info": null,
+            "welcome_package_type": null,
+            "is_free_gift": false,
+            "deep_discount": null,
+            "is_low_price_eligible": null,
+            "bundle_deal_info": null,
+            "add_on_deal_info": null,
+            "shipping_icon_type": 0,
+            "badge_icon_type": 0,
+            "spl_info": null,
+            "estimated_days": 2,
+            "is_pre_order": false,
+            "is_free_shipping": false,
+            "overall_purchase_limit": null,
+            "min_purchase_limit": 0,
+            "is_hide_stock": false,
+            "stock": null,
+            "normal_stock": null,
+            "current_promotion_reserved_stock": null,
+            "can_use_wholesale": false,
+            "wholesale_tier_list": [],
+            "price": 3569000000000,
+            "raw_discount": 6,
+            "hidden_price_display": null,
+            "price_min": 3569000000000,
+            "price_max": 3569000000000,
+            "price_before_discount": 3799000000000,
+            "price_min_before_discount": 3799000000000,
+            "price_max_before_discount": 3799000000000,
+            "other_stock": null,
+            "discount_stock": null,
+            "current_promotion_has_reserve_stock": false,
+            "complaint_policy": null,
+            "show_recycling_info": null,
+            "should_show_amp_tag": true,
+            "all_models_has_pre_order": false,
+            "is_item_inherited": true,
+            "max_quantity": null,
+            "drug_details": null,
+            "selected_real_models": null,
+            "size_tier_variation_idx": null,
+            "is_fashion_item": false,
+            "social_proof_label": null,
+            "title_tr": null,
+            "description_tr": null,
+            "rich_text_description_tr": null,
+            "stock_display": "CÒN HÀNG",
+            "max_quantity_display": "CÒN HÀNG",
+            "disclaimer": null,
+            "is_super_vitem": null
+        },
+        "account": {
+            "user_id": 223626982,
+            "is_new_user": true,
+            "default_address": {
+                "state": "Tỉnh Gia Lai",
+                "city": "Phường Quy Nhơn Bắc",
+                "district": "",
+                "town": "",
+                "zip_code": null,
+                "address": null,
+                "region": null,
+                "longitude": 109.181992,
+                "latitude": 13.8079911,
+                "vn_data_version": "new"
+            },
+            "adult_consent": 0,
+            "birth_timestamp": 931366800
+        },
+        "product_images": {
+            "video": null,
+            "images": [
+                "vn-11134207-820l4-megm9h2a4f7k62",
+                "vn-11134207-820l4-megm9h2acumd01",
+                "vn-11134207-820l4-megm9h242p6q9f",
+                "vn-11134207-820l4-menrbcoc9a84c3",
+                "vn-11134207-820l4-menrbcq089388b",
+                "vn-11134207-820l4-menrbcoo9x4x40",
+                "vn-11134207-820l4-menrbcod2s5f90",
+                "vn-11134207-820l4-menrbcodff9i69",
+                "vn-11134207-820l4-menrbcpymnt3d6"
+            ],
+            "first_tier_variations": [
+                {
+                    "name": "Xanh Đậm",
+                    "image": "vn-11134207-820l4-megm9h242p6q9f",
+                    "summed_stock": null,
+                    "display_indicator": 0,
+                    "show_find_similar": null,
+                    "name_tr": null,
+                    "selling_point": "",
+                    "selling_point_tr": null,
+                    "gallery_image": "vn-11134207-820l4-megm9h242p6q9f"
+                },
+                {
+                    "name": "Cam Vũ Trụ",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "summed_stock": null,
+                    "display_indicator": 0,
+                    "show_find_similar": null,
+                    "name_tr": null,
+                    "selling_point": "",
+                    "selling_point_tr": null,
+                    "gallery_image": "vn-11134207-820l4-megm9h2a4f7k62"
+                },
+                {
+                    "name": "Bạc",
+                    "image": "vn-11134207-820l4-megm9h2acumd01",
+                    "summed_stock": null,
+                    "display_indicator": 0,
+                    "show_find_similar": null,
+                    "name_tr": null,
+                    "selling_point": "",
+                    "selling_point_tr": null,
+                    "gallery_image": "vn-11134207-820l4-megm9h2acumd01"
+                }
+            ],
+            "sorted_variation_image_index_list": [
+                1,
+                0,
+                2
+            ],
+            "overlay": {
+                "type": 0,
+                "image": "vn-11134258-81ztc-mukloys8urrbd2",
+                "preview_end_time": null,
+                "is_pre_order": null,
+                "description": ""
+            },
+            "makeup_preview": null,
+            "abnormal_status": "",
+            "promotion_images": [],
+            "long_images": null,
+            "shopee_video_info_list": [],
+            "shopee_video_rcmd_info": null,
+            "shopee_video_req_id": null,
+            "skincam": null,
+            "pdp_top_info_list": null,
+            "has_long_image": false,
+            "show_find_similar": null,
+            "try_it_on": null,
+            "show_find_similar_for_selection": false,
+            "beautycam": null,
+            "unavailable_item_recommendation": null,
+            "models": [
+                {
+                    "tier_index": [
+                        2
+                    ],
+                    "gallery_image": "vn-11134207-820l4-megm9h2acumd01"
+                },
+                {
+                    "tier_index": [
+                        0
+                    ],
+                    "gallery_image": "vn-11134207-820l4-megm9h242p6q9f"
+                },
+                {
+                    "tier_index": [
+                        1
+                    ],
+                    "gallery_image": "vn-11134207-820l4-megm9h2a4f7k62"
+                }
+            ],
+            "gallery_contents": [
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-megm9h2acumd01",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-megm9h242p6q9f",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcoc9a84c3",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcq089388b",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcoo9x4x40",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcod2s5f90",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcodff9i69",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                },
+                {
+                    "image": {
+                        "url": "vn-11134207-820l4-menrbcpymnt3d6",
+                        "promotion_image_type": null,
+                        "label_content": null,
+                        "cmt_id": null
+                    },
+                    "video": null
+                }
+            ],
+            "cover_image": null
+        },
+        "product_price": {
+            "discount": 6,
+            "installment_info": {
+                "recommended_plan": {
+                    "months": 12,
+                    "pay_per_month": 297416666666,
+                    "has_buyer_transaction_fee": true
+                }
+            },
+            "spl_installment_info": null,
+            "pack_size": "",
+            "hide_price": false,
+            "price": {
+                "single_value": 3569000000000,
+                "range_min": -1,
+                "range_max": -1,
+                "price_mask": null
+            },
+            "price_before_discount": {
+                "single_value": 3799000000000,
+                "range_min": -1,
+                "range_max": -1,
+                "price_mask": null
+            },
+            "presale_price": null,
+            "lowest_past_price": null,
+            "labels": null,
+            "hide_discount": false,
+            "discount_text": null,
+            "show_final_price_indicator": null,
+            "final_price_vouchers": null,
+            "has_final_price": true,
+            "final_price_info": null,
+            "price_subtext": null,
+            "price_model": {
+                "price_single_model_id": 276504907701,
+                "price_min_model_id": null,
+                "price_max_model_id": null
+            },
+            "price_promotion": {
+                "price_single_promotion_id": 509423345291929,
+                "price_single_promotion_type": 301,
+                "price_min_promotion_id": null,
+                "price_min_promotion_type": null,
+                "price_max_promotion_id": null,
+                "price_max_promotion_type": null
+            },
+            "instalment_cta_action": {
+                "type": 0,
+                "redirection_url": null
+            },
+            "spl_installment_banner": null,
+            "show_non_logged_in_price_indicator": false
+        },
+        "flash_sale": null,
+        "flash_sale_preview": null,
+        "deep_discount": null,
+        "exclusive_price": null,
+        "exclusive_price_cta": null,
+        "product_meta": {
+            "show_lowest_price_guarantee": null,
+            "show_original_guarantee": null,
+            "show_best_price_guarantee": false,
+            "show_official_shop_label_in_title": true,
+            "show_shopee_verified_label": false,
+            "show_lowest_installment_guarantee": null,
+            "hide_sharing_button": false,
+            "hide_sold_count": false,
+            "show_description_translation_button": null
+        },
+        "product_review": {
+            "rating_star": 4.962283737024221,
+            "rating_count": [
+                5781,
+                23,
+                5,
+                17,
+                77,
+                5659
+            ],
+            "total_rating_count": 5781,
+            "historical_sold": null,
+            "global_sold": null,
+            "liked": false,
+            "liked_count": 5597,
+            "cmt_count": 5781,
+            "should_move_ratings_above": null,
+            "review_rcmd_exp_group": null,
+            "display_global_sold": false,
+            "hide_rating": false,
+            "hide_buyer_gallery": false,
+            "hide_reviews": false,
+            "hide_other_product_reviews_in_shop": false,
+            "sold_count_disclosure": {
+                "type": 2
+            },
+            "historical_sold_display": "40k+",
+            "global_sold_display": "40k+",
+            "sold_count_display": "40k+"
+        },
+        "promotion_info": {
+            "spl": null,
+            "spl_lite": null,
+            "installment": {
+                "month": 12,
+                "price_raw": 297416666666,
+                "interest": 0,
+                "has_buyer_transaction_fee": true,
+                "display_text": "12 tháng x {{price}} (Lãi suất 0%)"
+            },
+            "wholesale": null,
+            "insurance": null,
+            "item_installment_eligibility": {
+                "is_cc_installment_payment_eligible": true,
+                "is_non_cc_installment_payment_eligible": true
+            },
+            "installment_simulation_entry": null
+        },
+        "age_gate": {
+            "kyc": null,
+            "adult_consent": null
+        },
+        "shipping_meta": null,
+        "product_shipping": {
+            "free_shipping": {
+                "min_spend": null,
+                "has_fss": false
+            },
+            "shipping_fee_info": {
+                "ship_from_location": "Thành phố Hồ Chí Minh",
+                "price": {
+                    "single_value": -1,
+                    "range_min": 0,
+                    "range_max": 3770000000,
+                    "price_mask": null
+                },
+                "shipping_icon_type": 0,
+                "warning": null
+            },
+            "show_shipping_to": true,
+            "ungrouped_channel_infos": [
+                {
+                    "channel_id": 5004,
+                    "name": "Hàng Cồng Kềnh",
+                    "price": {
+                        "single_value": 0,
+                        "range_min": -1,
+                        "range_max": -1,
+                        "price_mask": null
+                    },
+                    "price_before_discount": {
+                        "single_value": 3770000000,
+                        "range_min": -1,
+                        "range_max": -1,
+                        "price_mask": null
+                    },
+                    "channel_delivery_info": {
+                        "has_edt": true,
+                        "display_mode": "edt_by_date",
+                        "estimated_delivery_date_from": 1793420085,
+                        "estimated_delivery_date_to": 1793592885,
+                        "estimated_delivery_time_min": 3,
+                        "estimated_delivery_time_max": 5,
+                        "delay_message": null,
+                        "is_fastest_edt_channel": true,
+                        "sla_message": "",
+                        "show_edt": true,
+                        "edt_text": "Nhận từ 31 Th10 - 2 Th11",
+                        "formatted_edt_text": [
+                            {
+                                "template": "{label_get_by++label_date_range_placeholder_underscore}",
+                                "format": null,
+                                "attributes": [
+                                    {
+                                        "type": 1,
+                                        "key": "label_get_by++label_date_range_placeholder_underscore",
+                                        "value": {
+                                            "value_str": "31 Thg 10 - 2 Thg 11",
+                                            "value_int": null
+                                        },
+                                        "format": [
+                                            1,
+                                            2
+                                        ],
+                                        "text_color": null,
+                                        "text_hex_color": "#26aa99",
+                                        "url": null
+                                    }
+                                ],
+                                "text_color": null,
+                                "text_hex_color": null
+                            }
+                        ],
+                        "formatted_pre_order_text": null,
+                        "formatted_fbs_description_text": null,
+                        "show_edt_as_header": true
+                    },
+                    "channel_promotion_infos": [
+                        {
+                            "rule_id": 466935469387776,
+                            "type": 1,
+                            "display_mode": null,
+                            "discount_off": null,
+                            "min_spend": {
+                                "single_value": 10000000000,
+                                "range_min": -1,
+                                "range_max": -1,
+                                "price_mask": null
+                            },
+                            "cap": null
+                        },
+                        {
+                            "rule_id": 466935465193472,
+                            "type": 1,
+                            "display_mode": null,
+                            "discount_off": null,
+                            "min_spend": {
+                                "single_value": 50000000000,
+                                "range_min": -1,
+                                "range_max": -1,
+                                "price_mask": null
+                            },
+                            "cap": null
+                        }
+                    ],
+                    "warning": null,
+                    "shipping_icon_type": null,
+                    "lowest_bpsf_promotion_rule": null,
+                    "service_type_info": "Bulky (new)",
+                    "is_integrated_channel": true,
+                    "late_delivery_compensation": {
+                        "type": 1,
+                        "amount": 1500000000,
+                        "is_guaranteed_edt": true,
+                        "compensation_amount": null,
+                        "text": null,
+                        "max_coins_cap": null,
+                        "coin_cap": 0
+                    },
+                    "is_sst_included": false,
+                    "display_text": {
+                        "late_delivery_compensation": null,
+                        "direct_delivery": null,
+                        "fulfilled_by_shopee": null,
+                        "spx_instant_delivery": null
+                    },
+                    "rule_type": 0,
+                    "is_xdd_channel": false,
+                    "show_shopee_plus_icon": false,
+                    "xdd_value": null,
+                    "hide_shipping_fee": null,
+                    "edt_tracking_info": "{\"edt_min\":3,\"edt_max\":5,\"edt_min_hours\":63,\"edt_max_hours\":111,\"edt_min_minutes\":3773,\"edt_max_minutes\":6653,\"edt_display_identifier\":65673,\"buyer_address_hash\":\"j4UmO4X\",\"is_cache_edt\":false}",
+                    "subscription_icon": 0,
+                    "sdv_available": false
+                },
+                {
+                    "channel_id": 5001,
+                    "name": "Nhanh",
+                    "price": {
+                        "single_value": 0,
+                        "range_min": -1,
+                        "range_max": -1,
+                        "price_mask": null
+                    },
+                    "price_before_discount": {
+                        "single_value": 3770000000,
+                        "range_min": -1,
+                        "range_max": -1,
+                        "price_mask": null
+                    },
+                    "channel_delivery_info": {
+                        "has_edt": true,
+                        "display_mode": "edt_by_date",
+                        "estimated_delivery_date_from": 1793452934,
+                        "estimated_delivery_date_to": 1793625734,
+                        "estimated_delivery_time_min": 3,
+                        "estimated_delivery_time_max": 5,
+                        "delay_message": null,
+                        "is_fastest_edt_channel": false,
+                        "sla_message": "",
+                        "show_edt": true,
+                        "edt_text": "Nhận từ 31 Th10 - 2 Th11",
+                        "formatted_edt_text": [
+                            {
+                                "template": "{label_get_by++label_date_range_placeholder_underscore}",
+                                "format": null,
+                                "attributes": [
+                                    {
+                                        "type": 1,
+                                        "key": "label_get_by++label_date_range_placeholder_underscore",
+                                        "value": {
+                                            "value_str": "31 Thg 10 - 2 Thg 11",
+                                            "value_int": null
+                                        },
+                                        "format": [
+                                            1
+                                        ],
+                                        "text_color": null,
+                                        "text_hex_color": "#000000de",
+                                        "url": null
+                                    }
+                                ],
+                                "text_color": null,
+                                "text_hex_color": null
+                            }
+                        ],
+                        "formatted_pre_order_text": null,
+                        "formatted_fbs_description_text": null,
+                        "show_edt_as_header": true
+                    },
+                    "channel_promotion_infos": [
+                        {
+                            "rule_id": 352826115560627,
+                            "type": 1,
+                            "display_mode": null,
+                            "discount_off": null,
+                            "min_spend": {
+                                "single_value": 0,
+                                "range_min": -1,
+                                "range_max": -1,
+                                "price_mask": null
+                            },
+                            "cap": null
+                        }
+                    ],
+                    "warning": null,
+                    "shipping_icon_type": null,
+                    "lowest_bpsf_promotion_rule": null,
+                    "service_type_info": "standard",
+                    "is_integrated_channel": true,
+                    "late_delivery_compensation": {
+                        "type": 1,
+                        "amount": 1500000000,
+                        "is_guaranteed_edt": true,
+                        "compensation_amount": null,
+                        "text": null,
+                        "max_coins_cap": null,
+                        "coin_cap": 0
+                    },
+                    "is_sst_included": false,
+                    "display_text": {
+                        "late_delivery_compensation": null,
+                        "direct_delivery": null,
+                        "fulfilled_by_shopee": null,
+                        "spx_instant_delivery": null
+                    },
+                    "rule_type": 0,
+                    "is_xdd_channel": false,
+                    "show_shopee_plus_icon": false,
+                    "xdd_value": null,
+                    "hide_shipping_fee": null,
+                    "edt_tracking_info": "{\"edt_min\":3,\"edt_max\":5,\"edt_min_hours\":72,\"edt_max_hours\":120,\"edt_min_minutes\":4320,\"edt_max_minutes\":7200,\"edt_display_identifier\":65545,\"buyer_address_hash\":\"j4UmO4X\",\"is_cache_edt\":false}",
+                    "subscription_icon": 0,
+                    "sdv_available": false
+                },
+                {
+                    "channel_id": 5012,
+                    "name": "Trong Ngày",
+                    "price": {
+                        "single_value": 0,
+                        "range_min": -1,
+                        "range_max": -1,
+                        "price_mask": null
+                    },
+                    "price_before_discount": null,
+                    "channel_delivery_info": {
+                        "has_edt": false,
+                        "display_mode": null,
+                        "estimated_delivery_date_from": null,
+                        "estimated_delivery_date_to": null,
+                        "estimated_delivery_time_min": null,
+                        "estimated_delivery_time_max": null,
+                        "delay_message": null,
+                        "is_fastest_edt_channel": false,
+                        "sla_message": "",
+                        "show_edt": null,
+                        "edt_text": null,
+                        "formatted_edt_text": null,
+                        "formatted_pre_order_text": null,
+                        "formatted_fbs_description_text": null,
+                        "show_edt_as_header": false
+                    },
+                    "channel_promotion_infos": null,
+                    "warning": {
+                        "type": "unsupported_address",
+                        "warning_msg": "Không hỗ trợ",
+                        "formatted_warning_msg": null
+                    },
+                    "shipping_icon_type": null,
+                    "lowest_bpsf_promotion_rule": null,
+                    "service_type_info": "same_day",
+                    "is_integrated_channel": true,
+                    "late_delivery_compensation": null,
+                    "is_sst_included": false,
+                    "display_text": {
+                        "late_delivery_compensation": null,
+                        "direct_delivery": null,
+                        "fulfilled_by_shopee": null,
+                        "spx_instant_delivery": null
+                    },
+                    "rule_type": 0,
+                    "is_xdd_channel": false,
+                    "show_shopee_plus_icon": false,
+                    "xdd_value": null,
+                    "hide_shipping_fee": null,
+                    "edt_tracking_info": null,
+                    "subscription_icon": 0,
+                    "sdv_available": false
+                }
+            ],
+            "grouped_channel_infos_by_service_type": [
+                {
+                    "name": "Lấy hàng chủ động",
+                    "channel_infos": [
+                        {
+                            "channel_id": 50052,
+                            "name": "Tủ Nhận Hàng",
+                            "price": {
+                                "single_value": 3770000000,
+                                "range_min": -1,
+                                "range_max": -1,
+                                "price_mask": null
+                            },
+                            "price_before_discount": null,
+                            "channel_delivery_info": {
+                                "has_edt": true,
+                                "display_mode": "edt_by_date",
+                                "estimated_delivery_date_from": 1793452934,
+                                "estimated_delivery_date_to": 1793625734,
+                                "estimated_delivery_time_min": 3,
+                                "estimated_delivery_time_max": 5,
+                                "delay_message": "🎁 Nhận ngay 1.000 Xu Shopee khi chọn lấy hàng chủ động",
+                                "is_fastest_edt_channel": false,
+                                "sla_message": "",
+                                "show_edt": true,
+                                "edt_text": "Nhận từ 31 Th10 - 2 Th11",
+                                "formatted_edt_text": [
+                                    {
+                                        "template": "{label_get_by++label_date_range_placeholder_underscore}",
+                                        "format": null,
+                                        "attributes": [
+                                            {
+                                                "type": 1,
+                                                "key": "label_get_by++label_date_range_placeholder_underscore",
+                                                "value": {
+                                                    "value_str": "31 Thg 10 - 2 Thg 11",
+                                                    "value_int": null
+                                                },
+                                                "format": [
+                                                    1
+                                                ],
+                                                "text_color": null,
+                                                "text_hex_color": "#000000de",
+                                                "url": null
+                                            }
+                                        ],
+                                        "text_color": null,
+                                        "text_hex_color": null
+                                    }
+                                ],
+                                "formatted_pre_order_text": null,
+                                "formatted_fbs_description_text": null,
+                                "show_edt_as_header": true
+                            },
+                            "channel_promotion_infos": [],
+                            "warning": null,
+                            "shipping_icon_type": null,
+                            "lowest_bpsf_promotion_rule": null,
+                            "service_type_info": "self_collection",
+                            "is_integrated_channel": true,
+                            "late_delivery_compensation": {
+                                "type": 1,
+                                "amount": 1500000000,
+                                "is_guaranteed_edt": true,
+                                "compensation_amount": null,
+                                "text": null,
+                                "max_coins_cap": null,
+                                "coin_cap": 0
+                            },
+                            "is_sst_included": false,
+                            "display_text": {
+                                "late_delivery_compensation": null,
+                                "direct_delivery": null,
+                                "fulfilled_by_shopee": null,
+                                "spx_instant_delivery": null
+                            },
+                            "rule_type": 0,
+                            "is_xdd_channel": false,
+                            "show_shopee_plus_icon": false,
+                            "xdd_value": null,
+                            "hide_shipping_fee": null,
+                            "edt_tracking_info": "{\"edt_min\":3,\"edt_max\":5,\"edt_min_hours\":72,\"edt_max_hours\":120,\"edt_min_minutes\":4320,\"edt_max_minutes\":7200,\"edt_display_identifier\":65545,\"buyer_address_hash\":\"j4UmO4X\",\"is_cache_edt\":false}",
+                            "subscription_icon": 0,
+                            "sdv_available": false
+                        }
+                    ]
+                }
+            ],
+            "also_available_channel_name": "",
+            "pre_selected_shipping_channel": {
+                "channel_id": 5004,
+                "name": "Hàng Cồng Kềnh",
+                "price": {
+                    "single_value": 0,
+                    "range_min": -1,
+                    "range_max": -1,
+                    "price_mask": ""
+                },
+                "price_before_discount": {
+                    "single_value": 3770000000,
+                    "range_min": -1,
+                    "range_max": -1,
+                    "price_mask": null
+                },
+                "channel_delivery_info": {
+                    "has_edt": true,
+                    "display_mode": "edt_by_date",
+                    "estimated_delivery_date_from": 1793420085,
+                    "estimated_delivery_date_to": 1793592885,
+                    "estimated_delivery_time_min": 3,
+                    "estimated_delivery_time_max": 5,
+                    "delay_message": "",
+                    "is_fastest_edt_channel": true,
+                    "sla_message": "",
+                    "show_edt": true,
+                    "edt_text": "Nhận từ 31 Th10 - 2 Th11",
+                    "formatted_edt_text": [
+                        {
+                            "template": "{label_get_by++label_date_range_placeholder_underscore}",
+                            "format": [],
+                            "attributes": [
+                                {
+                                    "type": 1,
+                                    "key": "label_get_by++label_date_range_placeholder_underscore",
+                                    "value": {
+                                        "value_str": "31 Thg 10 - 2 Thg 11",
+                                        "value_int": null
+                                    },
+                                    "format": [
+                                        1,
+                                        2
+                                    ],
+                                    "text_color": null,
+                                    "text_hex_color": "#26aa99",
+                                    "url": null
+                                }
+                            ],
+                            "text_color": null,
+                            "text_hex_color": null
+                        }
+                    ],
+                    "formatted_pre_order_text": null,
+                    "formatted_fbs_description_text": null,
+                    "show_edt_as_header": true
+                },
+                "channel_promotion_infos": [
+                    {
+                        "rule_id": 466935469387776,
+                        "type": 1,
+                        "display_mode": 0,
+                        "discount_off": 0,
+                        "min_spend": {
+                            "single_value": 10000000000,
+                            "range_min": -1,
+                            "range_max": -1,
+                            "price_mask": ""
+                        },
+                        "cap": 0
+                    },
+                    {
+                        "rule_id": 466935465193472,
+                        "type": 1,
+                        "display_mode": 0,
+                        "discount_off": 0,
+                        "min_spend": {
+                            "single_value": 50000000000,
+                            "range_min": -1,
+                            "range_max": -1,
+                            "price_mask": ""
+                        },
+                        "cap": 0
+                    }
+                ],
+                "warning": {
+                    "type": "",
+                    "warning_msg": "",
+                    "formatted_warning_msg": null
+                },
+                "shipping_icon_type": null,
+                "lowest_bpsf_promotion_rule": null,
+                "service_type_info": "Bulky (new)",
+                "is_integrated_channel": true,
+                "late_delivery_compensation": {
+                    "type": 1,
+                    "amount": 1500000000,
+                    "is_guaranteed_edt": true,
+                    "compensation_amount": {
+                        "value": 1500000000
+                    },
+                    "text": "",
+                    "max_coins_cap": null,
+                    "coin_cap": 0
+                },
+                "is_sst_included": false,
+                "display_text": {
+                    "late_delivery_compensation": {
+                        "text": "Tặng Voucher {compensation_amount} nếu đơn giao sau thời gian trên.",
+                        "gdt_max": null,
+                        "compensation_amount": {
+                            "value": 1500000000
+                        },
+                        "max_coins_cap": null,
+                        "coins_amount": null,
+                        "coin_interval_in_minutes": null
+                    },
+                    "direct_delivery": null,
+                    "fulfilled_by_shopee": null,
+                    "spx_instant_delivery": null
+                },
+                "rule_type": 0,
+                "is_xdd_channel": false,
+                "show_shopee_plus_icon": false,
+                "xdd_value": 0,
+                "hide_shipping_fee": null,
+                "edt_tracking_info": "{\"edt_min\":3,\"edt_max\":5,\"edt_min_hours\":63,\"edt_max_hours\":111,\"edt_min_minutes\":3773,\"edt_max_minutes\":6653,\"edt_display_identifier\":65669,\"buyer_address_hash\":\"j4UmO4X\",\"is_cache_edt\":false}",
+                "subscription_icon": 0,
+                "sdv_available": false
+            },
+            "show_grouped_channel_first": false,
+            "is_item_with_price_range": false,
+            "also_available_channel_icon_type": null,
+            "pre_order_text": "",
+            "selected_late_delivery_compensation_for_drawer": {
+                "type": null,
+                "amount": null,
+                "is_guaranteed_edt": null,
+                "compensation_amount": {
+                    "value": 1500000000
+                },
+                "text": "Nhận tối đa {compensation_amount} nếu đơn hàng giao trễ.",
+                "max_coins_cap": null,
+                "coin_cap": null
+            },
+            "shipping_info_text": {
+                "text_template": null,
+                "shipping_fee": null,
+                "edt_from": null,
+                "edt_to": null,
+                "show_shipping_fee_suffix": true,
+                "formatted_text": {
+                    "edt": {
+                        "template": "{label_get_by++label_date_range_placeholder_underscore}",
+                        "format": null,
+                        "attributes": [
+                            {
+                                "type": 1,
+                                "key": "label_get_by++label_date_range_placeholder_underscore",
+                                "value": {
+                                    "value_str": "31 Thg 10 - 2 Thg 11",
+                                    "value_int": null
+                                },
+                                "format": [
+                                    1,
+                                    2
+                                ],
+                                "text_color": null,
+                                "text_hex_color": "#26aa99",
+                                "url": null
+                            }
+                        ],
+                        "text_color": null,
+                        "text_hex_color": null
+                    },
+                    "shipping_fee": {
+                        "template": "Phí ship {shipping_fee}",
+                        "format": [
+                            1
+                        ],
+                        "attributes": [
+                            {
+                                "type": 2,
+                                "key": "shipping_fee",
+                                "value": {
+                                    "value_str": null,
+                                    "value_int": 0
+                                },
+                                "format": null,
+                                "text_color": null,
+                                "text_hex_color": "#219787",
+                                "url": null
+                            }
+                        ],
+                        "text_color": null,
+                        "text_hex_color": "#219787"
+                    },
+                    "late_delivery_compensation": {
+                        "template": "Tặng Voucher {compensation_amount} nếu đơn giao sau thời gian trên.",
+                        "format": null,
+                        "attributes": [
+                            {
+                                "type": 2,
+                                "key": "compensation_amount",
+                                "value": {
+                                    "value_str": null,
+                                    "value_int": 1500000000
+                                },
+                                "format": null,
+                                "text_color": null,
+                                "text_hex_color": null,
+                                "url": null
+                            }
+                        ],
+                        "text_color": null,
+                        "text_hex_color": null
+                    },
+                    "fbs_description": null,
+                    "display_edt_text_first_line": true,
+                    "should_wrap_edt_text_by_attribute": true,
+                    "scheduled_delivery_description": null,
+                    "warning": null
+                },
+                "highlight_free_shipping": false,
+                "instant_pause_type": null
+            },
+            "formatted_pre_order_text": null,
+            "has_free_return": null,
+            "model_id": 276504907701,
+            "delivery_address": {
+                "state": "Tỉnh Gia Lai",
+                "city": "Phường Quy Nhơn Bắc",
+                "district": "",
+                "town": "",
+                "zip_code": "",
+                "address": null,
+                "region": null,
+                "longitude": 109.181992,
+                "latitude": 13.8079911,
+                "vn_data_version": "new"
+            },
+            "disable_shipping_drawer": null
+        },
+        "shop_vouchers": [],
+        "free_return": null,
+        "coin_info": {
+            "spend_cash_unit": 100000,
+            "coin_earn_items": [
+                {
+                    "coin_earn": 0
+                },
+                {
+                    "coin_earn": 0
+                },
+                {
+                    "coin_earn": 0
+                }
+            ],
+            "coin_earn_label": null
+        },
+        "product_attributes": {
+            "attrs": [
+                {
+                    "name": "Kho",
+                    "value": "CÒN HÀNG",
+                    "id": null,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 7,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Thương hiệu",
+                    "value": "Apple",
+                    "id": null,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": "/search?brands=1189223",
+                    "brand_id": 1189223,
+                    "full_url": "https://shopee.vn/search?brands=1189223",
+                    "type": 1,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Dung lượng lưu trữ",
+                    "value": "256GB",
+                    "id": 100465,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Loại bảo hành",
+                    "value": "Bảo hành nhà sản xuất",
+                    "id": 100370,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Loại cáp điện thoại",
+                    "value": "Type C",
+                    "id": 100481,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Lọai sim",
+                    "value": "Micro, Nano, Tiêu chuẩn",
+                    "id": 100504,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Tên tổ chức chịu trách nhiệm sản xuất",
+                    "value": "Đang cập nhật",
+                    "id": 101067,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Địa chỉ tổ chức chịu trách nhiệm sản xuất",
+                    "value": "Đang cập nhật",
+                    "id": 101068,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Sản phẩm đặt theo yêu cầu",
+                    "value": "Không",
+                    "id": 101219,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Tích hợp pin",
+                    "value": "Không",
+                    "id": 100526,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "SIRIM Certified",
+                    "value": "No",
+                    "id": 101198,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Kích thước (dài x rộng x cao)",
+                    "value": "150 x 71.9 x 8.8 mm",
+                    "id": 100942,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 5,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                },
+                {
+                    "name": "Gửi từ",
+                    "value": "Thành phố Hồ Chí Minh",
+                    "id": null,
+                    "is_timestamp": null,
+                    "brand_option": null,
+                    "val_id": null,
+                    "url": null,
+                    "brand_id": null,
+                    "full_url": null,
+                    "type": 6,
+                    "item_attribute_type": null,
+                    "name_tr": null,
+                    "value_tr": null
+                }
+            ],
+            "categories": [
+                {
+                    "catid": 11036030,
+                    "display_name": "Điện Thoại & Phụ Kiện",
+                    "no_sub": false,
+                    "is_default_subcat": false
+                },
+                {
+                    "catid": 11036031,
+                    "display_name": "Điện thoại",
+                    "no_sub": false,
+                    "is_default_subcat": false
+                },
+                {
+                    "catid": 11036032,
+                    "display_name": "Apple",
+                    "no_sub": true,
+                    "is_default_subcat": false
+                }
+            ],
+            "related_items": [],
+            "upfront_attrs": null,
+            "fresh_featured_attrs": null
+        },
+        "shop_detailed": {
+            "shopid": 308461157,
+            "userid": 308480742,
+            "last_active_time": 1793193400,
+            "vacation": false,
+            "place": null,
+            "account": {
+                "portrait": "vn-11134216-7r98o-lya6pwe6ia1917",
+                "username": "viettel_store_aar",
+                "status": 1
+            },
+            "is_shopee_verified": false,
+            "is_preferred_plus_seller": false,
+            "is_official_shop": true,
+            "shop_location": null,
+            "item_count": 154,
+            "rating_star": 4.950005,
+            "response_rate": 100,
+            "session_info": null,
+            "name": "Viettel Store- AAR ",
+            "ctime": 1599814123,
+            "response_time": 3344,
+            "follower_count": 228041,
+            "show_official_shop_label": true,
+            "rating_bad": 335,
+            "rating_good": 63382,
+            "rating_normal": 392,
+            "session_infos": null,
+            "status": 1,
+            "is_individual_seller": null,
+            "is_mart": false,
+            "favorite_shop_info": null,
+            "is_3pf": false,
+            "sold_total": null,
+            "is_shopee_choice": false,
+            "is_high_end": false,
+            "banner": {
+                "shopee_choice": null
+            },
+            "authorized_brand": null,
+            "is_scs": false,
+            "shop_location_tr": null,
+            "sold_total_display": null,
+            "is_outlet": false,
+            "display_fbs_logo": false,
+            "is_chatroom_online": true,
+            "outlet_shop": null,
+            "vacation_status": null,
+            "display_shopee_choice_tick": false,
+            "is_smeter_shop": false,
+            "is_pharmacy": false,
+            "is_instant_mart": false,
+            "fbs_display_type": 0
+        },
+        "age_gate_control": null,
+        "abnormal_popup": null,
+        "return_on_spot": null,
+        "display_sections": {
+            "add_on_deal": null,
+            "bundle_deal": null,
+            "exclusive_price_label": null,
+            "free_return": null,
+            "coin": null,
+            "wholesale": null
+        },
+        "ineligible_ep": null,
+        "tax_disclaimer": null,
+        "alcohol_disclaimer": null,
+        "design_control": {
+            "use_new_revamp_first_screen": null,
+            "display_on_time_delivery_guarantee": true,
+            "disable_price_with_variation": false,
+            "display_direct_delivery": false,
+            "use_new_featured_video_revamp": null,
+            "first_screen_revamp_abtest_group": null,
+            "display_choice_customised_section": false,
+            "is_support_fbs_enabled": false,
+            "top_section_featured_video_ab_test_group": null,
+            "enable_ksp_config": null,
+            "disable_main_page_select_variation": null,
+            "support_shop_review_preview": null,
+            "pdp_revamp_phase1_improvement_ui_review_down": null,
+            "display_fashion_attributes": null,
+            "display_fashion_review_section": null,
+            "display_fashion_first_screen": null,
+            "enable_fashion_review_improvements": null,
+            "display_fbs_floating_counter": null,
+            "display_shipping_drawer_new_free_shipping_text": true,
+            "display_shipping_drawer_new_free_shipping_ui": true,
+            "shift_featured_videos_above_review_ratings_section": null,
+            "enable_fashion_featured_videos_improvements": null,
+            "hide_shipping_channel_promotion_text": true,
+            "expand_size_guide_section_by_default": null,
+            "hide_ftss_tpfs_section": null,
+            "merge_attributes_and_description": null,
+            "hide_review_view_all": null,
+            "keep_instant_pause_bottom_bar": false,
+            "display_others_also_bought": null
+        },
+        "shopee_free_return": null,
+        "detail_level": 0,
+        "removed_fields": null,
+        "size_guide": null,
+        "designer_info": null,
+        "shipping_info": null,
+        "vehicle_compatibility_info": null,
+        "nea": null,
+        "button_group": {
+            "buy_with_voucher": null,
+            "ineligible_user_platform_exclusive_sku": null,
+            "shop_opt": null
+        },
+        "installment_drawer": {
+            "priority": [
+                0,
+                1
+            ],
+            "spl": null,
+            "bank": {
+                "channels": [
+                    {
+                        "channel_ic": "ic_paymentoption_ccinstallment",
+                        "channel_name": "label_cc_installment",
+                        "is_cc": true,
+                        "plans": null,
+                        "banks": [
+                            {
+                                "bank_id": 208,
+                                "bank_name": "BIDV",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_BIDV.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-90",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-91",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-92",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 209,
+                                "bank_name": "Vietcombank",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-102",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-103",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 1875,
+                                "bank_name": "ACB",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_ACB.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-94",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-95",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 2998,
+                                "bank_name": "MBBank",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-131",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-132",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-133",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "12x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 12,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 297416666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-134",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 3127,
+                                "bank_name": "Eximbank",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-59000221",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-59000222",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 4488,
+                                "bank_name": "MSB",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_bank_msbank.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-105",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010101",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 4514,
+                                "bank_name": "HSBC",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ID/box_icon/ic_hsbc.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-23",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-24",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 4731,
+                                "bank_name": "VietinBank",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010107",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010108",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 4847,
+                                "bank_name": "TechcomBank",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010103",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010104",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-59050181",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 4932,
+                                "bank_name": "VPBank",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_vpbank_card.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-99",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-100",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 8642,
+                                "bank_name": "Standard Chartered",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ID/box_icon/ic_standard_chartered.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-38",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "12x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 12,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 297416666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-40",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 8710,
+                                "bank_name": "Shinhan Bank",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_shinhan_bank.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-33",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-34",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 8754,
+                                "bank_name": "TPBank",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_TPB.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-42",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-43",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-44",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 10125,
+                                "bank_name": "UOB",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_bank_uob.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010105",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-21",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 13426,
+                                "bank_name": "VIB",
+                                "bank_logo": "https://mall.shopee.vn/static/images/img_bankvn_vib.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-114",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-115",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-116",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "12x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 12,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 297416666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-117",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 13914,
+                                "bank_name": "Home Credit",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-151",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-152",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-153",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 13934,
+                                "bank_name": "HDBank",
+                                "bank_logo": "https://mall.shopee.vn/static/images/img_bankvn_hdbank.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-59001007",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-59001008",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 102847,
+                                "bank_name": "OCB",
+                                "bank_logo": "",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "3x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 3,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 1189666666666,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010201",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010202",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    },
+                                    {
+                                        "data": {
+                                            "name": "9x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 9,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 396555555555,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-500010203",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            },
+                            {
+                                "bank_id": 123997,
+                                "bank_name": "Sacombank",
+                                "bank_logo": "https://mall.shopee.vn/static/images/bank_logo/ic_sacombank.png",
+                                "sub_options": [
+                                    {
+                                        "data": {
+                                            "name": "6x @ 0%",
+                                            "channel_id": 5000101,
+                                            "tenure": 6,
+                                            "total_amount": 3569000000000,
+                                            "down_payment": null,
+                                            "interest_rate": 0,
+                                            "installment_amount": null,
+                                            "monthly_installment": 594833333333,
+                                            "bank_id": null,
+                                            "bank_name": null,
+                                            "has_buyer_transaction_fee": true
+                                        },
+                                        "name": null,
+                                        "option_info": "5000101-29",
+                                        "disabled_reason_key": null,
+                                        "disabled_reason": null,
+                                        "disabled_reason_data": null,
+                                        "sub_title": "SPayLater"
+                                    }
+                                ]
+                            }
+                        ],
+                        "plan_groups": null
+                    }
+                ]
+            },
+            "credit_card": null
+        },
+        "ongoing_banner": null,
+        "teaser_banner": null,
+        "price_breakdown": null,
+        "membership_exclusive": null,
+        "membership_exclusive_teaser": null,
+        "service_entrance": {
+            "services": [
+                {
+                    "text": "Chính hãng 100%",
+                    "type": null,
+                    "id": 22
+                },
+                {
+                    "text": "Miễn phí vận chuyển",
+                    "type": null,
+                    "id": 23
+                },
+                {
+                    "text": "Bảo hiểm thiết bị di động nâng cao",
+                    "type": null,
+                    "id": 24
+                }
+            ]
+        },
+        "service_drawer": {
+            "services": [
+                {
+                    "title": "Chính hãng 100%",
+                    "description": "Nhận lại gấp đôi số tiền mà bạn đã thanh toán cho sản phẩm không chính hãng từ Shopee Mall",
+                    "type": null,
+                    "free_return": null,
+                    "insurance": null,
+                    "id": 22,
+                    "redirection_url": "",
+                    "icon": "vn-11134258-7ras8-m3d6tufxak2pb2",
+                    "insurance_drawer": null,
+                    "product_type": 0
+                },
+                {
+                    "title": "Miễn phí vận chuyển",
+                    "description": "Ưu đãi miễn phí vận chuyển lên tới 40,000 VNĐ cho đơn hàng của Shopee Mall từ 150,000 VNĐ",
+                    "type": null,
+                    "free_return": null,
+                    "insurance": null,
+                    "id": 23,
+                    "redirection_url": "",
+                    "icon": "vn-11134258-7ras8-m3d6tycbl5t48c",
+                    "insurance_drawer": null,
+                    "product_type": 0
+                },
+                {
+                    "title": "Bảo hiểm thiết bị di động nâng cao",
+                    "description": "Tìm hiểu thêm",
+                    "type": null,
+                    "free_return": null,
+                    "insurance": null,
+                    "id": 24,
+                    "redirection_url": "https://insurance.shopee.vn/ec/ec-pdp.html?from=pdp&locale=VI&product_id=1650882748039999001",
+                    "icon": "vn-11134258-7ras8-m3d7fo07pu3s93",
+                    "insurance_drawer": {},
+                    "product_type": 0
+                }
+            ]
+        },
+        "trade_in": null,
+        "product_description": {
+            "paragraph_list": [
+                {
+                    "type": 0,
+                    "text": "\t\tiPhone 17 Pro Max được coi là “vũ khí chiến lược” của iPhone 17 Series. Không chỉ là một chiếc điện thoại thông thường, mẫu iPhone cao cấp này còn thể hiện sự đổi mới và sáng tạo. Với nhiều cải tiến nổi bật về thiết kế, màn hình, hiệu suất, cũng như hệ thống camera và pin, iPhone 17 Pro Max mang lại trải nghiệm tuyệt vời cho người dùng. Dưới đây, hãy cùng Viettel Store tìm hiểu về những tính năng mới cũng như giá bán của iPhone 17 Pro Max.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 10001,
+                    "text": null,
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": 1
+                },
+                {
+                    "type": 0,
+                    "text": "\t\tMàn hình Super Retina XDR hiển thị sống động từng khoảnh khắc",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "iPhone 17 Pro Max được trang bị màn hình Super Retina XDR lớn tới 6,9 inch, mang lại trải nghiệm hiển thị sống động và chân thực. Màn hình này hỗ trợ độ phân giải cao và tích hợp công nghệ ProMotion tiên tiến, giúp tái tạo màu sắc rực rỡ, chi tiết sắc nét và độ tương phản ấn tượng.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Với không gian hiển thị rộng rãi, thiết bị dễ dàng đáp ứng nhu cầu từ xem phim, chơi game cho đến công việc đa nhiệm. Đặc biệt, khả năng hiển thị màu sắc chính xác là một trong những điểm mạnh nổi bật, rất phù hợp với những người làm trong lĩnh vực sáng tạo như nhiếp ảnh gia hay nhà thiết kế đồ họa.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4cphc454",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "\t\tChip A19 Pro hiệu năng mạnh mẽ",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Chip A19 Pro được chế tạo trên quy trình 3nm tiên tiến, mang đến hiệu suất mạnh mẽ và khả năng tiết kiệm năng lượng đáng kể. Nhờ vào sức mạnh này, iPhone 17 Pro Max có thể xử lý mượt mà các tác vụ nặng như chơi game đồ họa cao, dựng video 4K hay làm việc với các ứng dụng AI phức tạp.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Không chỉ tập trung vào hiệu suất, chip A19 Pro còn tối ưu hóa mức tiêu thụ điện năng, giúp kéo dài thời gian sử dụng thiết bị. Đây là một nâng cấp quan trọng, mang lại trải nghiệm ổn định và toàn diện cho người dùng.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4dolj7d5",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "\t\tCamera sắc nét, chân thực trong từng chi tiết",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Cụm ba camera phía sau của iPhone 17 Pro Max đều có độ phân giải 48MP, mang lại chất lượng hình ảnh xuất sắc với độ chi tiết cao và rõ nét trong mọi điều kiện ánh sáng. Tính năng chụp đêm, zoom quang học và góc chụp siêu rộng cũng đã được cải tiến, giúp người dùng dễ dàng ghi lại những khoảnh khắc đẹp một cách chuyên nghiệp.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Ngoài ra, mẫu điện thoại cao cấp này còn trang bị camera trước với độ phân giải 18MP, cho phép chụp ảnh selfie rõ ràng, chân thực và tự nhiên hơn.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4dq03na2",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Một trong những điểm đặc biệt nhất trên iPhone 17 Pro Max chính là tính năng Ghi hình kép, cho phép người dùng quay video đồng thời bằng cả camera trước và sau. Với khả năng này, bạn có thể vừa ghi lại khung cảnh xung quanh bằng camera chính, vừa lưu giữ khoảnh khắc cảm xúc của chính mình qua camera selfie.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Tính năng này đặc biệt hữu ích cho các vlogger, streamer hoặc những ai thường xuyên tạo nội dung trên mạng xã hội, khi không cần đến thiết bị hỗ trợ phức tạp mà vẫn có được video hai góc nhìn sống động. Bên cạnh đó, Apple còn tối ưu hóa thuật toán xử lý hình ảnh, giúp cả hai video đều đạt chất lượng sắc nét, màu sắc trung thực và âm thanh rõ ràng.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4dreo3e5",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "\t\tThời lượng pin kéo dài",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "iPhone 17 Pro Max sở hữu viên pin dung lượng lớn kết hợp với chip A19 Pro, mang lại thời gian sử dụng ấn tượng. Người dùng có thể thoải mái sử dụng thiết bị cả ngày mà không cần lo lắng về việc sạc pin. Hơn nữa, công nghệ sạc nhanh cũng đã được cải tiến, cho phép sạc nhanh lên đến 50% trong 20 phút, rất thuận tiện cho những ai có lịch trình bận rộn. Điều này khiến iPhone 17 Pro Max không chỉ mạnh mẽ mà còn vô cùng tiện lợi trong mọi hoàn cảnh.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4du7sz23",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "\t\tTính năng mới thông minh",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "iPhone 17 Pro Max mang đến bước tiến ấn tượng khi cung cấp dung lượng lưu trữ tối đa lên đến 2TB – con số vượt trội so với nhiều mẫu smartphone hiện nay. Với bộ nhớ khổng lồ này, người dùng có thể thoải mái lưu trữ hàng nghìn bức ảnh chất lượng cao, video 4K hay thậm chí là 8K, cùng kho nhạc, phim và ứng dụng nặng mà không lo đầy bộ nhớ.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 0,
+                    "text": "Với dung lượng “khủng” này, iPhone 17 Pro Max thực sự trở thành một chiếc “ổ cứng di động” cao cấp, đáp ứng trọn vẹn nhu cầu công việc lẫn giải trí mà vẫn duy trì hiệu năng mượt mà.",
+                    "img_id": null,
+                    "ratio": null,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4dvmdfbf",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                },
+                {
+                    "type": 1,
+                    "text": null,
+                    "img_id": "vn-11134208-820l4-mehyoc4dst8je9",
+                    "ratio": 1,
+                    "description_type": 1,
+                    "empty_paragraph_count": null
+                }
+            ],
+            "source_language": ""
+        },
+        "selected_tiers": null,
+        "size_info": null,
+        "size_recommendation": null,
+        "translation_status": 0,
+        "product_description_tr": null,
+        "default_warnings": null,
+        "bcrs_disclaimer": null,
+        "top_banner": null,
+        "bottom_banner": null
+    }
+}

@@ -1,0 +1,1106 @@
+{
+    "error": 0,
+    "data": {
+        "ratings": [
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 97691634550,
+                "ctime": 1778175840,
+                "rating": 1,
+                "userid": 538950295,
+                "shopid": 308461157,
+                "comment": "Năm thứ 2 mua iphone ở đây rẻ hơn ngoài store 3tr , năm đầu mua trên đây còn lo sợ chứ năm nay vô tư luôn shop đóng gói kĩ lắm , tem niên phong đủ chỗ , máy mới new seal kích hoạt đủ 12 tháng bảo hành ❤️",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1793182130,
+                "editable": 2,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1778176024,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "khanhday515",
+                "author_portrait": "vn-11134233-7ras8-m39c4gm302r07a",
+                "author_shopid": 538930716,
+                "anonymous": false,
+                "images": [
+                    "vn-11134103-81ztc-mnylq5fdsnpe12"
+                ],
+                "videos": [
+                    {
+                        "id": "vn-11110103-6va0c-mnylss8qummea9",
+                        "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover",
+                        "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4",
+                        "duration": 6292,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6va0c-mnylss8qummea9\",\"biz\":103,\"duration\":6292,\"create_time\":1778176005,\"update_time\":1778176005,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"},\"extend_formats\":{},\"ab_test\":\"\"}",
+                        "cover_image_id": "",
+                        "highlight": {
+                            "id": "vn-11110103-6va0c-mnylss8qummea9",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4",
+                            "duration": 6292,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0c-mnylss8qummea9\",\"biz\":103,\"duration\":6292,\"create_time\":1778176005,\"update_time\":1778176005,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"},\"extend_formats\":{},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "score": 0.625,
+                            "template_video": false,
+                            "video_tier": 1
+                        },
+                        "score": 0,
+                        "template_video": false,
+                        "video_tier": 1
+                    }
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 220597679671,
+                        "modelid": 276504907701,
+                        "model_name": "Cam Vũ Trụ",
+                        "options": [
+                            "Cam Vũ Trụ"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 97691634550,
+                    "ctime": 1787019594,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1787019594,
+                    "is_hidden": false
+                },
+                "editable_date": 1780767840,
+                "show_reply": false,
+                "like_count": 89,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "has_template_tag": false,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "image_data": [
+                    {
+                        "image_id": "vn-11134103-81ztc-mnylq5fdsnpe12",
+                        "cover_image_id": "vn-11134103-81ztc-mnylq5fdsnpe12",
+                        "score": 0
+                    }
+                ],
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "video": {
+                            "id": "vn-11110103-6va0c-mnylss8qummea9",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4",
+                            "duration": 6292,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0c-mnylss8qummea9\",\"biz\":103,\"duration\":6292,\"create_time\":1778176005,\"update_time\":1778176005,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"},\"extend_formats\":{},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "highlight": {
+                                "id": "vn-11110103-6va0c-mnylss8qummea9",
+                                "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover",
+                                "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4",
+                                "duration": 6292,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6va0c-mnylss8qummea9\",\"biz\":103,\"duration\":6292,\"create_time\":1778176005,\"update_time\":1778176005,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6va0c-mnylss8qummea9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0c-mnylss8qummea9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":230563,\"abitrate\":32235,\"size\":213020,\"fps\":25,\"duration\":6292,\"update_time\":1778176008,\"codec\":\"H264\"},\"extend_formats\":{},\"ab_test\":\"\"}",
+                                "cover_image_id": "",
+                                "score": 0.625,
+                                "template_video": false,
+                                "video_tier": 1
+                            },
+                            "score": 0,
+                            "template_video": false,
+                            "video_tier": 1
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mnylq5fdsnpe12",
+                            "cover_image_id": "vn-11134103-81ztc-mnylq5fdsnpe12",
+                            "score": 0
+                        }
+                    }
+                ],
+                "review_creation_source": 0,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            },
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 85757848834,
+                "ctime": 1768780934,
+                "rating": 1,
+                "userid": 180212007,
+                "shopid": 308461157,
+                "comment": "Chất lượng sản phẩm:OK\nTính năng nổi bật:Mới\nĐúng với mô tả:ok\n\n❤️ Nhân viên Shiper nhiệt tình & vui vẻ. \nNhận hàng nhanh & đúng thời gian. \nHàng hoá đóng cẩn thận và bảo quản khá Kỹ lưỡng. \nChất lượng Mới 100% cho người dùng Trải Nghiệm❤️👍",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1793116302,
+                "editable": 0,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1768780934,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "hoanghaimobile71",
+                "author_portrait": "vn-11134233-820l4-mig1w1csym136f",
+                "anonymous": false,
+                "images": [
+                    "vn-11134103-820l4-mjnepzqv20w26d"
+                ],
+                "videos": [
+                    {
+                        "id": "vn-11110103-6v8h6-mjneq4b9kgzkc9",
+                        "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover",
+                        "url": "https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4",
+                        "duration": 5526,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6v8h6-mjneq4b9kgzkc9\",\"biz\":103,\"duration\":5526,\"create_time\":1768780909,\"update_time\":1768780909,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"width\":360,\"height\":640,\"bitrate\":222040,\"abitrate\":50258,\"size\":197088,\"fps\":30.00366,\"duration\":5526,\"update_time\":1784857883,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                        "cover_image_id": "sg-11134206-8261w-mjrnod39296v3d",
+                        "highlight": {
+                            "id": "vn-11110103-6v8h6-mjneq4b9kgzkc9",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover",
+                            "url": "https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4",
+                            "duration": 5526,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6v8h6-mjneq4b9kgzkc9\",\"biz\":103,\"duration\":5526,\"create_time\":1768780909,\"update_time\":1768780909,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"width\":360,\"height\":640,\"bitrate\":222040,\"abitrate\":50258,\"size\":197088,\"fps\":30.00366,\"duration\":5526,\"update_time\":1784857883,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "sg-11134206-8261w-mjrnod39296v3d",
+                            "score": 0.875,
+                            "video_tier": 2
+                        },
+                        "score": 0,
+                        "video_tier": 2
+                    }
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 267049483880,
+                        "modelid": 276504907702,
+                        "model_name": "Bạc",
+                        "options": [
+                            "Bạc"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 85757848834,
+                    "ctime": 1770273315,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1770273315,
+                    "is_hidden": false
+                },
+                "editable_date": 1771372934,
+                "show_reply": false,
+                "like_count": 174,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "template_tags": [
+                    "Chất lượng sản phẩm",
+                    "Tính năng nổi bật",
+                    "Đúng với mô tả"
+                ],
+                "has_template_tag": true,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "image_data": [
+                    {
+                        "image_id": "vn-11134103-820l4-mjnepzqv20w26d",
+                        "cover_image_id": "vn-11134103-820l4-mjnepzqv20w26d",
+                        "score": 0
+                    }
+                ],
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "video": {
+                            "id": "vn-11110103-6v8h6-mjneq4b9kgzkc9",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover",
+                            "url": "https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4",
+                            "duration": 5526,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6v8h6-mjneq4b9kgzkc9\",\"biz\":103,\"duration\":5526,\"create_time\":1768780909,\"update_time\":1768780909,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"width\":360,\"height\":640,\"bitrate\":222040,\"abitrate\":50258,\"size\":197088,\"fps\":30.00366,\"duration\":5526,\"update_time\":1784857883,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "sg-11134206-8261w-mjrnod39296v3d",
+                            "highlight": {
+                                "id": "vn-11110103-6v8h6-mjneq4b9kgzkc9",
+                                "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover",
+                                "url": "https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4",
+                                "duration": 5526,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6v8h6-mjneq4b9kgzkc9\",\"biz\":103,\"duration\":5526,\"create_time\":1768780909,\"update_time\":1768780909,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8h6-mjneq4b9kgzkc9_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.default.mp4\",\"width\":360,\"height\":640,\"bitrate\":410626,\"abitrate\":33732,\"size\":310589,\"fps\":25,\"duration\":5526,\"update_time\":1768780912,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"url\":\"https://down-zl-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8h6-mjneq4b9kgzkc9.16006031784857880.mp4\",\"width\":360,\"height\":640,\"bitrate\":222040,\"abitrate\":50258,\"size\":197088,\"fps\":30.00366,\"duration\":5526,\"update_time\":1784857883,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                                "cover_image_id": "sg-11134206-8261w-mjrnod39296v3d",
+                                "score": 0.875,
+                                "video_tier": 2
+                            },
+                            "score": 0,
+                            "video_tier": 2
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjnepzqv20w26d",
+                            "cover_image_id": "vn-11134103-820l4-mjnepzqv20w26d",
+                            "score": 0
+                        }
+                    }
+                ],
+                "review_creation_source": 3,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            },
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 96326999944,
+                "ctime": 1776609331,
+                "rating": 1,
+                "userid": 6671515,
+                "shopid": 308461157,
+                "comment": "Hiệu suất:muot ma\nChụp ảnh:qua tuyet voi\nMàn hình:chuan\n\nVừa Nhận hàng unbox máy nét như sony lun, viettel đóng gói tem rất nhiều và cẩn thận ạ, nhận siu mượt siu nét siu đẹp , hy vọng máy dùng bền lsau sẽ lại tin tưởng chọn viettel",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1792897113,
+                "editable": 0,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1776609331,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "nguyenngocanh1991",
+                "author_portrait": "vn-11134233-820l4-mf4g803yuh3ifc",
+                "author_shopid": 6670200,
+                "anonymous": false,
+                "images": [
+                    "vn-11134103-81ztc-mn8q66aqu0hx04",
+                    "vn-11134103-81ztc-mn8q66atixom0a",
+                    "vn-11134103-81ztc-mn8q66agt0jp11",
+                    "vn-11134103-81ztc-mn8q66agrlz92e"
+                ],
+                "videos": [
+                    {
+                        "id": "vn-11110103-6va0q-mn8q58wneg3o81",
+                        "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover",
+                        "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4",
+                        "duration": 4597,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6va0q-mn8q58wneg3o81\",\"biz\":103,\"duration\":4597,\"create_time\":1776609047,\"update_time\":1776609047,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"width\":640,\"height\":1138,\"bitrate\":573260,\"abitrate\":96968,\"size\":390619,\"fps\":25,\"duration\":4599,\"update_time\":1776609049,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":485509,\"abitrate\":32321,\"size\":303007,\"fps\":25,\"duration\":4599,\"update_time\":1776609051,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"width\":640,\"height\":1138,\"bitrate\":372081,\"abitrate\":128282,\"size\":295351,\"fps\":25,\"duration\":4599,\"update_time\":1776609055,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                        "cover_image_id": "",
+                        "highlight": {
+                            "id": "vn-11110103-6va0q-mn8q58wneg3o81",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4",
+                            "duration": 4597,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0q-mn8q58wneg3o81\",\"biz\":103,\"duration\":4597,\"create_time\":1776609047,\"update_time\":1776609047,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"width\":640,\"height\":1138,\"bitrate\":573260,\"abitrate\":96968,\"size\":390619,\"fps\":25,\"duration\":4599,\"update_time\":1776609049,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":485509,\"abitrate\":32321,\"size\":303007,\"fps\":25,\"duration\":4599,\"update_time\":1776609051,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"width\":640,\"height\":1138,\"bitrate\":372081,\"abitrate\":128282,\"size\":295351,\"fps\":25,\"duration\":4599,\"update_time\":1776609055,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "score": 0.812,
+                            "template_video": false,
+                            "video_tier": 0
+                        },
+                        "score": 0,
+                        "template_video": false,
+                        "video_tier": 0
+                    }
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 294592729038,
+                        "modelid": 276504907701,
+                        "model_name": "Cam Vũ Trụ",
+                        "options": [
+                            "Cam Vũ Trụ"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 96326999944,
+                    "ctime": 1776671973,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1776671973,
+                    "is_hidden": false
+                },
+                "editable_date": 1779201331,
+                "show_reply": false,
+                "like_count": 49,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "template_tags": [
+                    "Hiệu suất",
+                    "Chụp ảnh",
+                    "Màn hình"
+                ],
+                "has_template_tag": true,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "image_data": [
+                    {
+                        "image_id": "vn-11134103-81ztc-mn8q66aqu0hx04",
+                        "cover_image_id": "vn-11134103-81ztc-mn8q66aqu0hx04",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-81ztc-mn8q66atixom0a",
+                        "cover_image_id": "vn-11134103-81ztc-mn8q66atixom0a",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-81ztc-mn8q66agt0jp11",
+                        "cover_image_id": "vn-11134103-81ztc-mn8q66agt0jp11",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-81ztc-mn8q66agrlz92e",
+                        "cover_image_id": "vn-11134103-81ztc-mn8q66agrlz92e",
+                        "score": 0
+                    }
+                ],
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "video": {
+                            "id": "vn-11110103-6va0q-mn8q58wneg3o81",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4",
+                            "duration": 4597,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0q-mn8q58wneg3o81\",\"biz\":103,\"duration\":4597,\"create_time\":1776609047,\"update_time\":1776609047,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"width\":640,\"height\":1138,\"bitrate\":573260,\"abitrate\":96968,\"size\":390619,\"fps\":25,\"duration\":4599,\"update_time\":1776609049,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":485509,\"abitrate\":32321,\"size\":303007,\"fps\":25,\"duration\":4599,\"update_time\":1776609051,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"width\":640,\"height\":1138,\"bitrate\":372081,\"abitrate\":128282,\"size\":295351,\"fps\":25,\"duration\":4599,\"update_time\":1776609055,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "highlight": {
+                                "id": "vn-11110103-6va0q-mn8q58wneg3o81",
+                                "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover",
+                                "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4",
+                                "duration": 4597,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6va0q-mn8q58wneg3o81\",\"biz\":103,\"duration\":4597,\"create_time\":1776609047,\"update_time\":1776609047,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0q-mn8q58wneg3o81_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16000051776609047.mp4\",\"width\":640,\"height\":1138,\"bitrate\":573260,\"abitrate\":96968,\"size\":390619,\"fps\":25,\"duration\":4599,\"update_time\":1776609049,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":485509,\"abitrate\":32321,\"size\":303007,\"fps\":25,\"duration\":4599,\"update_time\":1776609051,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0q-mn8q58wneg3o81.16003081776609050.mp4\",\"width\":640,\"height\":1138,\"bitrate\":372081,\"abitrate\":128282,\"size\":295351,\"fps\":25,\"duration\":4599,\"update_time\":1776609055,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                                "cover_image_id": "",
+                                "score": 0.812,
+                                "template_video": false,
+                                "video_tier": 0
+                            },
+                            "score": 0,
+                            "template_video": false,
+                            "video_tier": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mn8q66aqu0hx04",
+                            "cover_image_id": "vn-11134103-81ztc-mn8q66aqu0hx04",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mn8q66atixom0a",
+                            "cover_image_id": "vn-11134103-81ztc-mn8q66atixom0a",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mn8q66agt0jp11",
+                            "cover_image_id": "vn-11134103-81ztc-mn8q66agt0jp11",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mn8q66agrlz92e",
+                            "cover_image_id": "vn-11134103-81ztc-mn8q66agrlz92e",
+                            "score": 0
+                        }
+                    }
+                ],
+                "review_creation_source": 2,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            },
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 98767905269,
+                "ctime": 1779211033,
+                "rating": 1,
+                "userid": 415606033,
+                "shopid": 308461157,
+                "comment": "Hiệu suất:tốt\nChụp ảnh:nét\nMàn hình:sắc nét\n\nSản phẩm rất tốt, chất lượng đúng như mô tả. Đóng gói cẩn thận, giao hàng nhanh, sử dụng rất hài lòng. Sẽ tiếp tục ủng hộ shop trong những lần mua tiếp theo.",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1792819695,
+                "editable": 0,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1779211033,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "o*****0",
+                "anonymous": true,
+                "images": [
+                    "vn-11134103-81ztc-mofpjen4qv4be5",
+                    "vn-11134103-81ztc-mofpjqpw6arx4c",
+                    "vn-11134103-81ztc-mofpjqpuqbrjbc"
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 226608072592,
+                        "modelid": 276504907702,
+                        "model_name": "Bạc",
+                        "options": [
+                            "Bạc"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 98767905269,
+                    "ctime": 1786960330,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1786960330,
+                    "is_hidden": false
+                },
+                "show_reply": false,
+                "like_count": 42,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "template_tags": [
+                    "Hiệu suất",
+                    "Chụp ảnh",
+                    "Màn hình"
+                ],
+                "has_template_tag": true,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "image_data": [
+                    {
+                        "image_id": "vn-11134103-81ztc-mofpjen4qv4be5",
+                        "cover_image_id": "vn-11134103-81ztc-mofpjen4qv4be5",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-81ztc-mofpjqpw6arx4c",
+                        "cover_image_id": "vn-11134103-81ztc-mofpjqpw6arx4c",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-81ztc-mofpjqpuqbrjbc",
+                        "cover_image_id": "vn-11134103-81ztc-mofpjqpuqbrjbc",
+                        "score": 0
+                    }
+                ],
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mofpjen4qv4be5",
+                            "cover_image_id": "vn-11134103-81ztc-mofpjen4qv4be5",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mofpjqpw6arx4c",
+                            "cover_image_id": "vn-11134103-81ztc-mofpjqpw6arx4c",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-81ztc-mofpjqpuqbrjbc",
+                            "cover_image_id": "vn-11134103-81ztc-mofpjqpuqbrjbc",
+                            "score": 0
+                        }
+                    }
+                ],
+                "review_creation_source": 2,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            },
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 85594831021,
+                "ctime": 1768655542,
+                "rating": 1,
+                "userid": 1618680887,
+                "shopid": 308461157,
+                "comment": "Hiệu suất:mượt mà\nChụp ảnh:quá nét\nMàn hình:quâ đẹp\n\nSản phẩm đúng với mô tả, ngon mượt đẳng cấp sang chảnh, hình ảnh mang tính chất minh hoạ, đúng siêu phẩm",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1793105125,
+                "editable": 0,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1768655542,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "me7xe4788s",
+                "author_portrait": "",
+                "anonymous": false,
+                "images": [
+                    "vn-11134103-820l4-mjlc3wra2c5e11",
+                    "vn-11134103-820l4-mjlc3wr843ra8d",
+                    "vn-11134103-820l4-mjlc3wr85ibqb4",
+                    "vn-11134103-820l4-mjlc3wr86ww618",
+                    "vn-11134103-820l4-mjlc3wr88bgm73"
+                ],
+                "videos": [
+                    {
+                        "id": "vn-11110103-6v8gr-mjlc3m4dh1q80c",
+                        "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover",
+                        "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4",
+                        "duration": 6293,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6v8gr-mjlc3m4dh1q80c\",\"biz\":103,\"duration\":6293,\"create_time\":1768655415,\"update_time\":1768655416,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"width\":640,\"height\":1138,\"bitrate\":628626,\"abitrate\":97716,\"size\":579884,\"fps\":25,\"duration\":6320,\"update_time\":1768655421,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":462503,\"abitrate\":33681,\"size\":398461,\"fps\":25,\"duration\":6320,\"update_time\":1768655423,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"width\":640,\"height\":1138,\"bitrate\":520777,\"abitrate\":129756,\"size\":522253,\"fps\":25,\"duration\":6320,\"update_time\":1768655429,\"codec\":\"H265\"},{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"width\":720,\"height\":1280,\"bitrate\":734047,\"abitrate\":129773,\"size\":692331,\"fps\":24.00126,\"duration\":6333,\"update_time\":1784840588,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                        "cover_image_id": "sg-11134206-8260n-mjooomzu0ikhd5",
+                        "highlight": {
+                            "id": "vn-11110103-6v8gr-mjlc3m4dh1q80c",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4",
+                            "duration": 6293,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6v8gr-mjlc3m4dh1q80c\",\"biz\":103,\"duration\":6293,\"create_time\":1768655415,\"update_time\":1768655416,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"width\":640,\"height\":1138,\"bitrate\":628626,\"abitrate\":97716,\"size\":579884,\"fps\":25,\"duration\":6320,\"update_time\":1768655421,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":462503,\"abitrate\":33681,\"size\":398461,\"fps\":25,\"duration\":6320,\"update_time\":1768655423,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"width\":640,\"height\":1138,\"bitrate\":520777,\"abitrate\":129756,\"size\":522253,\"fps\":25,\"duration\":6320,\"update_time\":1768655429,\"codec\":\"H265\"},{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"width\":720,\"height\":1280,\"bitrate\":734047,\"abitrate\":129773,\"size\":692331,\"fps\":24.00126,\"duration\":6333,\"update_time\":1784840588,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "sg-11134206-8260n-mjooomzu0ikhd5",
+                            "score": 0,
+                            "video_tier": 2
+                        },
+                        "score": 0,
+                        "video_tier": 2
+                    }
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 238030157447,
+                        "modelid": 276504907701,
+                        "model_name": "Cam Vũ Trụ",
+                        "options": [
+                            "Cam Vũ Trụ"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 85594831021,
+                    "ctime": 1770267381,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1770267381,
+                    "is_hidden": false
+                },
+                "editable_date": 1771247542,
+                "show_reply": false,
+                "like_count": 68,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "template_tags": [
+                    "Hiệu suất",
+                    "Chụp ảnh",
+                    "Màn hình"
+                ],
+                "has_template_tag": true,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "image_data": [
+                    {
+                        "image_id": "vn-11134103-820l4-mjlc3wra2c5e11",
+                        "cover_image_id": "vn-11134103-820l4-mjlc3wra2c5e11",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-820l4-mjlc3wr843ra8d",
+                        "cover_image_id": "vn-11134103-820l4-mjlc3wr843ra8d",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-820l4-mjlc3wr85ibqb4",
+                        "cover_image_id": "vn-11134103-820l4-mjlc3wr85ibqb4",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-820l4-mjlc3wr86ww618",
+                        "cover_image_id": "vn-11134103-820l4-mjlc3wr86ww618",
+                        "score": 0
+                    },
+                    {
+                        "image_id": "vn-11134103-820l4-mjlc3wr88bgm73",
+                        "cover_image_id": "vn-11134103-820l4-mjlc3wr88bgm73",
+                        "score": 0
+                    }
+                ],
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "video": {
+                            "id": "vn-11110103-6v8gr-mjlc3m4dh1q80c",
+                            "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4",
+                            "duration": 6293,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6v8gr-mjlc3m4dh1q80c\",\"biz\":103,\"duration\":6293,\"create_time\":1768655415,\"update_time\":1768655416,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"width\":640,\"height\":1138,\"bitrate\":628626,\"abitrate\":97716,\"size\":579884,\"fps\":25,\"duration\":6320,\"update_time\":1768655421,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":462503,\"abitrate\":33681,\"size\":398461,\"fps\":25,\"duration\":6320,\"update_time\":1768655423,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"width\":640,\"height\":1138,\"bitrate\":520777,\"abitrate\":129756,\"size\":522253,\"fps\":25,\"duration\":6320,\"update_time\":1768655429,\"codec\":\"H265\"},{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"width\":720,\"height\":1280,\"bitrate\":734047,\"abitrate\":129773,\"size\":692331,\"fps\":24.00126,\"duration\":6333,\"update_time\":1784840588,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "sg-11134206-8260n-mjooomzu0ikhd5",
+                            "highlight": {
+                                "id": "vn-11110103-6v8gr-mjlc3m4dh1q80c",
+                                "cover": "https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover",
+                                "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4",
+                                "duration": 6293,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6v8gr-mjlc3m4dh1q80c\",\"biz\":103,\"duration\":6293,\"create_time\":1768655415,\"update_time\":1768655416,\"serviceID\":6,\"cover\":\"https://down-bs-vn.img.susercontent.com/vn-11110103-6v8gr-mjlc3m4dh1q80c_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16000051768655416.mp4\",\"width\":640,\"height\":1138,\"bitrate\":628626,\"abitrate\":97716,\"size\":579884,\"fps\":25,\"duration\":6320,\"update_time\":1768655421,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":462503,\"abitrate\":33681,\"size\":398461,\"fps\":25,\"duration\":6320,\"update_time\":1768655423,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16003081768655421.mp4\",\"width\":640,\"height\":1138,\"bitrate\":520777,\"abitrate\":129756,\"size\":522253,\"fps\":25,\"duration\":6320,\"update_time\":1768655429,\"codec\":\"H265\"},{\"format\":1600603,\"defn\":\"V10000P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6v8gr-mjlc3m4dh1q80c.16006031784840582.mp4\",\"width\":720,\"height\":1280,\"bitrate\":734047,\"abitrate\":129773,\"size\":692331,\"fps\":24.00126,\"duration\":6333,\"update_time\":1784840588,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                                "cover_image_id": "sg-11134206-8260n-mjooomzu0ikhd5",
+                                "score": 0,
+                                "video_tier": 2
+                            },
+                            "score": 0,
+                            "video_tier": 2
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjlc3wra2c5e11",
+                            "cover_image_id": "vn-11134103-820l4-mjlc3wra2c5e11",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjlc3wr843ra8d",
+                            "cover_image_id": "vn-11134103-820l4-mjlc3wr843ra8d",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjlc3wr85ibqb4",
+                            "cover_image_id": "vn-11134103-820l4-mjlc3wr85ibqb4",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjlc3wr86ww618",
+                            "cover_image_id": "vn-11134103-820l4-mjlc3wr86ww618",
+                            "score": 0
+                        }
+                    },
+                    {
+                        "image": {
+                            "image_id": "vn-11134103-820l4-mjlc3wr88bgm73",
+                            "cover_image_id": "vn-11134103-820l4-mjlc3wr88bgm73",
+                            "score": 0
+                        }
+                    }
+                ],
+                "review_creation_source": 2,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            },
+            {
+                "orderid": 0,
+                "itemid": 42568221380,
+                "cmtid": 97581819622,
+                "ctime": 1777965307,
+                "rating": 1,
+                "userid": 123755266,
+                "shopid": 308461157,
+                "comment": "Hiệu suất:máy dùng tốt\nChụp ảnh:ảnh chụp ok\nMàn hình:màn đẹp , viền mỏng\n\nViettel giao hàng cực nhanh , đóng gói hàng ( tem niêm phong cẩn thận )",
+                "rating_star": 5,
+                "status": 2,
+                "mtime": 1790699294,
+                "editable": 0,
+                "opt": 2,
+                "filter": 7,
+                "is_hidden": false,
+                "submit_time": 1777965307,
+                "origin_itemid": 0,
+                "origin_shopid": 0,
+                "author_username": "trungkienvu284",
+                "author_portrait": "821162816d86a5a949b6f8484be5beb8",
+                "author_shopid": 123753442,
+                "anonymous": false,
+                "videos": [
+                    {
+                        "id": "vn-11110103-6va0j-mnv4o5oqnv9c82",
+                        "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover",
+                        "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4",
+                        "duration": 7961,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6va0j-mnv4o5oqnv9c82\",\"biz\":103,\"duration\":7961,\"create_time\":1777965227,\"update_time\":1777965227,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"width\":640,\"height\":1138,\"bitrate\":657551,\"abitrate\":97034,\"size\":762149,\"fps\":25,\"duration\":8000,\"update_time\":1777965233,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":470893,\"abitrate\":33389,\"size\":512247,\"fps\":25,\"duration\":8000,\"update_time\":1777965236,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"width\":640,\"height\":1138,\"bitrate\":290559,\"abitrate\":128976,\"size\":429400,\"fps\":25,\"duration\":8000,\"update_time\":1777965241,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                        "cover_image_id": "",
+                        "highlight": {
+                            "id": "vn-11110103-6va0j-mnv4o5oqnv9c82",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4",
+                            "duration": 7961,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0j-mnv4o5oqnv9c82\",\"biz\":103,\"duration\":7961,\"create_time\":1777965227,\"update_time\":1777965227,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"width\":640,\"height\":1138,\"bitrate\":657551,\"abitrate\":97034,\"size\":762149,\"fps\":25,\"duration\":8000,\"update_time\":1777965233,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":470893,\"abitrate\":33389,\"size\":512247,\"fps\":25,\"duration\":8000,\"update_time\":1777965236,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"width\":640,\"height\":1138,\"bitrate\":290559,\"abitrate\":128976,\"size\":429400,\"fps\":25,\"duration\":8000,\"update_time\":1777965241,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "score": 0.875,
+                            "template_video": false,
+                            "video_tier": 2
+                        },
+                        "score": 0,
+                        "template_video": false,
+                        "video_tier": 2
+                    },
+                    {
+                        "id": "vn-11110103-6va09-mnv4o5p4jxfp6b",
+                        "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover",
+                        "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4",
+                        "duration": 11865,
+                        "mms_ext": "{\"vid\":\"vn-11110103-6va09-mnv4o5p4jxfp6b\",\"biz\":103,\"duration\":11865,\"create_time\":1777965295,\"update_time\":1777965295,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":787974,\"abitrate\":96785,\"size\":1329307,\"fps\":25,\"duration\":11920,\"update_time\":1777965301,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":397481,\"abitrate\":33093,\"size\":650708,\"fps\":25,\"duration\":11880,\"update_time\":1777965305,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":453051,\"abitrate\":128926,\"size\":877922,\"fps\":25,\"duration\":11880,\"update_time\":1777965316,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                        "cover_image_id": "",
+                        "highlight": {
+                            "id": "vn-11110103-6va09-mnv4o5p4jxfp6b",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4",
+                            "duration": 11865,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va09-mnv4o5p4jxfp6b\",\"biz\":103,\"duration\":11865,\"create_time\":1777965295,\"update_time\":1777965295,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":787974,\"abitrate\":96785,\"size\":1329307,\"fps\":25,\"duration\":11920,\"update_time\":1777965301,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":397481,\"abitrate\":33093,\"size\":650708,\"fps\":25,\"duration\":11880,\"update_time\":1777965305,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":453051,\"abitrate\":128926,\"size\":877922,\"fps\":25,\"duration\":11880,\"update_time\":1777965316,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "score": 0.875,
+                            "template_video": true,
+                            "video_tier": 2
+                        },
+                        "score": 0,
+                        "template_video": true,
+                        "video_tier": 2
+                    }
+                ],
+                "product_items": [
+                    {
+                        "itemid": 42568221380,
+                        "shopid": 308461157,
+                        "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                        "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                        "is_snapshot": 1,
+                        "snapshotid": 220597679671,
+                        "modelid": 276504907702,
+                        "model_name": "Bạc",
+                        "options": [
+                            "Bạc"
+                        ],
+                        "is_half_pdp": false
+                    }
+                ],
+                "ItemRatingReply": {
+                    "orderid": 0,
+                    "cmtid": 97581819622,
+                    "ctime": 1780286867,
+                    "userid": 308480742,
+                    "comment": "Cảm ơn quý khách đã tin tưởng và ủng hộ Viettel Store! Chúng tôi rất vui khi được phục vụ quý khách và hy vọng mang đến trải nghiệm ngày càng tốt hơn trong những lần mua sắm tiếp theo.",
+                    "mtime": 1780286867,
+                    "is_hidden": false
+                },
+                "editable_date": 1780557307,
+                "show_reply": false,
+                "like_count": 9,
+                "liked": false,
+                "sync_to_social": false,
+                "detailed_rating": {
+                    "product_quality": 5,
+                    "seller_service": 5,
+                    "delivery_service": 5,
+                    "driver_service": 5
+                },
+                "exclude_scoring_due_low_logistic": false,
+                "template_tags": [
+                    "Hiệu suất",
+                    "Chụp ảnh",
+                    "Màn hình"
+                ],
+                "has_template_tag": true,
+                "sip_info": {
+                    "is_oversea": false,
+                    "origin_region": "vn"
+                },
+                "is_repeated_purchase": false,
+                "display_variation_filter": true,
+                "overall_fit": 0,
+                "is_normal_item": true,
+                "size_info_abt": "",
+                "key_media": {
+                    "key_media_code": 0,
+                    "key_media_id": ""
+                },
+                "is_super_review": false,
+                "region": "VN",
+                "original_item_info": {
+                    "itemid": 42568221380,
+                    "shopid": 308461157,
+                    "name": "Apple iPhone 17 Pro Max 256GB Chính hãng ZP/A",
+                    "image": "vn-11134207-820l4-megm9h2a4f7k62",
+                    "is_half_pdp": false
+                },
+                "show_super_review_tag": false,
+                "super_review_status": 0,
+                "review_type": 0,
+                "medias": [
+                    {
+                        "video": {
+                            "id": "vn-11110103-6va09-mnv4o5p4jxfp6b",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4",
+                            "duration": 11865,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va09-mnv4o5p4jxfp6b\",\"biz\":103,\"duration\":11865,\"create_time\":1777965295,\"update_time\":1777965295,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":787974,\"abitrate\":96785,\"size\":1329307,\"fps\":25,\"duration\":11920,\"update_time\":1777965301,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":397481,\"abitrate\":33093,\"size\":650708,\"fps\":25,\"duration\":11880,\"update_time\":1777965305,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":453051,\"abitrate\":128926,\"size\":877922,\"fps\":25,\"duration\":11880,\"update_time\":1777965316,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "highlight": {
+                                "id": "vn-11110103-6va09-mnv4o5p4jxfp6b",
+                                "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover",
+                                "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4",
+                                "duration": 11865,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6va09-mnv4o5p4jxfp6b\",\"biz\":103,\"duration\":11865,\"create_time\":1777965295,\"update_time\":1777965295,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va09-mnv4o5p4jxfp6b_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.12000051777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":787974,\"abitrate\":96785,\"size\":1329307,\"fps\":25,\"duration\":11920,\"update_time\":1777965301,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":397481,\"abitrate\":33093,\"size\":650708,\"fps\":25,\"duration\":11880,\"update_time\":1777965305,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va09-mnv4o5p4jxfp6b.16003081777965301.mp4\",\"width\":640,\"height\":1138,\"bitrate\":453051,\"abitrate\":128926,\"size\":877922,\"fps\":25,\"duration\":11880,\"update_time\":1777965316,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                                "cover_image_id": "",
+                                "score": 0.875,
+                                "template_video": true,
+                                "video_tier": 2
+                            },
+                            "score": 0,
+                            "template_video": true,
+                            "video_tier": 2
+                        }
+                    },
+                    {
+                        "video": {
+                            "id": "vn-11110103-6va0j-mnv4o5oqnv9c82",
+                            "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover",
+                            "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4",
+                            "duration": 7961,
+                            "mms_ext": "{\"vid\":\"vn-11110103-6va0j-mnv4o5oqnv9c82\",\"biz\":103,\"duration\":7961,\"create_time\":1777965227,\"update_time\":1777965227,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"width\":640,\"height\":1138,\"bitrate\":657551,\"abitrate\":97034,\"size\":762149,\"fps\":25,\"duration\":8000,\"update_time\":1777965233,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":470893,\"abitrate\":33389,\"size\":512247,\"fps\":25,\"duration\":8000,\"update_time\":1777965236,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"width\":640,\"height\":1138,\"bitrate\":290559,\"abitrate\":128976,\"size\":429400,\"fps\":25,\"duration\":8000,\"update_time\":1777965241,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                            "cover_image_id": "",
+                            "highlight": {
+                                "id": "vn-11110103-6va0j-mnv4o5oqnv9c82",
+                                "cover": "https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover",
+                                "url": "https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4",
+                                "duration": 7961,
+                                "mms_ext": "{\"vid\":\"vn-11110103-6va0j-mnv4o5oqnv9c82\",\"biz\":103,\"duration\":7961,\"create_time\":1777965227,\"update_time\":1777965227,\"serviceID\":6,\"cover\":\"https://down-zl-vn.img.susercontent.com/vn-11110103-6va0j-mnv4o5oqnv9c82_cover\",\"cover_list\":[],\"formats\":[{\"format\":1600005,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16000051777965228.mp4\",\"width\":640,\"height\":1138,\"bitrate\":657551,\"abitrate\":97034,\"size\":762149,\"fps\":25,\"duration\":8000,\"update_time\":1777965233,\"codec\":\"H264\"}],\"default_format\":{\"format\":1600323,\"defn\":\"V540P\",\"profile\":\"MP4\",\"path\":\"\",\"url\":\"https://mms.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.default.mp4\",\"width\":540,\"height\":960,\"bitrate\":470893,\"abitrate\":33389,\"size\":512247,\"fps\":25,\"duration\":8000,\"update_time\":1777965236,\"codec\":\"H264\"},\"extend_formats\":{\"H265\":[{\"format\":1600308,\"defn\":\"V640P\",\"profile\":\"MP4\",\"path\":\"api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"url\":\"https://down-aka-vn.vod.susercontent.com/api/v4/11110103/mms/vn-11110103-6va0j-mnv4o5oqnv9c82.16003081777965234.mp4\",\"width\":640,\"height\":1138,\"bitrate\":290559,\"abitrate\":128976,\"size\":429400,\"fps\":25,\"duration\":8000,\"update_time\":1777965241,\"codec\":\"H265\"}]},\"ab_test\":\"\"}",
+                                "cover_image_id": "",
+                                "score": 0.875,
+                                "template_video": false,
+                                "video_tier": 2
+                            },
+                            "score": 0,
+                            "template_video": false,
+                            "video_tier": 2
+                        }
+                    }
+                ],
+                "review_creation_source": 2,
+                "is_half_pdp": false,
+                "is_current_user_rating": false
+            }
+        ],
+        "item_rating_summary": {
+            "rating_total": 5778,
+            "rating_count": [
+                23,
+                5,
+                17,
+                77,
+                5656
+            ],
+            "rcount_with_context": 1303,
+            "rcount_with_image": 805,
+            "rcount_with_media": 1002,
+            "rcount_local_review": 5778,
+            "rcount_repeat_purchase": 0,
+            "rcount_overall_fit_small": 0,
+            "rcount_overall_fit_fit": 0,
+            "rcount_overall_fit_large": 0,
+            "rcount_oversea_review": 0,
+            "rcount_folded": 0,
+            "show_size_fitting": false
+        },
+        "is_sip_item": false,
+        "rcmd_algo": "BUNDLE:comment_search,BUNDLE_RANKER:media_ranker_default,RECALLER:comment_search_default,QUEUE:comment_search_default,NEWABTEST:0,QUEUES:comment_search_default",
+        "downgrade_switch": false,
+        "has_more": true,
+        "show_local_review": false,
+        "browsing_ui": "",
+        "enable_buyer_gallery_media": true,
+        "size_info_abt": "",
+        "resize_image_abt": true,
+        "purchase_bar_abt": "bucket_a",
+        "signature": "",
+        "original_review_summary": {},
+        "fe_review_summary": {},
+        "similar_section_scenario": 3,
+        "variation_filters_data": {},
+        "hide_shop_rating": false,
+        "current_review_tab": 0,
+        "item_rating_count": 5781,
+        "item_rating_star": 4.962283737024221,
+        "fe_component_toggles": {},
+        "search_bar_enough_organic_review": true,
+        "size_filter_count": 0,
+        "chatbot_track_id": "",
+        "chatbot_pass_through_data": "",
+        "is_show_product_ratings_section": true,
+        "is_show_similar_ratings_section": false
+    }
+}
