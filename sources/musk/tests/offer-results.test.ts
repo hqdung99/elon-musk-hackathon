@@ -76,6 +76,7 @@ it("renders the selected SKU image for recommendations and alternatives", async 
     if (!selected) throw new Error("Expected selected SKU.");
     selected.image_url = `https://down-vn.img.susercontent.com/file/sku-${profile.product.listing_id}`;
   }
+
   const html = render(output.result);
   expect(html).toContain('src="https://down-vn.img.susercontent.com/file/sku-value"');
   expect(html).toContain('src="https://down-vn.img.susercontent.com/file/sku-fast"');
