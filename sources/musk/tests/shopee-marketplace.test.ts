@@ -9,6 +9,28 @@ const listing = {
   title: "Shopee item 123",
 };
 
+it.each([null, undefined, []])(
+  "handles unavailable review rows as no retrieved evidence: %j",
+  async (ratings) => {
+    const adapter = createShopeeAdapter(
+      async () => new Response(JSON.stringify({ error: 0, data: { ratings } }), { status: 200 }),
+    );
+    await expect(adapter.getReviews(listing)).resolves.toEqual({ status: "ok", data: [] });
+  },
+);
+
+it("still rejects malformed review rows and Shopee API errors", async () => {
+  const malformed = createShopeeAdapter(
+    async () => new Response(JSON.stringify({ error: 0, data: { ratings: {} } }), { status: 200 }),
+  );
+  await expect(malformed.getReviews(listing)).rejects.toThrow("get_ratings.data.ratings");
+  const failed = createShopeeAdapter(
+    async () =>
+      new Response(JSON.stringify({ error: 403, data: { ratings: null } }), { status: 200 }),
+  );
+  await expect(failed.getReviews(listing)).rejects.toThrow("returned error 403");
+});
+
 const productResponse = {
   error: 0,
   data: {
@@ -157,6 +179,8 @@ describe("Shopee marketplace adapter", () => {
             max_quantity: 5,
           },
         });
+      if (url.pathname.includes("/get_recommend_"))
+        return jsonResponse({ error: 0, data: { shop_vouchers: [], vouchers: [] } });
       if (url.pathname.endsWith("/checkout/get"))
         return jsonResponse({
           error: 0,
@@ -260,7 +284,7 @@ describe("Shopee marketplace adapter", () => {
     ).toHaveLength(1);
     expect(cart.state()).toEqual([]);
     expect(fetcher.mock.calls.some(([input]) => String(input).includes("/get_recommend_"))).toBe(
-      false,
+      true,
     );
     const selectionCall = fetcher.mock.calls.find(([input]) =>
       String(input).includes("/select_variation_pc"),

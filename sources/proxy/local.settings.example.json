@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "SHOPEE_PROXY_AF_AC_ENC_DAT": "",
+    "SHOPEE_PROXY_COOKIE": "",
+    "SHOPEE_PROXY_USER_AGENT": "",
+    "SHOPEE_PROXY_CSRF_TOKEN": "",
+    "SHOPEE_PROXY_REFERER": ""
+  }
+}

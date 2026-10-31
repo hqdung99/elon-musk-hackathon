@@ -1,7 +1,7 @@
 import { afterEach, beforeAll, expect, it, vi } from "vitest";
 import { listingKey } from "../src/domain/schemas";
 import { approveAndRevalidate, completeSelection, runPipeline } from "../src/pipeline/orchestrator";
-import { createAzureAI, defaultAzureConfig } from "../src/providers/ai";
+import { createOpenAI, defaultOpenAIConfig } from "../src/providers/ai";
 import { createShopeeAdapter } from "../src/providers/marketplace";
 import { cartItem, cartServer } from "./helpers/shopee-cart";
 
@@ -13,7 +13,7 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart shipping, ranking and fresh revalidation", async () => {
+it("integrates OpenAI contracts and Shopee search, relevance, explicit SKU, cart shipping, ranking and fresh revalidation", async () => {
   const intent = {
     product_description: "iPhone 16 128GB",
     quantity: 1,
@@ -59,7 +59,7 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
   const original = { ...cartItem(99, 88, 3), checkout: false };
   const cart = cartServer({ existing: [original] });
   const requests: string[] = [];
-  const azureTasks: string[] = [];
+  const openaiTasks: string[] = [];
   const fetcher: typeof fetch = async (input, init) => {
     const url = new URL(String(input), "https://musk.local");
     const path = url.pathname;
@@ -67,9 +67,9 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
     requests.push(path);
     let payload: unknown;
     if (path.endsWith("/chat/completions")) {
-      const task = body.tools[0].function.name;
-      azureTasks.push(task);
-      expect(body.tools[0].function.strict).toBe(true);
+      const task = body.response_format.json_schema.name;
+      openaiTasks.push(task);
+      expect(body.response_format.json_schema.strict).toBe(true);
       const data = JSON.parse(body.messages[1].content).data;
       const output =
         task === "interpret_intent"
@@ -115,7 +115,7 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
                       })),
                     }
                   : undefined;
-      if (!output) throw new Error(`Unexpected Azure task: ${task}`);
+      if (!output) throw new Error(`Unexpected OpenAI task: ${task}`);
       payload = {
         id: "integration",
         object: "chat.completion",
@@ -124,17 +124,10 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
         choices: [
           {
             index: 0,
-            finish_reason: "tool_calls",
+            finish_reason: "stop",
             message: {
               role: "assistant",
-              content: null,
-              tool_calls: [
-                {
-                  id: `call-${azureTasks.length}`,
-                  type: "function",
-                  function: { name: task, arguments: JSON.stringify(output) },
-                },
-              ],
+              content: JSON.stringify(output),
             },
           },
         ],
@@ -260,7 +253,7 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
 
   vi.stubGlobal("fetch", fetcher);
   const deps = {
-    ai: await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" }),
+    ai: await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" }),
     marketplace: createShopeeAdapter(fetcher),
   };
   const output = await runPipeline(
@@ -279,7 +272,7 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
     { [listingKey(output.candidates[0].listing)]: "789" },
     deps,
   );
-  expect(result.mode).toBe("shopee/azure");
+  expect(result.mode).toBe("shopee/openai");
   expect(result.profiles).toHaveLength(1);
   const profile = result.profiles[0];
   expect(profile.quote.item_unit_price?.amount_minor).toBe(22_590_000);
@@ -312,7 +305,7 @@ it("integrates Azure contracts and Shopee search, relevance, explicit SKU, cart 
   expect(requests.filter((path) => path.endsWith("/get_pc"))).toHaveLength(2);
   expect(requests.filter((path) => path.endsWith("/checkout/get"))).toHaveLength(2);
   expect(requests.some((path) => path.includes("/get_recommend_"))).toBe(false);
-  expect(azureTasks).toEqual([
+  expect(openaiTasks).toEqual([
     "interpret_intent",
     "build_search_plan",
     "assess_listings",

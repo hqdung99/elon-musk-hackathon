@@ -197,11 +197,13 @@ describe("checkout shipping estimates", () => {
   });
 
   it.each([1, 2, 3])(
-    "uses net prices and net shipping without another voucher deduction (quantity: %s)",
+    "reconciles net prices before fetching vouchers (quantity: %s)",
     async (quantity) => {
       const data = checkoutResponse(2_500_000_000, 500_000_000);
       const expectedTotal = 80_000 * quantity + 20_000 + 2_000;
       const request = vi.fn(async (_path: string, endpoint: string) => {
+        if (endpoint.startsWith("get_recommend_"))
+          return { data: { shop_vouchers: [], vouchers: [] } };
         if (endpoint !== "checkout_get") throw new Error(`Unexpected request: ${endpoint}`);
 
         return {
@@ -226,12 +228,12 @@ describe("checkout shipping estimates", () => {
         null,
         { price: 10_000_000_000 },
       );
-      expect(request).toHaveBeenCalledTimes(1);
+      expect(request).toHaveBeenCalledTimes(3);
       expect(result.item_unit_price).toEqual({ amount_minor: 80_000, currency: "VND" });
       expect(result.shipping_cost).toEqual({ amount_minor: 20_000, currency: "VND" });
       expect(result.other_fees).toEqual({ amount_minor: 2_000, currency: "VND" });
       expect(result.total_estimated).toBe(true);
-      expect(result.limitations.join(" ")).toContain("không lấy hay trừ thêm voucher");
+      expect(result.limitations.join(" ")).toContain("không cộng dồn voucher");
       const quote: OfferQuote = {
         listing_id: "123",
         variant_id: "789",

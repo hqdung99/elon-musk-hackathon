@@ -2,42 +2,43 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it, vi } from "vitest";
 import { Settings } from "../src/components/chat/Settings";
-import { defaultAzureConfig } from "../src/providers/ai";
+import { defaultOpenAIConfig } from "../src/providers/ai";
 
 it.each(["", "fake-settings-secret"])(
-  "shows read-only Azure configuration and key availability without an override: %s",
+  "shows read-only OpenAI configuration and key availability without an override: %s",
   (apiKey) => {
     const html = renderToStaticMarkup(
       createElement(Settings, {
         value: {
-          aiMode: "azure",
+          aiMode: "openai",
           dataMode: "fixture",
           scenario: "unchanged",
-          azure: { ...defaultAzureConfig, apiKey },
+          openai: { ...defaultOpenAIConfig, apiKey },
         },
         onSave: vi.fn(),
         onClose: vi.fn(),
       }),
     );
-    expect(html).toContain(defaultAzureConfig.endpoint);
-    expect(html).toContain(defaultAzureConfig.deployment);
-    expect(html).toContain(defaultAzureConfig.apiVersion);
-    expect(html).toContain("VITE_AZURE_OPENAI_API_KEY");
-    expect(html).toContain(apiKey ? "Đã nạp API key từ cấu hình local." : "Chưa có API key Azure.");
+    expect(html).toContain(defaultOpenAIConfig.endpoint);
+    expect(html).toContain(defaultOpenAIConfig.model);
+    expect(html).toContain("VITE_OPENAI_API_KEY");
+    expect(html).toContain(
+      apiKey ? "Đã nạp API key từ cấu hình local." : "Chưa có API key OpenAI.",
+    );
     expect(html).not.toContain("fake-settings-secret");
     expect(html).not.toMatch(/<input\b/);
     expect(html).toContain("Áp dụng cấu hình");
   },
 );
 
-it("keeps Azure details hidden in demo mode", () => {
+it("keeps OpenAI details hidden in demo mode", () => {
   const html = renderToStaticMarkup(
     createElement(Settings, {
       value: {
         aiMode: "demo",
         dataMode: "fixture",
         scenario: "unchanged",
-        azure: { ...defaultAzureConfig, apiKey: "fake-settings-secret" },
+        openai: { ...defaultOpenAIConfig, apiKey: "fake-settings-secret" },
       },
       onSave: vi.fn(),
       onClose: vi.fn(),
@@ -55,7 +56,7 @@ it("discloses permanent cart clearing and the one-SKU workflow in Shopee mode", 
         aiMode: "demo",
         dataMode: "shopee",
         scenario: "unchanged",
-        azure: defaultAzureConfig,
+        openai: defaultOpenAIConfig,
       },
       onSave: vi.fn(),
       onClose: vi.fn(),

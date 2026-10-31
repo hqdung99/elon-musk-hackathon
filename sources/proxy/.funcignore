@@ -1,0 +1,10 @@
+.git*
+.venv
+.python_packages
+__pycache__
+tests
+local.settings*.json
+.env*
+README.md
+package.ps1
+*.zip

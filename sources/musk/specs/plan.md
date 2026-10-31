@@ -2,27 +2,27 @@
 
 ## Stack and runtime
 
-Status: implemented locally. Fixture data and demo AI are the default;
-Shopee and Azure are explicitly selected live integrations.
+Status: implemented locally. Live Shopee and OpenAI are the default;
+fixture data and demo AI remain selectable in settings.
 Behavior follows [brainstorm.md](../../../brainstorm.md).
 
 | Area             | Implementation                                                                                 |
 | ---------------- | ---------------------------------------------------------------------------------------------- |
 | Frontend         | React 19, TypeScript 5.9, CSS; Vite 7 development server and build                             |
-| AI               | Azure OpenAI through LangChain `AzureChatOpenAI` (`@langchain/openai`, `@langchain/core`)      |
+| AI               | OpenAI through LangChain `ChatOpenAI` (`@langchain/openai`, `@langchain/core`)                 |
 | Contracts        | Zod 4 schemas plus deterministic semantic validation                                           |
 | Shopee transport | Development-only Vite proxy: `/shopee-api/` to `https://shopee.vn/api/`                        |
 | State            | React memory: conversation, run IDs and approval snapshots; no database or application backend |
 | Validation       | Vitest 5, TypeScript, ESLint and Prettier                                                      |
 
-Azure defaults: endpoint `https://baophanai.openai.azure.com/`, deployment
-`gpt-5-mini`, API version `2024-05-01-preview`. Configuration is loaded from
-ignored local configuration and `VITE_AZURE_OPENAI_*` variables, not chat input.
+OpenAI defaults: endpoint `https://api.openai.com/v1`, model
+`gpt-5-mini`. Configuration is loaded from
+ignored local configuration and `VITE_OPENAI_*` variables, not chat input.
 Use strict structured outputs and validate their contents before continuing.
 
 Shopee session headers, including `af-ac-enc-dat`, `cookie` and `user-agent`,
 are injected server-side by the proxy from ignored `.env.local` configuration.
-The proxy does not refresh sessions. Azure `VITE_` keys are browser-visible and
+The proxy does not refresh sessions. OpenAI `VITE_` keys are browser-visible and
 embedded in builds; never commit credentials or distribute credential-bearing builds.
 See [setup and run instructions](../README.md).
 
@@ -59,7 +59,7 @@ sources/musk/
       shopee-cart.ts         Exclusive cart workspace and verified cleanup
       shopee-shipping.ts     Checkout shipping and net-price reconciliation
       checkout.ts            Cart handoff contract and fixture simulation
-      ai.ts                  LangChain/Azure OpenAI structured operations
+      ai.ts                  LangChain/OpenAI structured operations
       fixtures.ts            Explicit demo/test data
   tests/                     Domain, pipeline, UI, and checkout tests
   specs/
@@ -67,6 +67,17 @@ sources/musk/
 ```
 
 ## Architecture boundaries
+
+Each chat turn first passes through `pipeline/interpret-turn.ts`. AI proposes a
+validated action: new product, requirement/preference revision, clarification
+answer, result question, ambiguous turn, decline, or request for UI approval.
+New products clear the active intent and offers while retaining the visible chat.
+Intent parsing receives only the latest message and (for the same task) the active
+structured intent, never the full transcript. Requirements are searched again;
+preference-only revisions reuse profiles only when all other intent fields match.
+Result questions use existing evidence without marketplace calls. Text approval
+never opens checkout; SKU selection, explicit UI approval and revalidation remain
+mandatory. Demo routing is scripted; natural-language routing uses OpenAI.
 
 - **UI:** Render structured state, collect SKU choices and explicit approval;
   never decide eligibility or place orders.
@@ -348,8 +359,8 @@ FieldSource = {
 - `sources` records provenance; `missing_fields` lists unknown profile paths.
   A value without supporting provenance cannot pass a requirement.
 
-Total = post-voucher unit price x quantity + shipping + other fees.
-Shopee already includes vouchers; live `discounts` is empty. No voucher API calls.
+Total = checkout unit price x quantity + shipping + other fees - selected voucher.
+After reconciling checkout with voucher auto-application disabled, fetch shop and platform voucher recommendations for the exact cart SKU. Select the largest eligible cash discount once; do not stack vouchers or count coins/shipping rewards as item discounts. Check validity, shop scope, minimum spend/quantity, usage and payment restrictions. Display the voucher code for manual selection at checkout.
 Amounts use currency minor units: one VND unit is one dong; one USD unit is one cent.
 All components must share a currency; unsafe arithmetic or unknown required pricing
 leaves `total` null, never zero. The generic fixture contract may carry discounts:
@@ -443,7 +454,7 @@ RunResult =
 ```
 
 **Validate:** recommended ID is rank one's offer ID, or null for an empty ranking.
-`mode` is `<fixture|shopee>/<demo|azure>`. Pauses return `clarification` or
+`mode` is `<fixture|shopee>/<demo|openai>`. Pauses return `clarification` or
 `selection`, not a success-shaped empty recommendation.
 
 ## 9. Revalidate approved offer

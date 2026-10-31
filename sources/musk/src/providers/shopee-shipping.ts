@@ -1,5 +1,6 @@
 import { z } from "zod";
-import type { Listing, Money } from "../domain/schemas";
+import type { Listing, Money, OfferQuote } from "../domain/schemas";
+import { getBestVoucher } from "./shopee-vouchers";
 
 export type ShopeeRequest = (
   path: string,
@@ -54,6 +55,7 @@ export interface ShippingEstimate {
   item_unit_price?: Money;
   other_fees?: Money | null;
   total_estimated?: boolean;
+  discounts?: OfferQuote["discounts"];
 }
 
 export function createCheckoutShippingEstimator(request: ShopeeRequest) {
@@ -134,7 +136,7 @@ export function createCheckoutShippingEstimator(request: ShopeeRequest) {
       throw new Error("Shopee shipping quote includes other items or a different quantity.");
     const limitations = [
       "Phí ship là ước tính cho địa chỉ lưu trên tài khoản Shopee, không phải khu vực đã nhập.",
-      "Giá sản phẩm Shopee trả về đã gồm voucher; Musk dùng nguyên giá này, không lấy hay trừ thêm voucher.",
+      "Tổng ước tính trừ một voucher tiền mặt đủ điều kiện có mức giảm lớn nhất; không cộng dồn voucher. Kiểm tra và chọn mã trên Shopee khi thanh toán.",
       ...(cartItem ? [] : ["Chưa xác nhận phí khác; tổng thanh toán vẫn chưa rõ."]),
       ...(data.can_checkout === false
         ? [
@@ -183,7 +185,7 @@ export function createCheckoutShippingEstimator(request: ShopeeRequest) {
       limitations,
     });
 
-    function finish(estimate: ShippingEstimate): ShippingEstimate {
+    async function finish(estimate: ShippingEstimate): Promise<ShippingEstimate> {
       if (!cartItem) return estimate;
       const unitPrice = item.price ?? rawFee.parse(cartItem.price);
       const itemSubtotal = (unitPrice / 100_000) * quantity;
@@ -200,11 +202,24 @@ export function createCheckoutShippingEstimator(request: ShopeeRequest) {
           "Shopee checkout total cannot be reconciled with item and shipping prices.",
         );
 
+      // Reconcile the checkout with vouchers explicitly disabled first. Subtract
+      // the selected order-specific benefit once through calculateTotal.
+      const discounts =
+        fees === null
+          ? []
+          : await getBestVoucher(
+              request,
+              { ...cartItem, shopid, itemid, modelid, quantity, price: unitPrice },
+              itemSubtotal,
+              signal,
+            );
+
       return {
         ...estimate,
         item_unit_price: { amount_minor: unitPrice / 100_000, currency: "VND" },
         other_fees: fees === null ? null : { amount_minor: fees, currency: "VND" },
         total_estimated: true,
+        discounts,
         limitations: [
           ...estimate.limitations,
           ...(fees === null

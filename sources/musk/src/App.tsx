@@ -5,12 +5,18 @@ import { VariantSelection } from "./components/offers/VariantSelection";
 import { Settings } from "./components/chat/Settings";
 import type { SettingsValue } from "./components/chat/Settings";
 import type { OfferProfile, PipelineResult, Stage } from "./domain/schemas";
-import { createAzureAI, defaultAzureConfig, demoAI, readLocalConfig } from "./providers/ai";
+import { createOpenAI, defaultOpenAIConfig, demoAI, readLocalConfig } from "./providers/ai";
 import { createFixtureMarketplace } from "./providers/fixtures";
 import { shopeeAdapter } from "./providers/marketplace";
 import { CartCleanupError } from "./providers/shopee-cart";
 import { fixtureCheckout, shopeeCheckout } from "./providers/checkout";
-import { approveAndRevalidate, completeSelection, runPipeline } from "./pipeline/orchestrator";
+import { approveAndRevalidate, completeSelection, runWithIntent } from "./pipeline/orchestrator";
+import { interpretTurn, intentMessages, canReuseProfiles } from "./pipeline/interpret-turn";
+import type { TurnContext } from "./pipeline/interpret-turn";
+import { interpretIntent } from "./pipeline/interpret-intent";
+import { rankOffers } from "./pipeline/rank-offers";
+import { filterOffers } from "./pipeline/filter-offers";
+import { recommendOffers } from "./pipeline/recommend-offers";
 import type { VariantChoices } from "./pipeline/types";
 import { initialState, reducer } from "./state";
 
@@ -34,14 +40,15 @@ export default function App() {
   const [input, setInput] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settings, setSettings] = useState<SettingsValue>({
-    aiMode: "demo",
-    dataMode: "fixture",
+    aiMode: "openai",
+    dataMode: "shopee",
     scenario: "unchanged",
-    azure: defaultAzureConfig,
+    openai: defaultOpenAIConfig,
   });
   const runId = useRef(0);
   const controller = useRef<AbortController | null>(null);
   const userTexts = useRef<string[]>([]);
+  const shopping = useRef<TurnContext>({ intent: null, result: null });
   const freshData = useRef(false);
   const feedEnd = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -52,7 +59,7 @@ export default function App() {
     readLocalConfig()
       .then((config) => {
         if (active)
-          setSettings((current) => ({ ...current, azure: { ...current.azure, ...config } }));
+          setSettings((current) => ({ ...current, openai: { ...current.openai, ...config } }));
       })
       .catch(() => {
         if (active)
@@ -61,7 +68,7 @@ export default function App() {
             message: {
               id: crypto.randomUUID(),
               kind: "error",
-              text: "Không đọc được cấu hình local. Kiểm tra cấu hình Azure local rồi khởi động lại Vite.",
+              text: "Không đọc được cấu hình local. Kiểm tra cấu hình OpenAI local rồi khởi động lại Vite.",
             },
           });
       });
@@ -129,14 +136,16 @@ export default function App() {
 
   function errorText(error: unknown) {
     const raw = error instanceof Error ? error.message : "Có lỗi không xác định.";
-    const safe = settings.azure.apiKey ? raw.split(settings.azure.apiKey).join("[key đã ẩn]") : raw;
+    const safe = settings.openai.apiKey
+      ? raw.split(settings.openai.apiKey).join("[key đã ẩn]")
+      : raw;
 
-    return `${safe}\nKhông tự đổi sang dữ liệu demo. Với Azure, kiểm tra key, deployment, API version và CORS trong cấu hình.`;
+    return `${safe}\nKhông tự đổi sang dữ liệu demo.`;
   }
 
   async function dependencies(signal: AbortSignal, id: number, revalidating = false) {
     return {
-      ai: settings.aiMode === "azure" ? await createAzureAI(settings.azure) : demoAI,
+      ai: settings.aiMode === "openai" ? await createOpenAI(settings.openai) : demoAI,
       marketplace:
         settings.dataMode === "fixture"
           ? createFixtureMarketplace(settings.scenario, revalidating || freshData.current)
@@ -146,13 +155,86 @@ export default function App() {
     };
   }
 
-  async function search(texts: string[]) {
+  async function search(texts: string[], newTurn?: string) {
+    const pendingSelection = state.pendingSelection;
     const { id, signal } = nextRun();
     dispatch({ type: "start", runId: id });
     try {
       const deps = await dependencies(signal, id);
       signal.throwIfAborted();
-      const output = await runPipeline(texts, deps);
+      const context = shopping.current;
+      const decision = newTurn ? await interpretTurn(newTurn, context, deps.ai, signal) : null;
+      if (signal.aborted || id !== runId.current) return;
+      if (
+        decision &&
+        ["clarify", "ask_results", "request_approval", "decline"].includes(decision.action)
+      ) {
+        const answer =
+          decision.action === "ask_results"
+            ? await deps.ai.answerResults(newTurn!, context, signal)
+            : decision.action === "request_approval"
+              ? "Chọn offer rồi nhấn Duyệt & kiểm tra lại để xác nhận đúng SKU và điều kiện. Musk không duyệt bằng tin nhắn."
+              : decision.action === "decline"
+                ? "Đã dừng yêu cầu mua sắm."
+                : decision.question!;
+        if (signal.aborted || id !== runId.current) return;
+        message("assistant", answer, id);
+        if (decision.action === "decline") {
+          shopping.current = { intent: null, result: null };
+          userTexts.current = [];
+          dispatch({ type: "stop", runId: id, stage: "done" });
+        } else if (pendingSelection) {
+          dispatch({ type: "selection", runId: id, prepared: pendingSelection });
+        } else if (context.result) {
+          dispatch({ type: "result", runId: id, result: context.result });
+        } else if (context.intent) {
+          dispatch({ type: "clarification", runId: id, intent: context.intent });
+        } else dispatch({ type: "stop", runId: id, stage: "idle" });
+
+        return;
+      }
+
+      const inputs = decision ? intentMessages(newTurn!, context.intent, decision) : texts;
+      userTexts.current = inputs;
+      if (decision?.action === "new_product") {
+        shopping.current = { intent: null, result: null };
+        freshData.current = false;
+        dispatch({ type: "clearIntent", runId: id });
+      }
+
+      const intent = await interpretIntent(inputs, deps);
+      if (signal.aborted || id !== runId.current) return;
+      shopping.current = { intent, result: null };
+      if (
+        decision?.action === "revise_preferences" &&
+        context.result &&
+        canReuseProfiles(context.result.intent, intent)
+      ) {
+        dispatch({ type: "progress", runId: id, stage: "ranking" });
+        const { filters, candidates } = filterOffers(context.result.profiles, intent);
+        const ranking = await rankOffers(intent, candidates, deps);
+        const result = {
+          ...context.result,
+          intent,
+          filters,
+          ranking,
+          recommendation: recommendOffers(
+            intent,
+            context.result.profiles,
+            ranking,
+            deps,
+            context.result.search_review.truncated,
+            filters,
+          ),
+        };
+        if (signal.aborted || id !== runId.current) return;
+        shopping.current = { intent, result };
+        dispatch({ type: "result", runId: id, result });
+
+        return;
+      }
+
+      const output = await runWithIntent(intent, deps);
       if (signal.aborted || id !== runId.current) return;
       if (output.status === "clarification") {
         dispatch({ type: "clarification", runId: id, intent: output.intent });
@@ -163,7 +245,10 @@ export default function App() {
         );
       } else if (output.status === "selection") {
         dispatch({ type: "selection", runId: id, prepared: output });
-      } else dispatch({ type: "result", runId: id, result: output.result });
+      } else {
+        shopping.current = { intent: output.result.intent, result: output.result };
+        dispatch({ type: "result", runId: id, result: output.result });
+      }
     } catch (error) {
       if (error instanceof CartCleanupError && (signal.aborted || id !== runId.current)) {
         message("error", errorText(error));
@@ -188,6 +273,7 @@ export default function App() {
       signal.throwIfAborted();
       const result = await completeSelection(prepared, choices, deps);
       if (signal.aborted || id !== runId.current) return;
+      shopping.current = { intent: result.intent, result };
       dispatch({ type: "result", runId: id, result });
     } catch (error) {
       if (error instanceof CartCleanupError && (signal.aborted || id !== runId.current)) {
@@ -207,15 +293,15 @@ export default function App() {
   function submit(text = input) {
     if (!text.trim()) return;
     const value = text.trim();
-    userTexts.current = [...userTexts.current, value];
     message("user", value);
     setInput("");
-    void search([...userTexts.current]);
+    void search([], value);
   }
 
   function reset() {
     const { id } = nextRun();
     userTexts.current = [];
+    shopping.current = { intent: null, result: null };
     freshData.current = false;
     setInput("");
     dispatch({ type: "reset", runId: id });
@@ -308,6 +394,8 @@ export default function App() {
 
   function decline() {
     const { id } = nextRun();
+    shopping.current = { intent: null, result: null };
+    userTexts.current = [];
     message("user", "Không tiếp tục thanh toán.", id);
     message(
       "assistant",
@@ -362,7 +450,7 @@ export default function App() {
             <span className="badge green">LOCAL MVP</span>
             <span>
               {settings.dataMode === "fixture" ? "Dữ liệu giả lập" : "Shopee API"} ·{" "}
-              {settings.aiMode === "demo" ? "AI demo, không gọi mô hình" : "Azure OpenAI"}
+              {settings.aiMode === "demo" ? "AI demo, không gọi mô hình" : "OpenAI"}
             </span>
             <button onClick={() => setSettingsOpen(true)}>Đổi chế độ ↗</button>
           </div>
@@ -409,7 +497,7 @@ export default function App() {
                   <p className="demo-hint">
                     Demo hỗ trợ kịch bản iPhone 16 128GB và câu trả lời có cấu trúc.
                     <br />
-                    Chọn Azure trong Cấu hình để dùng AI diễn giải tự nhiên.
+                    Chọn OpenAI trong Cấu hình để dùng AI diễn giải tự nhiên.
                   </p>
                 </section>
               )}
@@ -422,7 +510,7 @@ export default function App() {
                     onApprove={(profile) => void approve(profile, item.result, item.runId)}
                     onDecline={decline}
                     onRevise={() => {
-                      setInput(userTexts.current.join("\n"));
+                      setInput("");
                       inputRef.current?.focus();
                     }}
                   />
@@ -529,7 +617,7 @@ export default function App() {
                   ✦{" "}
                   {settings.aiMode === "demo"
                     ? "Bắt đầu bằng ví dụ để khám phá"
-                    : "Được hỗ trợ bởi Azure OpenAI"}
+                    : "Được hỗ trợ bởi OpenAI"}
                 </span>
                 <button
                   type="submit"
@@ -560,6 +648,7 @@ export default function App() {
               setSettings(value);
               setSettingsOpen(false);
               freshData.current = false;
+              shopping.current = { ...shopping.current, result: null };
               dispatch({ type: "invalidate", runId: id });
               message(
                 "assistant",

@@ -1,5 +1,5 @@
 import { afterEach, beforeAll, expect, it, vi } from "vitest";
-import { createAzureAI, defaultAzureConfig, demoAI, readLocalConfig } from "../src/providers/ai";
+import { createOpenAI, defaultOpenAIConfig, demoAI, readLocalConfig } from "../src/providers/ai";
 import { createFixtureMarketplace, fixtureListings } from "../src/providers/fixtures";
 import { assembleProfile } from "../src/pipeline/profiles";
 
@@ -11,40 +11,33 @@ beforeAll(async () => {
   await import("@langchain/openai");
 }, 60_000);
 
-it("loads Azure settings from Vite environment variables and trims surrounding whitespace", async () => {
-  vi.stubEnv("VITE_AZURE_OPENAI_ENDPOINT", " https://test-resource.openai.azure.com/ ");
-  vi.stubEnv("VITE_AZURE_OPENAI_DEPLOYMENT", " test-deployment ");
-  vi.stubEnv("VITE_AZURE_OPENAI_API_VERSION", " 2024-10-21 ");
-  vi.stubEnv("VITE_AZURE_OPENAI_API_KEY", " fake-env-test-key ");
+it("loads OpenAI settings from Vite environment variables and trims surrounding whitespace", async () => {
+  vi.stubEnv("VITE_OPENAI_ENDPOINT", " https://api.openai.com/v1 ");
+  vi.stubEnv("VITE_OPENAI_MODEL", " test-model ");
+  vi.stubEnv("VITE_OPENAI_API_KEY", " fake-env-test-key ");
   const config = await readLocalConfig();
-  expect(config.endpoint).toBe("https://test-resource.openai.azure.com/");
-  expect(config.deployment).toBe("test-deployment");
-  expect(config.apiVersion).toBe("2024-10-21");
+  expect(config.endpoint).toBe("https://api.openai.com/v1");
+  expect(config.model).toBe("test-model");
   expect(config.apiKey === "fake-env-test-key").toBe(true);
 
-  vi.stubEnv("VITE_AZURE_OPENAI_API_KEY", "fake-updated-env-key");
+  vi.stubEnv("VITE_OPENAI_API_KEY", "fake-updated-env-key");
   expect((await readLocalConfig()).apiKey === "fake-updated-env-key").toBe(true);
 });
 
 it("does not replace local configuration or defaults with blank Vite settings", async () => {
-  const variables = [
-    "VITE_AZURE_OPENAI_ENDPOINT",
-    "VITE_AZURE_OPENAI_DEPLOYMENT",
-    "VITE_AZURE_OPENAI_API_VERSION",
-    "VITE_AZURE_OPENAI_API_KEY",
-  ];
+  const variables = ["VITE_OPENAI_ENDPOINT", "VITE_OPENAI_MODEL", "VITE_OPENAI_API_KEY"];
   for (const variable of variables) vi.stubEnv(variable, undefined);
-  const baseline = { ...defaultAzureConfig, ...(await readLocalConfig()) };
+  const baseline = { ...defaultOpenAIConfig, ...(await readLocalConfig()) };
   for (const variable of variables) vi.stubEnv(variable, "  ");
-  const configured = { ...defaultAzureConfig, ...(await readLocalConfig()) };
+  const configured = { ...defaultOpenAIConfig, ...(await readLocalConfig()) };
   expect(
-    (["endpoint", "deployment", "apiVersion", "apiKey"] as const).every(
+    (["endpoint", "model", "apiKey"] as const).every(
       (field) => configured[field] === baseline[field],
     ),
   ).toBe(true);
 });
 
-function toolResponse(name: string, value: unknown) {
+function toolResponse(_name: string, value: unknown) {
   return new Response(
     JSON.stringify({
       id: "mock-completion",
@@ -54,17 +47,10 @@ function toolResponse(name: string, value: unknown) {
       choices: [
         {
           index: 0,
-          finish_reason: "tool_calls",
+          finish_reason: "stop",
           message: {
             role: "assistant",
-            content: null,
-            tool_calls: [
-              {
-                id: "call-1",
-                type: "function",
-                function: { name, arguments: JSON.stringify(value) },
-              },
-            ],
+            content: JSON.stringify(value),
           },
         },
       ],
@@ -74,7 +60,32 @@ function toolResponse(name: string, value: unknown) {
   );
 }
 
-it("uses the supplied Azure endpoint, deployment, API version and structured output without a network call", async () => {
+it("uses a constrained turn decision before interpreting a new product", async () => {
+  const bodies: string[] = [];
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    bodies.push(await new Request(input, init).text());
+
+    return toolResponse("interpret_turn", { action: "new_product", question: null });
+  });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
+  const intent = await demoAI.interpretIntent([
+    "Mua 1 máy iPhone 16 128GB. Tổng tối đa 19 triệu VND. Giao tại TP.HCM.",
+  ]);
+  expect(await ai.interpretTurn("mua nệm cao su", { intent, result: null })).toEqual({
+    action: "new_product",
+    question: null,
+  });
+  const body = JSON.parse(bodies[0]);
+  expect(body.response_format.json_schema.name).toBe("interpret_turn");
+  expect(body.response_format.json_schema.strict).toBe(true);
+  const data = JSON.parse(body.messages[1].content).data;
+  expect(data.text).toBe("mua nệm cao su");
+  expect(data.context.intent.product_description).toBe("iPhone 16 128GB");
+  expect(data.context.has_results).toBe(false);
+  expect(data.context.result).toBeUndefined();
+});
+
+it("uses the supplied OpenAI endpoint, model, API version and structured output without a network call", async () => {
   const intent = {
     product_description: "iPhone 16 128GB",
     quantity: 1,
@@ -100,20 +111,22 @@ it("uses the supplied Azure endpoint, deployment, API version and structured out
 
     return toolResponse("interpret_intent", intent);
   });
-  const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
   expect(await ai.interpretIntent(["Find an iPhone"])).toEqual(intent);
   expect(requests).toHaveLength(1);
   const url = new URL(requests[0].url);
-  expect(url.origin).toBe("https://baophanai.openai.azure.com");
-  expect(url.pathname).toBe("/openai/deployments/gpt-5-mini/chat/completions");
-  expect(url.searchParams.get("api-version")).toBe("2024-05-01-preview");
-  expect(requests[0].headers.get("api-key")).toBe("fake-unit-test-key");
-  expect(JSON.parse(requests[0].body).tools[0].function.name).toBe("interpret_intent");
-  expect(JSON.parse(requests[0].body).tools[0].function.strict).toBe(true);
+  expect(url.origin).toBe("https://api.openai.com");
+  expect(url.pathname).toBe("/v1/chat/completions");
+  expect(url.searchParams.has("api-version")).toBe(false);
+  expect(requests[0].headers.get("authorization")).toBe("Bearer fake-unit-test-key");
+  expect(requests[0].headers.has("api-key")).toBe(false);
+  expect(JSON.parse(requests[0].body).model).toBe("gpt-5-mini");
+  expect(JSON.parse(requests[0].body).response_format.json_schema.name).toBe("interpret_intent");
+  expect(JSON.parse(requests[0].body).response_format.json_schema.strict).toBe(true);
 });
 
 it.each(["mall", "is_mall", "no_filters"])(
-  "constrains Azure search plans to advertised filter names: %s",
+  "constrains OpenAI search plans to advertised filter names: %s",
   async (name) => {
     const bodies: string[] = [];
     const plan = {
@@ -127,7 +140,7 @@ it.each(["mall", "is_mall", "no_filters"])(
 
       return toolResponse("build_search_plan", plan);
     });
-    const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+    const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
     const result = ai.buildSearchPlan(
       {
         product_description: "iPhone 16",
@@ -157,7 +170,7 @@ it.each(["mall", "is_mall", "no_filters"])(
 
     if (name === "is_mall") await expect(result).rejects.toThrow();
     else expect(await result).toEqual(plan);
-    const schema = JSON.parse(bodies[0]).tools[0].function.parameters.properties;
+    const schema = JSON.parse(bodies[0]).response_format.json_schema.schema.properties;
     if (name === "no_filters") expect(schema.filters.maxItems).toBe(0);
     else {
       const option = schema.filters.items.anyOf?.[0] ?? schema.filters.items;
@@ -170,7 +183,7 @@ it.each(["mall", "is_mall", "no_filters"])(
   },
 );
 
-it("rejects invented post-search requirement IDs in the Azure schema", async () => {
+it("rejects invented post-search requirement IDs in the OpenAI schema", async () => {
   const intent = await demoAI.interpretIntent([
     "Mua 1 máy iPhone 16 128GB, tổng tối đa 25 triệu VND, giao tại TP.HCM.",
   ]);
@@ -182,7 +195,7 @@ it("rejects invented post-search requirement IDs in the Azure schema", async () 
       post_search_requirement_ids: ["invented"],
     }),
   );
-  const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
   await expect(ai.buildSearchPlan(intent, { filters: [], sort_options: [] })).rejects.toThrow();
 });
 
@@ -207,7 +220,7 @@ it.each(["unique", "duplicate", "invented"])(
         limitations: [],
       }),
     );
-    const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+    const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
     const result = ai.summarizeReviews(
       [
         {
@@ -252,10 +265,10 @@ it.each(["unique", "duplicate", "invented"])(
   },
 );
 
-it("does not call Azure when Shopee returned no reviews", async () => {
+it("does not call OpenAI when Shopee returned no reviews", async () => {
   const fetcher = vi.fn();
   vi.stubGlobal("fetch", fetcher);
-  const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
   expect(await ai.summarizeReviews([], "789")).toMatchObject({
     analyzed_review_count: 0,
     themes: [],
@@ -274,16 +287,28 @@ it("preserves exact missing fields and derives ranks without altering AI orderin
       .map((listing) => assembleProfile(listing, intent, marketplace, demoAI)),
   );
   const ordered = [...profiles].reverse();
-  vi.stubGlobal("fetch", async () =>
-    toolResponse("rank_offers", {
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    const body = JSON.parse(await new Request(input, init).text());
+    const schema = body.response_format.json_schema.schema;
+    // Repeated empty preference arrays previously became $ref nodes with
+    // maxItems/title siblings, rejected by the real OpenAI schema validator.
+    expect(JSON.stringify(schema)).not.toContain('"$ref"');
+    expect(schema.additionalProperties).toBe(false);
+    const rows = schema.properties.ranked_offers;
+    expect(rows.minItems).toBe(profiles.length);
+    expect(rows.maxItems).toBe(profiles.length);
+    for (const option of rows.items.anyOf)
+      expect(option.properties.preference_reasons.maxItems).toBe(0);
+
+    return toolResponse("rank_offers", {
       ranked_offers: ordered.map((profile) => ({
         offer_id: profile.offer_id,
         preference_reasons: [],
         trade_offs: [],
       })),
-    }),
-  );
-  const ai = await createAzureAI({ ...defaultAzureConfig, apiKey: "fake-unit-test-key" });
+    });
+  });
+  const ai = await createOpenAI({ ...defaultOpenAIConfig, apiKey: "fake-unit-test-key" });
   const ranking = await ai.rankOffers(intent, profiles);
   expect(ranking.ranked_offers.map((row) => row.offer_id)).toEqual(
     ordered.map((profile) => profile.offer_id),

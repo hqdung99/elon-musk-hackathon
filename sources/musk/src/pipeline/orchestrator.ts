@@ -31,6 +31,20 @@ export async function runPipeline(
 
   stage("clarifying");
   const intent = await interpretIntent(messages, dependencies);
+
+  return runWithIntent(intent, dependencies);
+}
+
+export async function runWithIntent(
+  intent: ShoppingIntent,
+  dependencies: PipelineDependencies,
+): Promise<RunResult> {
+  const { signal, progress = () => undefined } = dependencies;
+  const stage = (value: Stage) => {
+    signal?.throwIfAborted();
+    progress(value);
+  };
+
   if (intent.questions_for_user.length) return { status: "clarification", intent };
 
   stage("planning");

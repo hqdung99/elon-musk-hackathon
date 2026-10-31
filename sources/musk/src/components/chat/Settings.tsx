@@ -1,12 +1,12 @@
 import { useState } from "react";
-import type { AzureConfig } from "../../providers/ai";
+import type { OpenAIConfig } from "../../providers/ai";
 import type { FixtureScenario } from "../../providers/fixtures";
 
 export interface SettingsValue {
-  aiMode: "demo" | "azure";
+  aiMode: "demo" | "openai";
   dataMode: "fixture" | "shopee";
   scenario: FixtureScenario;
-  azure: AzureConfig;
+  openai: OpenAIConfig;
 }
 
 export function Settings({
@@ -19,7 +19,7 @@ export function Settings({
   onClose: () => void;
 }) {
   const [draft, setDraft] = useState(value);
-  const { azure } = value;
+  const { openai } = value;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -46,7 +46,7 @@ export function Settings({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            onSave({ ...draft, azure });
+            onSave({ ...draft, openai });
           }}
         >
           <label>
@@ -54,11 +54,11 @@ export function Settings({
             <select
               value={draft.aiMode}
               onChange={(event) =>
-                setDraft({ ...draft, aiMode: event.target.value === "azure" ? "azure" : "demo" })
+                setDraft({ ...draft, aiMode: event.target.value === "openai" ? "openai" : "demo" })
               }
             >
               <option value="demo">Demo theo kịch bản · không gọi AI</option>
-              <option value="azure">Azure OpenAI · LangChain</option>
+              <option value="openai">OpenAI · LangChain</option>
             </select>
           </label>
           <label>
@@ -80,12 +80,12 @@ export function Settings({
             <p className="callout warning">
               Musk sẽ xóa toàn bộ giỏ Shopee trước mỗi lần báo giá; nội dung cũ không được khôi
               phục. Mỗi lần chỉ thêm một SKU, kiểm tra giá và phí ship rồi xóa SKU đó, kiểm tra giỏ
-              trống trước khi thử phương án tiếp theo. Giá Shopee đã gồm voucher, Musk không trừ
-              thêm. Không chỉnh sửa giỏ trong lúc xử lý. Phí áp dụng cho địa chỉ lưu trên tài khoản,
-              không phải khu vực đã nhập. Sau khi bạn duyệt và kiểm tra lại thành công, giỏ chỉ giữ
-              SKU với số lượng đã duyệt để tiếp tục thủ công. Cần đăng nhập cùng tài khoản Shopee
-              trên trình duyệt. Không đặt hàng hay thanh toán. Nếu không dọn được giỏ, Musk sẽ dừng
-              và báo lỗi.
+              trống trước khi thử phương án tiếp theo. Musk trừ một voucher tiền mặt đủ điều kiện
+              vào tổng ước tính. Không chỉnh sửa giỏ trong lúc xử lý. Phí áp dụng cho địa chỉ lưu
+              trên tài khoản, không phải khu vực đã nhập. Sau khi bạn duyệt và kiểm tra lại thành
+              công, giỏ chỉ giữ SKU với số lượng đã duyệt để tiếp tục thủ công. Cần đăng nhập cùng
+              tài khoản Shopee trên trình duyệt. Không đặt hàng hay thanh toán. Nếu không dọn được
+              giỏ, Musk sẽ dừng và báo lỗi.
             </p>
           )}
           <label>
@@ -109,25 +109,23 @@ export function Settings({
               <option value="unknown_shipping">Không xác nhận phí ship</option>
             </select>
           </label>
-          {draft.aiMode === "azure" && (
+          {draft.aiMode === "openai" && (
             <fieldset>
-              <legend>Azure OpenAI</legend>
-              <p className="small">Endpoint: {azure.endpoint}</p>
-              <p className="small">Deployment: {azure.deployment}</p>
-              <p className="small">API version: {azure.apiVersion}</p>
-              <p className={azure.apiKey.trim() ? "callout" : "callout warning"}>
-                {azure.apiKey.trim()
+              <legend>OpenAI</legend>
+              <p className="small">Endpoint: {openai.endpoint}</p>
+              <p className="small">Model: {openai.model}</p>
+              <p className={openai.apiKey.trim() ? "callout" : "callout warning"}>
+                {openai.apiKey.trim()
                   ? "Đã nạp API key từ cấu hình local."
-                  : "Chưa có API key Azure."}
+                  : "Chưa có API key OpenAI."}
               </p>
               <p className="muted small">
-                Cấu hình Azure chỉ đọc. Đặt VITE_AZURE_OPENAI_API_KEY và các tùy chọn Azure trong
+                Cấu hình OpenAI chỉ đọc. Đặt VITE_OPENAI_API_KEY và các tùy chọn OpenAI trong
                 .env.local, rồi khởi động lại Vite.
               </p>
               <p className="callout warning">
-                Khi chạy Azure, tin nhắn và bằng chứng sản phẩm sẽ được gửi đến endpoint này. Key
-                hiển thị được trong trình duyệt. Chỉ dùng key demo đã xoay vòng. CORS và API version
-                cần được hỗ trợ.
+                Khi chạy OpenAI, tin nhắn và bằng chứng sản phẩm sẽ được gửi đến endpoint này. Key
+                hiển thị được trong trình duyệt. Chỉ dùng key demo đã xoay vòng.
               </p>
             </fieldset>
           )}

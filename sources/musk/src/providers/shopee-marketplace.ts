@@ -476,7 +476,10 @@ export function createShopeeAdapter(
       const data = record(response.data, "get_ratings.data");
 
       return ok<Review[]>(
-        arrayValue(data.ratings, "get_ratings.data.ratings").map((entry) => {
+        // Successful Shopee responses can omit ratings or return null when no
+        // review rows are available. This means no retrieved evidence, not that
+        // the product has no reviews. Keep malformed non-null values explicit.
+        arrayValue(data.ratings ?? [], "get_ratings.data.ratings").map((entry) => {
           const rating = record(entry, "rating");
           const productItems = Array.isArray(rating.product_items) ? rating.product_items : [];
           const item = productItems[0] ? record(productItems[0], "rating product item") : null;
@@ -558,6 +561,7 @@ export function createShopeeAdapter(
       if (shipping.shipping_cost) sources.push(source(listing, "quote.shipping_cost"));
       if (shipping.item_unit_price) sources.push(source(listing, "quote.item_unit_price"));
       if (shipping.other_fees) sources.push(source(listing, "quote.other_fees"));
+      if (shipping.discounts?.length) sources.push(source(listing, "quote.discounts"));
 
       const quote: OfferQuote = {
         listing_id: listing.listing_id,
@@ -570,7 +574,7 @@ export function createShopeeAdapter(
         limitations: shipping.limitations,
         total_estimated: shipping.total_estimated,
         other_fees: shipping.other_fees ?? null,
-        discounts: [],
+        discounts: shipping.discounts ?? [],
         total: null,
         in_stock,
         estimated_delivery_to: null,

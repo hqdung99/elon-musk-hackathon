@@ -5,7 +5,7 @@ import {
   evaluateRequirements,
   validateSearchPlan,
 } from "../src/domain/requirements";
-import { createAzureAI, defaultAzureConfig, demoAI } from "../src/providers/ai";
+import { createOpenAI, defaultOpenAIConfig, demoAI } from "../src/providers/ai";
 import { fixtureCheckout } from "../src/providers/checkout";
 import { openCheckout as handoffCheckout } from "../src/pipeline/open-checkout";
 import { createFixtureMarketplace } from "../src/providers/fixtures";
@@ -494,10 +494,10 @@ describe("local application boundaries", () => {
     expect(stopped.runId).toBe(2);
     expect(reducer(stopped, { type: "result", runId: 1, result })).toBe(stopped);
   });
-  it("rejects missing credentials and non-Azure endpoints before requests", async () => {
-    await expect(createAzureAI(defaultAzureConfig)).rejects.toThrow("API key");
+  it("rejects missing credentials and non-OpenAI endpoints before requests", async () => {
+    await expect(createOpenAI(defaultOpenAIConfig)).rejects.toThrow("API key");
     await expect(
-      createAzureAI({ ...defaultAzureConfig, endpoint: "https://example.com", apiKey: "test" }),
+      createOpenAI({ ...defaultOpenAIConfig, endpoint: "https://example.com", apiKey: "test" }),
     ).rejects.toThrow("Endpoint");
   });
 });

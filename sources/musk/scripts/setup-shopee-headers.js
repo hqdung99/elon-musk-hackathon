@@ -145,8 +145,204 @@ function extractCurlHeaders(source) {
   return collectHeaders(urls[0], pairs);
 }
 
+function splitPowerShellTokens(source) {
+  const tokens = [];
+  const escapes = {
+    0: "\0",
+    a: "\x07",
+    b: "\b",
+    e: "\x1b",
+    f: "\f",
+    n: "\n",
+    r: "\r",
+    t: "\t",
+    v: "\v",
+  };
+  for (let index = 0; index < source.length;) {
+    const char = source[index];
+    if (char === "\r" || char === "\n") {
+      if (char === "\r" && source[index + 1] === "\n") index += 1;
+      tokens.push({ value: ";" });
+      index += 1;
+    } else if (/\s/.test(char)) {
+      index += 1;
+    } else if (char === "#") {
+      while (index < source.length && source[index] !== "\n") index += 1;
+    } else if (char === "`" && /[\r\n]/.test(source[index + 1] ?? "")) {
+      index += source[index + 1] === "\r" && source[index + 2] === "\n" ? 3 : 2;
+    } else if (char === "'" || char === '"') {
+      const quote = char;
+      let value = "";
+      let literal = true;
+      let closed = false;
+      index += 1;
+      while (index < source.length) {
+        const next = source[index++];
+        if (next === quote) {
+          if (source[index] === quote) {
+            value += quote;
+            index += 1;
+          } else {
+            closed = true;
+            break;
+          }
+        } else if (quote === '"' && next === "`") {
+          if (index === source.length) break;
+          const escaped = source[index++];
+          value += escapes[escaped] ?? escaped;
+        } else {
+          if (quote === '"' && next === "$") literal = false;
+          value += next;
+        }
+      }
+      if (!closed) throw new Error("Copied PowerShell has an unterminated string.");
+      tokens.push({ value, literal });
+    } else if ("@(){}=,;".includes(char)) {
+      tokens.push({ value: char });
+      index += 1;
+    } else {
+      const start = index;
+      while (index < source.length && !/[\s"'`(){}=,;#@]/.test(source[index])) index += 1;
+      if (index === start) throw new Error("Unsupported PowerShell syntax.");
+      tokens.push({ value: source.slice(start, index) });
+    }
+  }
+  return tokens;
+}
+
+function extractPowerShellHeaders(source) {
+  const tokens = splitPowerShellTokens(source);
+  const isWord = (token, value) =>
+    token && token.literal === undefined && token.value.toLowerCase() === value.toLowerCase();
+  const commands = tokens
+    .map((token, index) => (isWord(token, "Invoke-WebRequest") ? index : -1))
+    .filter((index) => index >= 0);
+  if (commands.length !== 1)
+    throw new Error("Provide exactly one copied Invoke-WebRequest command.");
+  const commandIndex = commands[0];
+  const command = tokens.slice(commandIndex + 1);
+  function option(name, required = true) {
+    const matches = command
+      .map((token, index) => (isWord(token, name) ? index : -1))
+      .filter((index) => index >= 0);
+    if (matches.length !== 1 && (required || matches.length))
+      throw new Error(`Expected one PowerShell ${name} option.`);
+    return matches.length ? matches[0] + 1 : undefined;
+  }
+  function string(token) {
+    if (!token?.literal)
+      throw new Error(
+        "PowerShell URLs, headers and cookies must be string literals without interpolation.",
+      );
+    return token.value;
+  }
+  const uriIndex = option("-Uri");
+  const url = string(command[uriIndex]);
+  const afterUri = command[uriIndex + 1];
+  if (
+    afterUri &&
+    !isWord(afterUri, ";") &&
+    (afterUri.literal !== undefined || !afterUri.value.startsWith("-"))
+  )
+    throw new Error("PowerShell -Uri must be a single string literal.");
+  if (!url.startsWith("https://shopee.vn/api/"))
+    throw new Error("Expected a URL under https://shopee.vn/api/.");
+  let index = option("-Headers");
+  if (!isWord(command[index++], "@") || !isWord(command[index++], "{"))
+    throw new Error("Expected a literal PowerShell headers hashtable.");
+  const pairs = [];
+  while (command[index] && !isWord(command[index], "}")) {
+    if (isWord(command[index], ";")) {
+      index += 1;
+      continue;
+    }
+    const name = string(command[index++]);
+    if (!isWord(command[index++], "="))
+      throw new Error("Expected a literal PowerShell header assignment.");
+    pairs.push([name, string(command[index++])]);
+  }
+  if (!command[index]) throw new Error("Unterminated PowerShell headers hashtable.");
+
+  const sessionIndex = option("-WebSession", false);
+  if (sessionIndex !== undefined) {
+    const session = command[sessionIndex];
+    if (session?.literal !== undefined || !/^\$[a-z_]\w*$/i.test(session?.value ?? ""))
+      throw new Error("Expected a PowerShell WebSession variable.");
+    const name = session.value;
+    let initialized = false;
+    const cookies = [];
+    const requestPath = new URL(url).pathname;
+    for (let position = 0; position < commandIndex; position += 1) {
+      if (isWord(tokens[position], name) && isWord(tokens[position + 1], "=")) {
+        if (
+          initialized ||
+          !isWord(tokens[position + 2], "New-Object") ||
+          !isWord(tokens[position + 3], "Microsoft.PowerShell.Commands.WebRequestSession") ||
+          !isWord(tokens[position + 4], ";")
+        )
+          throw new Error("Expected one literal PowerShell WebRequestSession initialization.");
+        initialized = true;
+      } else if (isWord(tokens[position], `${name}.UserAgent`)) {
+        if (
+          !initialized ||
+          !isWord(tokens[position + 1], "=") ||
+          !isWord(tokens[position + 3], ";")
+        )
+          throw new Error("Expected a literal PowerShell UserAgent assignment.");
+        pairs.push(["user-agent", string(tokens[position + 2])]);
+      } else if (isWord(tokens[position], `${name}.Cookies.Add`)) {
+        const syntax = {
+          1: "(",
+          2: "(",
+          3: "New-Object",
+          4: "System.Net.Cookie",
+          5: "(",
+          7: ",",
+          9: ",",
+          11: ",",
+          13: ")",
+          14: ")",
+          15: ")",
+        };
+        if (
+          !initialized ||
+          !isWord(tokens[position + 16], ";") ||
+          Object.entries(syntax).some(
+            ([offset, value]) => !isWord(tokens[position + Number(offset)], value),
+          )
+        )
+          throw new Error("Expected literal PowerShell System.Net.Cookie constructors.");
+        const [cookieName, value, path, domain] = [6, 8, 10, 12].map((offset) =>
+          string(tokens[position + offset]),
+        );
+        if (!/^[!#$%&'*+\-.^_`|~\w]+$/.test(cookieName) || /[;\r\n\0]/.test(value))
+          throw new Error("Invalid PowerShell session cookie.");
+        const pathMatches =
+          path.startsWith("/") &&
+          (requestPath === path ||
+            (requestPath.startsWith(path) &&
+              (path.endsWith("/") || requestPath[path.length] === "/")));
+        if (domain.replace(/^\./, "").toLowerCase() === "shopee.vn" && pathMatches)
+          cookies.push({ value: `${cookieName}=${value}`, path });
+      }
+    }
+    if (!initialized) throw new Error("Missing PowerShell WebRequestSession initialization.");
+    if (cookies.length)
+      pairs.push([
+        "cookie",
+        cookies
+          .sort((a, b) => b.path.length - a.path.length)
+          .map((cookie) => cookie.value)
+          .join("; "),
+      ]);
+  }
+  return collectHeaders(url, pairs);
+}
+
 function extractHeaders(source) {
   if (/^\s*curl(?:\.exe)?\s/i.test(source)) return extractCurlHeaders(source);
+  if (/^\s*(?:\$[a-z_]\w*\s*=|Invoke-WebRequest\b)/i.test(source))
+    return extractPowerShellHeaders(source);
   const file = ts.createSourceFile(
     "fetch.js",
     source,
@@ -207,8 +403,8 @@ export function setupHeaders(source, destination = envPath) {
   const lines = [...headers].map(([header, value]) => [variables[header], quoteEnv(value)]);
   let contents = existsSync(destination) ? readFileSync(destination, "utf8") : "";
   const newline = contents.includes("\r\n") ? "\r\n" : "\n";
-  if (!/^[ \t]*(?:export[ \t]+)?VITE_AZURE_OPENAI_API_KEY[ \t]*=/m.test(contents))
-    lines.push(["VITE_AZURE_OPENAI_API_KEY", '""']);
+  if (!/^[ \t]*(?:export[ \t]+)?VITE_OPENAI_API_KEY[ \t]*=/m.test(contents))
+    lines.push(["VITE_OPENAI_API_KEY", '""']);
   for (const [name, value] of lines) {
     const pattern = new RegExp(`^(?:export[ \\t]+)?${name}[ \\t]*=.*$`, "gm");
     const existing = [...contents.matchAll(pattern)];
@@ -228,12 +424,12 @@ if (process.argv[1] && resolve(process.argv[1]) === scriptPath) {
   try {
     if (process.argv.length > 3 || (!process.argv[2] && process.stdin.isTTY))
       throw new Error(
-        "Usage: node scripts/setup-shopee-headers.js [copied-curl-or-fetch-file] (or pipe stdin).",
+        "Usage: node scripts/setup-shopee-headers.js [copied-curl-fetch-or-powershell-file] (or pipe stdin).",
       );
     const source = readFileSync(process.argv[2] ?? 0, "utf8");
     setupHeaders(source);
     console.log(
-      "Updated the Shopee headers in .env.local. Added an empty VITE_AZURE_OPENAI_API_KEY entry if missing; fill it once to use Azure. Restart Vite.",
+      "Updated the Shopee headers in .env.local. Added an empty VITE_OPENAI_API_KEY entry if missing; fill it once to use OpenAI. Restart Vite.",
     );
   } catch (error) {
     console.error(error instanceof Error ? error.message : "Shopee header setup failed.");

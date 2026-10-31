@@ -25,6 +25,7 @@ export const initialState: State = {
 
 export type Action =
   | { type: "start"; runId: number }
+  | { type: "clearIntent"; runId: number }
   | { type: "message"; message: Message; runId?: number }
   | { type: "progress"; runId: number; stage: Stage }
   | { type: "clarification"; runId: number; intent: ShoppingIntent }
@@ -37,6 +38,8 @@ export type Action =
 export function reducer(state: State, action: Action): State {
   if ("runId" in action && action.runId !== undefined && action.runId < state.runId) return state;
   switch (action.type) {
+    case "clearIntent":
+      return { ...state, intent: null, pendingSelection: null };
     case "start":
       return {
         ...state,
