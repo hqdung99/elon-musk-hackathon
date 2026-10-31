@@ -214,7 +214,7 @@ sequenceDiagram
     participant M as Musk
     participant S as Shopee API
     participant A as AI
-    M->>S: 3.1 Search until ten organic results (max three pages)
+    M->>S: 3.1 Search until three organic results (max three pages)
     S-->>M: 3.2 Return organic listings
     M->>M: 3.3 Deduplicate listings and start review trail
 ```
@@ -252,7 +252,7 @@ sequenceDiagram
     M->>A: 4.1 Assess listing relevance
     A-->>M: 4.2 Return relevant, irrelevant or unknown with reasons
     M->>S: 4.3 Get product and variants for retained listings
-    M->>A: 4.4 Choose SKU from explicit requirements; default/any when unconstrained
+    M->>A: 4.4 Choose SKU from explicit requirements, default/any when unconstrained
     A-->>M: Selected SKU, no match, or precise uncertainty
     M->>U: Ask only when an explicit variant constraint is uncertain
     U-->>M: 4.5 Choose SKU or skip
