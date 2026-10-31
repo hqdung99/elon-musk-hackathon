@@ -49,7 +49,7 @@ Refresh Shopee headers with the same command when the session expires; restart V
 
 Choose a SKU or skip each listing, inspect the recommendation, then click **Duyệt & kiểm tra lại**.
 Expand **Các listing đã xem** to see the search, every returned organic listing, and why each was kept, removed, skipped, or not evaluated due to limits.
-The cap is **12 retained offers** (unknowns included), not 12 raw listings; search is bounded to 3 pages.
+Musk analyzes only the **first 10 organic search results** (ads excluded; up to 3 pages are read only to make up for ads). Relevance, quotes, reviews and ranking all run on those 10.
 If revalidation allows continuing, Musk leaves only the approved SKU and quantity in the cart.
 Click **Mở giỏ hàng Shopee** to continue manually using the same Shopee account.
 

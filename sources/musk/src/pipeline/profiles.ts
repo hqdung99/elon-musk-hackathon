@@ -17,6 +17,34 @@ import type { MarketplaceAdapter } from "../providers/marketplace";
 import type { PipelineDependencies, PreparedSearch, VariantChoices } from "./types";
 import type { CandidateResults } from "./search-products";
 
+const relevanceConcurrency = 4;
+
+// Runs at most `limit` tasks at once and returns results in input order.
+export async function mapConcurrent<T, R>(
+  items: T[],
+  limit: number,
+  task: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let next = 0;
+  let failed = false;
+  async function worker() {
+    while (!failed && next < items.length) {
+      const index = next++;
+      try {
+        results[index] = await task(items[index]);
+      } catch (error) {
+        failed = true;
+        throw error;
+      }
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+
+  return results;
+}
+
 export async function prepareSearch(
   search: CandidateResults,
   intent: ShoppingIntent,
@@ -31,9 +59,13 @@ export async function prepareSearch(
     search_review: structuredClone(search.search_review),
   };
   const relevanceBatchSize = 12;
-  for (let offset = 0; offset < listings.length; offset += relevanceBatchSize) {
+  const batches: Listing[][] = [];
+  for (let offset = 0; offset < listings.length; offset += relevanceBatchSize)
+    batches.push(listings.slice(offset, offset + relevanceBatchSize));
+  // Batches are independent, so they run concurrently; results keep search order because
+  // profiling later walks candidates in order and stops at the retained-offer limit.
+  const assessed = await mapConcurrent(batches, relevanceConcurrency, async (batch) => {
     signal?.throwIfAborted();
-    const batch = listings.slice(offset, offset + relevanceBatchSize);
     const { assessments } = listingRelevanceSchema.parse(
       await ai.assessListings(intent, batch, signal),
     );
@@ -50,28 +82,39 @@ export async function prepareSearch(
 
     if (seen.size !== expected.size)
       throw new Error("AI bỏ sót listing khi kiểm tra mức liên quan.");
+    const results = [];
     for (const listing of batch) {
       signal?.throwIfAborted();
       const assessment = assessments.find((entry) => listingKey(entry) === listingKey(listing))!;
-      const entry = prepared.search_review.entries.find(
-        (entry) => listingKey(entry.listing) === listingKey(listing),
-      );
-      if (!entry) throw new Error("Nhật ký tìm kiếm thiếu listing đã kiểm tra.");
-      entry.status = assessment.status === "irrelevant" ? "irrelevant" : "pending";
-      entry.reasons = [
-        assessment.reason,
-        ...(assessment.status === "unknown"
-          ? ["Mức liên quan chưa rõ; vẫn giữ để đánh giá, chưa được tính là phù hợp."]
-          : []),
-      ];
-      if (assessment.status === "irrelevant") continue;
+      if (assessment.status === "irrelevant") {
+        results.push({ listing, assessment, product: null });
+        continue;
+      }
+
       const product = productSchema.parse(
         unwrap(await marketplace.getProductDetails(listing, signal)),
       );
       if (product.listing_id !== listing.listing_id)
         throw new Error("Dữ liệu sản phẩm không khớp listing.");
-      prepared.candidates.push({ listing, product, relevance: assessment.status });
+      results.push({ listing, assessment, product });
     }
+
+    return results;
+  });
+  for (const { listing, assessment, product } of assessed.flat()) {
+    const entry = prepared.search_review.entries.find(
+      (entry) => listingKey(entry.listing) === listingKey(listing),
+    );
+    if (!entry) throw new Error("Nhật ký tìm kiếm thiếu listing đã kiểm tra.");
+    entry.status = assessment.status === "irrelevant" ? "irrelevant" : "pending";
+    entry.reasons = [
+      assessment.reason,
+      ...(assessment.status === "unknown"
+        ? ["Mức liên quan chưa rõ; vẫn giữ để đánh giá, chưa được tính là phù hợp."]
+        : []),
+    ];
+    if (product && assessment.status !== "irrelevant")
+      prepared.candidates.push({ listing, product, relevance: assessment.status });
   }
 
   return prepared;

@@ -120,12 +120,20 @@ export default function App() {
     text: string,
     id?: number,
     checkoutUrl?: string,
+    suggestedReplies?: string[],
   ) {
     dispatch({
       type: "message",
       runId: id,
-      message: { id: crypto.randomUUID(), kind, text, checkoutUrl },
+      message: { id: crypto.randomUUID(), kind, text, checkoutUrl, suggestedReplies },
     });
+  }
+
+  function addReply(reply: string) {
+    setInput((current) =>
+      current.trim() ? `${current.trim().replace(/[.,;]$/, "")}. ${reply}` : reply,
+    );
+    inputRef.current?.focus();
   }
 
   function nextRun() {
@@ -188,7 +196,13 @@ export default function App() {
                 ? "Đã dừng yêu cầu mua sắm."
                 : decision.question!;
         if (signal.aborted || id !== runId.current) return;
-        message("assistant", answer, id);
+        message(
+          "assistant",
+          answer,
+          id,
+          undefined,
+          decision.action === "clarify" ? decision.suggested_replies : undefined,
+        );
         if (decision.action === "decline") {
           shopping.current = { intent: null, result: null };
           userTexts.current = [];
@@ -252,6 +266,8 @@ export default function App() {
           "assistant",
           `Để chọn đúng, Musk cần làm rõ:\n${output.intent.questions_for_user.map((question) => `• ${question}`).join("\n")}`,
           id,
+          undefined,
+          output.intent.suggested_replies,
         );
       } else if (output.status === "selection") {
         dispatch({ type: "selection", runId: id, prepared: output });
@@ -534,6 +550,18 @@ export default function App() {
                         </span>
                       )}
                       <p>{item.text}</p>
+                      {item.suggestedReplies?.length &&
+                      item === state.messages.at(-1) &&
+                      !state.busy ? (
+                        <div className="suggested-replies">
+                          <span>Gợi ý trả lời · chọn một hoặc nhiều, sửa nếu cần rồi gửi</span>
+                          {item.suggestedReplies.map((reply) => (
+                            <button key={reply} type="button" onClick={() => addReply(reply)}>
+                              {reply}
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
                       {item.checkoutUrl && (
                         <a
                           className="button primary"

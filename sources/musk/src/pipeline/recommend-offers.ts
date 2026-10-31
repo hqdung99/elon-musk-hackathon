@@ -6,6 +6,7 @@ import type {
   ShoppingIntent,
 } from "../domain/schemas";
 import { fixtureLimitations } from "../providers/fixtures";
+import { searchListingLimit } from "./search-products";
 import type { PipelineDependencies } from "./types";
 
 export function recommendOffers(
@@ -32,7 +33,9 @@ export function recommendOffers(
       ...new Set(profiles.flatMap((profile) => profile.quote.limitations ?? [])),
       ...(ai.mode === "demo" ? ["AI demo theo kịch bản cố định, không gọi mô hình."] : []),
       ...(truncated
-        ? ["Giới hạn 12 offer giữ lại để so sánh / 3 trang tìm kiếm; chưa bao phủ mọi kết quả."]
+        ? [
+            `Chỉ phân tích ${searchListingLimit} kết quả tìm kiếm đầu tiên; chưa bao phủ mọi kết quả.`,
+          ]
         : []),
       ...(unknownChecks.length
         ? [

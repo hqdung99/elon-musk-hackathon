@@ -55,6 +55,7 @@ it("integrates OpenAI contracts and Shopee search, relevance, explicit SKU, cart
       },
     ],
     questions_for_user: [],
+    suggested_replies: [],
   };
   const original = { ...cartItem(99, 88, 3), checkout: false };
   const cart = cartServer({ existing: [original] });

@@ -62,6 +62,8 @@ export const intentSchema = z.object({
   requirements: z.array(requirementSchema),
   preferences: z.array(preferenceSchema),
   questions_for_user: z.array(z.string()),
+  // Short messages the user can pick to answer questions_for_user; empty when nothing is asked.
+  suggested_replies: z.array(z.string()).optional(),
 });
 
 export type ShoppingIntent = z.infer<typeof intentSchema>;

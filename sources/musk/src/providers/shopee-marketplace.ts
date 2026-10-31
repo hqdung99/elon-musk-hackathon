@@ -18,6 +18,9 @@ import type { CheckoutAdapter, CheckoutNavigation } from "./checkout";
 
 type JsonRecord = Record<string, unknown>;
 
+// Musk analyzes only the first 10 organic results; 20 per page usually covers them after ads.
+const searchPageSize = 20;
+
 interface ProductResponse {
   data: JsonRecord;
   item: JsonRecord;
@@ -311,8 +314,8 @@ export function createShopeeAdapter(
         }),
         fe_filter_options: JSON.stringify(filterOptions),
         keyword: plan.query,
-        limit: "60",
-        newest: String((page - 1) * 60),
+        limit: String(searchPageSize),
+        newest: String((page - 1) * searchPageSize),
         order,
         page_type: "search",
         scenario: "PAGE_GLOBAL_SEARCH",

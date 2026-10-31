@@ -60,15 +60,14 @@ export function ListingReviewTrail({
         </p>
         <p>Bộ lọc API: {filters.join(" · ") || "Không có"}</p>
         <p className="muted">
-          Đã tải {review.pages_fetched} trang, nhận {review.entries.length} listing duy nhất không
-          quảng cáo. Giới hạn: {review.listing_limit} offer giữ lại để so sánh / {review.page_limit}{" "}
-          trang. Listing bị loại hoặc bạn bỏ qua không tính vào giới hạn; offer còn điều kiện chưa
-          rõ vẫn tính và được gắn nhãn.
+          Đã tải {review.pages_fetched} trang, phân tích {review.entries.length} listing duy nhất
+          không quảng cáo. Musk chỉ phân tích {review.listing_limit} kết quả đầu tiên (tối đa{" "}
+          {review.page_limit} trang để bù quảng cáo).
         </p>
         {review.truncated && (
           <p className="callout warning">
-            Đã chạm giới hạn offer giữ lại hoặc số trang tìm kiếm. Listing chưa đánh giá SKU do giới
-            hạn không phải bị loại vì không phù hợp. Các trang chưa tải không nằm trong nhật ký.
+            Shopee còn thêm kết quả ngoài {review.listing_limit} kết quả đầu tiên; các kết quả đó
+            không được tải hay phân tích và không nằm trong nhật ký.
           </p>
         )}
         {review.entries.length === 0 ? (

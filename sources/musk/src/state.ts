@@ -3,7 +3,14 @@ import type { PreparedSearch } from "./pipeline/types";
 import type { Activity } from "./providers/activity";
 
 export type Message =
-  | { id: string; kind: "user" | "assistant" | "error"; text: string; checkoutUrl?: string }
+  | {
+      id: string;
+      kind: "user" | "assistant" | "error";
+      text: string;
+      checkoutUrl?: string;
+      // Suggested answers to a clarification question, shown as chips while it is the latest message.
+      suggestedReplies?: string[];
+    }
   | { id: string; kind: "result"; runId: number; result: PipelineResult };
 
 export interface State {

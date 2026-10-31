@@ -193,7 +193,7 @@ describe("separate pipeline stages", () => {
       search_review: {
         plan,
         pages_fetched: 2,
-        listing_limit: 12,
+        listing_limit: 10,
         page_limit: 3,
         truncated: false,
         entries: [fixtureListings[0], fixtureListings[1]].map((listing) => ({
@@ -206,7 +206,7 @@ describe("separate pipeline stages", () => {
     expect(search.mock.calls.map((call) => call[1])).toEqual([1, 2]);
   });
 
-  it("does not truncate raw search results at the retained-offer limit", async () => {
+  it("keeps only the first 10 raw search results and reports the rest as truncated", async () => {
     const listings = Array.from({ length: 13 }, (_, index) => ({
       ...fixtureListings[0],
       listing_id: `listing-${index}`,
@@ -219,17 +219,16 @@ describe("separate pipeline stages", () => {
       ai: demoAI,
       marketplace: { ...createFixtureMarketplace(), searchProducts: search },
     });
-    expect(output.listings).toHaveLength(13);
-    expect(output.truncated).toBe(false);
-    expect(output.search_review.entries).toHaveLength(13);
-    expect(output.search_review.entries.filter((entry) => entry.status === "pending")).toHaveLength(
-      13,
-    );
-    expect(output.search_review.entries[12]).toMatchObject({
-      listing: listings[12],
+    expect(output.listings).toEqual(listings.slice(0, 10));
+    expect(output.truncated).toBe(true);
+    expect(output.search_review.truncated).toBe(true);
+    expect(output.search_review.entries).toHaveLength(10);
+    expect(output.search_review.entries[9]).toMatchObject({
+      listing: listings[9],
       status: "pending",
+      reasons: [],
     });
-    expect(output.search_review.entries[12].reasons).toEqual([]);
+    expect(search).toHaveBeenCalledOnce();
   });
 
   it("rejects repeating pagination and missing next-page information", async () => {
@@ -271,7 +270,7 @@ describe("separate pipeline stages", () => {
       output.truncated,
     );
     expect(recommendation.limitations).toContain(
-      "Giới hạn 12 offer giữ lại để so sánh / 3 trang tìm kiếm; chưa bao phủ mọi kết quả.",
+      "Chỉ phân tích 10 kết quả tìm kiếm đầu tiên; chưa bao phủ mọi kết quả.",
     );
   });
 
