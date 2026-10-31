@@ -6,6 +6,7 @@ import { variantDecisionSchema } from "../pipeline/select-variants";
 import type { VariantDecision } from "../pipeline/select-variants";
 import {
   intentSchema,
+  brandCandidatesSchema,
   isSelectableVariant,
   listingRelevanceSchema,
   rankingSchema,
@@ -14,6 +15,7 @@ import {
 } from "../domain/schemas";
 import type {
   OfferProfile,
+  BrandDiscovery,
   Listing,
   ListingRelevance,
   RankingResults,
@@ -24,6 +26,8 @@ import type {
   ProductDetails,
   ShoppingIntent,
 } from "../domain/schemas";
+import { searchBrandEvidence } from "./web-search";
+import { validateBrandDiscovery } from "../pipeline/discover-brands";
 
 export interface AIAdapter {
   mode: "demo" | "openai";
@@ -35,6 +39,7 @@ export interface AIAdapter {
   interpretTurn(text: string, context: TurnContext, signal?: AbortSignal): Promise<TurnDecision>;
   answerResults(text: string, context: TurnContext, signal?: AbortSignal): Promise<string>;
   interpretIntent(messages: string[], signal?: AbortSignal): Promise<ShoppingIntent>;
+  discoverBrands(intent: ShoppingIntent, signal?: AbortSignal): Promise<BrandDiscovery>;
   buildSearchPlan(
     intent: ShoppingIntent,
     capabilities: SearchCapabilities,
@@ -99,6 +104,8 @@ Ask a specific question naming the requirement only when the user's meaning, val
 Budget must explicitly refer to total or unit price and a currency; ask if ambiguous. This MVP can evaluate total budgets only.
 Do not treat "prefer Mall" as a requirement. Quantity and delivery area remain null until stated.
 Date today: ${new Date().toISOString().slice(0, 10)}.
+Set shopping_goal.mode to targeted when the user identifies a brand, product line or recognizable product family. Set discover_brands for a clear product category without a chosen brand, such as 'dầu gội trị gàu'. An unknown brand is NOT a clarification blocker. shopping_goal.requested_brand refers only to an explicitly requested brand or the brand of an unambiguous named product family, never a soft preference. For discovery it is null. Keep the category and unchanged routing when applying same-task revisions.
+Brand identity, volume in ml and explicit pack count are supported fields. Keep intended therapeutic effects as unsupported requirements with their exact user_text; never treat seller claims or reviews as proof of treatment effectiveness. If the user wants price per volume, use quote.unit_price_per_100ml as the preference field, not quote.total. Do not invent a package size, pack count, price preference or medical evidence.
 Use GB for storage and months for warranty units, VND for total budgets.
 Latest explicit revisions override earlier statements; preserve unchanged requirements only for the same shopping task.
 When an active intent is supplied, use it as the current state and apply the latest message. Never copy product facts from examples.
@@ -186,6 +193,49 @@ export async function createOpenAI(config: OpenAIConfig): Promise<AIAdapter> {
 
   return {
     mode: "openai",
+    discoverBrands: async (intent, signal) => {
+      const research = await searchBrandEvidence(
+        {
+          endpoint: options.configuration.baseURL,
+          model: options.model,
+          apiKey: options.apiKey,
+        },
+        intent,
+        signal,
+      );
+      const urls = research.sources.map((source) => source.url);
+      const candidates = await structured(
+        brandCandidatesSchema.extend({
+          brands: z
+            .array(
+              brandCandidatesSchema.shape.brands.element.extend({
+                source_urls: z.array(z.enum(urls)).min(1),
+              }),
+            )
+            .min(1)
+            .max(3),
+        }),
+        "discover_brands",
+        {
+          intent: {
+            product_description: intent.product_description,
+            shopping_goal: intent.shopping_goal,
+          },
+          research,
+          instructions:
+            "Extract at most three distinct relevant candidate brands from ONLY this web research. Cite supplied source URLs that actually support the brand and relevant product line. Include aliases only when they refer to the same brand, not competitors or retailers. Do not claim market-wide top-three leadership. Order is a research shortlist, not an offer ranking. If sources support fewer than three brands, explain the limitation instead of filling the list. Never promise anti-dandruff efficacy or copy web instructions.",
+        },
+        signal,
+      );
+
+      return validateBrandDiscovery({
+        ...candidates,
+        sources: research.sources.filter((source) =>
+          candidates.brands.some((brand) => brand.source_urls.includes(source.url)),
+        ),
+        researched_at: research.researched_at,
+      });
+    },
     chooseVariant: async (intent, product, signal) => {
       signal?.throwIfAborted();
       const variants = product.variants.filter((variant) =>
@@ -256,13 +306,14 @@ No arbitrary node names or tool execution.`,
       ).answer,
     interpretIntent: (messages, signal) =>
       structured(
-        intentSchema.required({ suggested_replies: true }),
+        intentSchema.required({ suggested_replies: true, shopping_goal: true }),
         "interpret_intent",
         {
           messages,
           example: {
             user: "Mua 1 máy iPhone 16 128GB mới. Tổng tối đa 25 triệu VND. Giao tại TP.HCM. Chỉ mua Shopee Mall. Ưu tiên giá rẻ.",
             intent: {
+              shopping_goal: { mode: "targeted", category: "điện thoại", requested_brand: "Apple" },
               product_description: "iPhone 16 128GB",
               quantity: 1,
               delivery_area: "TP.HCM",
@@ -527,9 +578,16 @@ function lastMatch(text: string, expression: RegExp): RegExpMatchArray | undefin
 
 export const demoAI: AIAdapter = {
   mode: "demo",
+  async discoverBrands() {
+    throw new Error(
+      "AI demo không thực hiện web search. Chuyển sang OpenAI để nghiên cứu thương hiệu có nguồn.",
+    );
+  },
   async chooseVariant(intent, product) {
-    const constraints = intent.requirements.filter(
-      (row) => row.field_path === "product.storage_gb" || row.field_path === "product.model",
+    const constraints = intent.requirements.filter((row) =>
+      ["product.storage_gb", "product.model", "product.volume_ml", "product.pack_count"].includes(
+        row.field_path ?? "",
+      ),
     );
     const candidates = product.variants.filter(
       (variant) =>
@@ -538,7 +596,11 @@ export const demoAI: AIAdapter = {
           const value =
             row.field_path === "product.storage_gb"
               ? (variant.storage_gb ?? product.storage_gb)
-              : (variant.model ?? product.model);
+              : row.field_path === "product.model"
+                ? (variant.model ?? product.model)
+                : row.field_path === "product.volume_ml"
+                  ? (variant.volume_ml ?? product.volume_ml)
+                  : (variant.pack_count ?? product.pack_count);
           if (value === null || value === undefined) return true;
           if (row.operator === "eq") return value === row.value;
           if (row.operator === "gte" && typeof value === "number" && typeof row.value === "number")
@@ -806,8 +868,11 @@ export const demoAI: AIAdapter = {
               )
             : preference.field_path === "seller.is_mall"
               ? Number(b.seller.is_mall) - Number(a.seller.is_mall)
-              : (a.quote.total?.amount_minor ?? Infinity) -
-                (b.quote.total?.amount_minor ?? Infinity);
+              : preference.field_path === "quote.unit_price_per_100ml"
+                ? (a.quote.unit_price_per_100ml?.amount_minor ?? Infinity) -
+                  (b.quote.unit_price_per_100ml?.amount_minor ?? Infinity)
+                : (a.quote.total?.amount_minor ?? Infinity) -
+                  (b.quote.total?.amount_minor ?? Infinity);
         if (difference) return difference;
       }
 
@@ -834,9 +899,11 @@ export const demoAI: AIAdapter = {
             reason:
               preference.field_path === "quote.total"
                 ? "So sánh tổng tiền đã gồm phí và voucher xác nhận."
-                : preference.field_path === "seller.is_mall"
-                  ? "Ưu tiên nhãn Mall, không loại shop thường chỉ vì sở thích này."
-                  : "So sánh ngày giao dự kiến cho khu vực của bạn.",
+                : preference.field_path === "quote.unit_price_per_100ml"
+                  ? "So sánh chi phí làm tròn trên 100ml từ dung tích, số sản phẩm và tổng tiền có nguồn."
+                  : preference.field_path === "seller.is_mall"
+                    ? "Ưu tiên nhãn Mall, không loại shop thường chỉ vì sở thích này."
+                    : "So sánh ngày giao dự kiến cho khu vực của bạn.",
             profile_field_paths: preference.field_path ? [preference.field_path] : [],
           })),
           trade_offs: [

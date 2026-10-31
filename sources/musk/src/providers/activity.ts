@@ -69,6 +69,10 @@ export function trackAI(ai: AIAdapter, report: ActivityReporter): AIAdapter {
       step("AI soạn câu trả lời", null, () => ai.answerResults(text, context, signal)),
     interpretIntent: (messages, signal) =>
       step("AI phân tích yêu cầu", null, () => ai.interpretIntent(messages, signal)),
+    discoverBrands: (intent, signal) =>
+      step("AI nghiên cứu thương hiệu bằng web search", intent.product_description, () =>
+        ai.discoverBrands(intent, signal),
+      ),
     buildSearchPlan: (intent, capabilities, signal) =>
       step("AI lập kế hoạch tìm kiếm", intent.product_description, () =>
         ai.buildSearchPlan(intent, capabilities, signal),

@@ -136,7 +136,7 @@ it("renders each outcome, exact search context, source links and SKU without con
   const html = renderToStaticMarkup(createElement(ListingReviewTrail, { review, intent }));
   for (const status of statuses) expect(html).toContain(`data-review-status="${status}"`);
   expect(html).toContain("Giữ lại: còn điều kiện chưa rõ");
-  expect(html).toContain("Bạn đã bỏ qua");
+  expect(html).toContain("Bỏ qua");
   expect(html).toContain("Loại: khác sản phẩm cần tìm");
   expect(html).toContain("Loại: không đạt điều kiện");
   expect(html).toContain("Chờ đánh giá SKU");

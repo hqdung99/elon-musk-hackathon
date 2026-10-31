@@ -7,7 +7,13 @@ import { interpretIntent } from "./interpret-intent";
 import { openCheckout } from "./open-checkout";
 import { planSearch } from "./plan-search";
 import { buildOfferProfiles, mapConcurrent, prepareSearch } from "./profiles";
-import { rankOffers } from "./rank-offers";
+import { compareOffers } from "./compare-brands";
+import {
+  searchDiscoveredBrands,
+  validateBrandDiscovery,
+  verifyDiscoveredBrands,
+} from "./discover-brands";
+import type { CandidateResults } from "./search-products";
 import { recommendOffers } from "./recommend-offers";
 import { revalidateOffer } from "./revalidate-offer";
 import { searchProducts } from "./search-products";
@@ -51,13 +57,21 @@ export async function runWithIntent(
   if (intent.questions_for_user.length) return { status: "clarification", intent };
 
   stage("planning");
-  const plan = await planSearch(intent, dependencies);
-
-  stage("searching");
-  const search = await searchProducts(plan, dependencies);
+  let search: CandidateResults;
+  if (intent.shopping_goal?.mode === "discover_brands") {
+    stage("discovering");
+    const discovery = validateBrandDiscovery(await dependencies.ai.discoverBrands(intent, signal));
+    stage("planning");
+    search = await searchDiscoveredBrands(intent, discovery, dependencies);
+  } else {
+    const plan = await planSearch(intent, dependencies);
+    stage("searching");
+    search = await searchProducts(plan, dependencies);
+  }
 
   stage("profiling");
   const prepared = await prepareSearch(search, intent, dependencies);
+  verifyDiscoveredBrands(prepared);
   const choices = await selectVariants(prepared, dependencies);
   if (!choices) return { status: "selection", ...prepared };
 
@@ -128,10 +142,23 @@ export async function completeSelection(
   const { filters, candidates } = filterOffers(profiles, intent);
 
   stage("ranking");
-  const ranking = await rankOffers(intent, candidates, dependencies);
+  const { ranking, brand_comparisons } = await compareOffers(
+    intent,
+    candidates,
+    dependencies,
+    prepared.search_review.discovery,
+  );
 
   stage("recommending");
-  const recommendation = recommendOffers(intent, profiles, ranking, dependencies, limited, filters);
+  const recommendation = recommendOffers(
+    intent,
+    profiles,
+    ranking,
+    dependencies,
+    limited,
+    filters,
+    prepared.search_review,
+  );
   const search_review = structuredClone(prepared.search_review);
   search_review.truncated = limited;
   for (const { listing } of prepared.candidates) {
@@ -194,6 +221,7 @@ export async function completeSelection(
     recommendation,
     mode: `${marketplace.mode}/${ai.mode}`,
     search_review,
+    ...(brand_comparisons ? { brand_comparisons } : {}),
   };
 }
 

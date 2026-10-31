@@ -11,6 +11,8 @@ export interface CandidateResults {
 // Only the first organic results are analyzed, to keep AI and Shopee calls few and fast.
 export const searchListingLimit = 3;
 
+export const searchPageLimit = 3;
+
 export async function searchProducts(
   plan: SearchPlan,
   { marketplace, signal }: PipelineDependencies,
@@ -19,7 +21,7 @@ export async function searchProducts(
   const visited = new Set<number>();
   // Extra pages are fetched only when ads or duplicates leave fewer than the limit on a page.
   const listingLimit = searchListingLimit;
-  const pageLimit = 3;
+  const pageLimit = searchPageLimit;
   let page: number | null = 1;
   let hasMore = false;
   while (page !== null && listings.size < listingLimit && visited.size < pageLimit) {

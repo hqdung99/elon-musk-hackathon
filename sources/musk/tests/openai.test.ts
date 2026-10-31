@@ -144,6 +144,7 @@ it("does not call OpenAI when every variant is known unavailable", async () => {
 it("uses the supplied OpenAI endpoint, model, API version and structured output without a network call", async () => {
   const intent = {
     product_description: "iPhone 16 128GB",
+    shopping_goal: { mode: "targeted", category: "điện thoại", requested_brand: "Apple" },
     quantity: 1,
     delivery_area: "TP.HCM",
     requirements: [
@@ -399,7 +400,11 @@ it("uses low reasoning effort only for listing relevance classification", async 
               },
             ],
           }
-        : { ...intent, suggested_replies: [] },
+        : {
+            ...intent,
+            suggested_replies: [],
+            shopping_goal: { mode: "targeted", category: "điện thoại", requested_brand: "Apple" },
+          },
     );
   });
   const intent = await demoAI.interpretIntent([

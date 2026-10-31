@@ -97,6 +97,28 @@ function conditionFromApi(value: unknown): ProductDetails["condition"] {
   return null;
 }
 
+function volumeFromTitle(title: string): number | null {
+  const sizes = new Set(
+    [...title.matchAll(/\b(\d+(?:[.,]\d+)?)\s*(ml|lít|lit|litre|liter|l)\b/gi)].map(
+      (match) => Number(match[1].replace(",", ".")) * (match[2].toLowerCase() === "ml" ? 1 : 1000),
+    ),
+  );
+  const size = [...sizes][0];
+
+  return sizes.size === 1 && Number.isFinite(size) && size > 0 ? size : null;
+}
+
+function packCountFromTitle(title: string): number | null {
+  const counts = new Set(
+    [...title.matchAll(/(?:^|\s)(\d+)\s*(?:chai|lọ|tuýp)(?=\s|$|[.,])/gi)].map((match) =>
+      Number(match[1]),
+    ),
+  );
+  const count = [...counts][0];
+
+  return counts.size === 1 && Number.isSafeInteger(count) && count > 0 ? count : null;
+}
+
 function imageUrl(value: unknown): string | null {
   if (value == null || value === "") return null;
   if (typeof value !== "string") throw new Error("Shopee image must be a string.");
@@ -141,6 +163,8 @@ function productVariant(
     is_grayout: model.is_grayout ?? null,
     stock: model.stock ?? null,
     image_url: image,
+    volume_ml: volumeFromTitle(name),
+    pack_count: packCountFromTitle(name),
   });
 }
 
@@ -452,6 +476,14 @@ export function createShopeeAdapter(
       }
 
       const productSources: FieldSource[] = [];
+      const brand = typeof item.brand === "string" && item.brand.trim() ? item.brand.trim() : null;
+      const brand_id = stringValue(item.brand_id);
+      const volume_ml = volumeFromTitle(title);
+      const pack_count = packCountFromTitle(title);
+      if (brand) productSources.push(source(listing, "product.brand"));
+      if (brand_id) productSources.push(source(listing, "product.brand_id"));
+      if (volume_ml !== null) productSources.push(source(listing, "product.volume_ml"));
+      if (pack_count !== null) productSources.push(source(listing, "product.pack_count"));
       if (image_url) productSources.push(source(listing, "product.image_url"));
       const model = modelFromTitle(title);
       const storage_gb = storageFromTitle(title);
@@ -463,6 +495,10 @@ export function createShopeeAdapter(
         listing_id: stringValue(item.item_id) ?? listing.listing_id,
         title,
         image_url,
+        brand,
+        brand_id,
+        volume_ml,
+        pack_count,
         model,
         storage_gb,
         condition: rawCondition,

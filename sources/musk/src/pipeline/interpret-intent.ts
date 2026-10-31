@@ -8,6 +8,8 @@ export async function interpretIntent(
   { ai, signal }: PipelineDependencies,
 ): Promise<ShoppingIntent> {
   const intent = intentSchema.parse(await ai.interpretIntent(messages, signal));
+  if (intent.shopping_goal?.mode === "discover_brands" && intent.shopping_goal.requested_brand)
+    throw new Error("Yêu cầu đã chọn thương hiệu không được tự chuyển sang khám phá thương hiệu.");
   // Remove the obsolete generic blocker if it survived in active intent.
   intent.questions_for_user = intent.questions_for_user.filter(
     (question) =>

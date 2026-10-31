@@ -56,7 +56,35 @@ Inspect the recommendation, then click **Duyệt & kiểm tra lại**.
 Recommendation cards use Shopee's selected-SKU image when available, falling back
 to the product image. Missing or failed images are labeled, not replaced with fake artwork.
 Expand **Các listing đã xem** to see the search, every returned organic listing, and why each was kept, removed, skipped, or not evaluated due to limits.
-Musk analyzes only the **first 3 organic search results** for faster testing (ads excluded; up to 3 pages are read only to make up for ads). Relevance, quotes, reviews and ranking all run on those 3.
+For a known brand or product family, Musk analyzes only the **first 3 organic search results** for faster testing (ads excluded; up to 3 pages are read only to make up for ads).
+
+For a clear category without a chosen brand, try this in **OpenAI + Shopee** mode:
+
+> Mua 1 sản phẩm dầu gội trị gàu, giao tại TP.HCM. Tổng tối đa 350 nghìn VND. Ưu tiên giá rẻ.
+
+The turn interpreter decides whether this starts a new shopping task; the intent
+interpreter then chooses targeted search or brand discovery. Missing brand alone
+does not require clarification. Discovery uses OpenAI's hosted Responses API
+`web_search`, then extracts up to **3 source-backed candidate brands**. These are
+not asserted market-share leaders. Citations and research limitations appear in
+the results. The configured model/account must support `web_search`; research
+errors remain explicit, and demo AI does not fabricate web research.
+
+Each discovered brand gets its own Shopee search capped at **3 organic listings**
+(up to **9 listings / 9 pages total**). Duplicates are analyzed once. Product API
+brand metadata must match a researched name or alias before SKU selection and
+quoting; missing or mismatched brands are skipped with reasons. Musk compares
+offers within each brand first, then compares each brand's leading offer. Expand
+the within-brand groups to inspect or select another offer. Preference-only
+updates repeat both comparisons using the existing profiles.
+
+Volumes and explicit pack counts are extracted conservatively from product/SKU
+labels; ambiguous or absent values stay unknown. Cost per 100ml includes quoted
+shipping/fees/discounts and is rounded to currency minor units. It is calculated
+only with sourced volume, pack count and total, and used for ordering only when
+explicitly requested. Seller claims and reviews do not prove treatment efficacy.
+Web search and the additional AI/Shopee calls increase latency and API costs.
+
 If revalidation allows continuing, Musk leaves only the approved SKU and quantity in the cart.
 Click **Mở giỏ hàng Shopee** to continue manually using the same Shopee account.
 

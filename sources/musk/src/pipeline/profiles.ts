@@ -181,7 +181,17 @@ export async function assembleProfile(
     throw new Error("Chưa xác định được chính xác biến thể; cần bổ sung adapter chọn biến thể.");
   if (selected.model != null) product.model = selected.model;
   if (selected.storage_gb != null) product.storage_gb = selected.storage_gb;
-  for (const field of ["model", "storage_gb"] as const) {
+  for (const field of ["volume_ml", "pack_count"] as const) {
+    if (selected[field] != null) product[field] = selected[field];
+    else if (product.variants.some((variant) => variant[field] != null)) {
+      product[field] = null;
+      product.sources = product.sources.filter(
+        (source) => source.field_path !== `product.${field}`,
+      );
+    }
+  }
+
+  for (const field of ["model", "storage_gb", "volume_ml", "pack_count"] as const) {
     const field_path = `product.${field}` as const;
     if (
       selected[field] != null &&
@@ -225,6 +235,32 @@ export async function assembleProfile(
   if (quote.total && calculated && JSON.stringify(quote.total) !== JSON.stringify(calculated))
     throw new Error("Tổng báo giá không khớp các thành phần giá.");
   quote.total = calculated;
+  if (product.volume_ml !== undefined || product.pack_count !== undefined) {
+    quote.unit_price_per_100ml = null;
+    if (
+      quote.total &&
+      product.volume_ml &&
+      product.pack_count &&
+      ["product.volume_ml", "product.pack_count", "quote.total"].every((path) =>
+        [...product.sources, ...quote.sources].some((source) => source.field_path === path),
+      )
+    ) {
+      const amount_minor = Math.round(
+        (quote.total.amount_minor * 100) /
+          (quote.quantity * product.volume_ml * product.pack_count),
+      );
+      if (!Number.isSafeInteger(amount_minor) || amount_minor < 0)
+        throw new Error("Không tính được chi phí trên 100ml từ báo giá và dung tích.");
+      quote.unit_price_per_100ml = { ...quote.total, amount_minor };
+      quote.sources.push({
+        field_path: "quote.unit_price_per_100ml",
+        source_url: listing.url,
+        observed_at: quote.observed_at,
+        basis: "platform_reported",
+      });
+    }
+  }
+
   const summary = reviewSummarySchema.parse(summaryResult.value);
   if (summary.analyzed_review_count !== reviews.length)
     throw new Error("AI đếm sai số đánh giá đã phân tích.");

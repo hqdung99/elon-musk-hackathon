@@ -4,6 +4,7 @@ import type {
   RankingResults,
   Recommendation,
   ShoppingIntent,
+  SearchReview,
 } from "../domain/schemas";
 import { fixtureLimitations } from "../providers/fixtures";
 import { searchListingLimit } from "./search-products";
@@ -16,6 +17,7 @@ export function recommendOffers(
   { ai, marketplace }: PipelineDependencies,
   truncated: boolean,
   filters: FilterResult[] = [],
+  review?: SearchReview,
 ): Recommendation {
   const recommended = ranking.ranked_offers[0];
   const unknownChecks =
@@ -29,6 +31,25 @@ export function recommendOffers(
     recommended_offer_id: recommended?.offer_id ?? null,
     reasons: recommended?.preference_reasons.map((reason) => reason.reason) ?? [],
     limitations: [
+      ...(review?.discovery
+        ? [
+            "Thương hiệu là danh sách ứng viên từ web search, không phải xếp hạng thị phần hoặc bằng chứng hiệu quả điều trị.",
+            ...review.discovery.limitations,
+            `Phân tích tối đa ${searchListingLimit} listing cho mỗi thương hiệu (${review.discovery.brands.length} thương hiệu), không khảo sát toàn thị trường.`,
+            ...review.discovery.brands.flatMap((brand) =>
+              profiles.some((profile) =>
+                review.entries.some(
+                  (entry) =>
+                    entry.brand === brand.name &&
+                    entry.listing.listing_id === profile.product.listing_id &&
+                    entry.listing.seller_id === profile.seller.seller_id,
+                ),
+              )
+                ? []
+                : [`Chưa có offer được xác minh để so sánh cho ${brand.name}.`],
+            ),
+          ]
+        : []),
       ...intent.requirements
         .filter((requirement) => !requirement.field_path)
         .map(
@@ -38,7 +59,7 @@ export function recommendOffers(
       ...(marketplace.mode === "fixture" ? fixtureLimitations(profiles) : []),
       ...new Set(profiles.flatMap((profile) => profile.quote.limitations ?? [])),
       ...(ai.mode === "demo" ? ["AI demo theo kịch bản cố định, không gọi mô hình."] : []),
-      ...(truncated
+      ...(truncated && !review?.discovery
         ? [
             `Chỉ phân tích ${searchListingLimit} kết quả tìm kiếm đầu tiên; chưa bao phủ mọi kết quả.`,
           ]
@@ -49,7 +70,11 @@ export function recommendOffers(
           ]
         : []),
       ...(!ranking.ranked_offers.length
-        ? ["Mọi offer đều không đạt ít nhất một điều kiện. Không tự nới yêu cầu."]
+        ? [
+            profiles.length
+              ? "Mọi offer đều không đạt ít nhất một điều kiện. Không tự nới yêu cầu."
+              : "Chưa có offer được xác minh để đề xuất. Không tự tạo sản phẩm hoặc nới yêu cầu.",
+          ]
         : []),
       ...(!intent.preferences.length
         ? ["Chưa có sở thích rõ ràng; thứ tự không thể hiện một lựa chọn tốt nhất cho bạn."]

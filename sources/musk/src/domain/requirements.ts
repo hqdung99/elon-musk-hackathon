@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeBrand } from "./schemas";
 import type {
   FieldPath,
   FilterResult,
@@ -46,12 +47,20 @@ export function fieldValue(
       return profile.product.storage_gb;
     case "product.condition":
       return profile.product.condition;
+    case "product.brand":
+      return profile.product.brand ?? null;
+    case "product.volume_ml":
+      return profile.product.volume_ml ?? null;
+    case "product.pack_count":
+      return profile.product.pack_count ?? null;
     case "seller.is_mall":
       return profile.seller.is_mall;
     case "seller.rating":
       return profile.seller.rating;
     case "quote.total":
       return profile.quote.total;
+    case "quote.unit_price_per_100ml":
+      return profile.quote.unit_price_per_100ml ?? null;
     case "quote.in_stock":
       return profile.quote.in_stock;
     case "quote.estimated_delivery_to":
@@ -86,6 +95,10 @@ function check(profile: OfferProfile, requirement: Requirement): RequirementChec
 
   if (requirement.field_path === "product.storage_gb" && requirement.unit !== "GB")
     return unknown("Dung lượng cần đơn vị GB.");
+  if (requirement.field_path === "product.volume_ml" && requirement.unit !== "ml")
+    return unknown("Dung tích cần đơn vị ml.");
+  if (requirement.field_path === "product.pack_count" && requirement.unit !== "count")
+    return unknown("Số sản phẩm trong gói cần đơn vị count.");
   if (requirement.field_path === "policies.warranty_months" && requirement.unit !== "months")
     return unknown("Thời hạn bảo hành cần đơn vị months.");
   const expected = requirement.value;
@@ -99,7 +112,12 @@ function check(profile: OfferProfile, requirement: Requirement): RequirementChec
     case "eq":
       if (typeof actual !== typeof expected)
         return unknown("Kiểu dữ liệu không phù hợp để so sánh.");
-      pass = actual === expected;
+      pass =
+        requirement.field_path === "product.brand" &&
+        typeof actual === "string" &&
+        typeof expected === "string"
+          ? normalizeBrand(actual) === normalizeBrand(expected)
+          : actual === expected;
       break;
     case "gte":
     case "lte": {

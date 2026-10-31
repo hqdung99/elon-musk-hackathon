@@ -69,6 +69,58 @@ const productResponse = {
   },
 };
 
+it.each([
+  ["Clear 1 chai 500ml", 500, 1],
+  ["Clear 500ml", 500, null],
+  ["Combo 2 chai 1L", 1000, 2],
+  ["Clear 500ml hoặc 300ml", null, null],
+  ["Clear 1 chai 500ml và 2 chai 500ml", 500, null],
+])("normalizes only unambiguous package evidence in %s", async (title, volume, count) => {
+  const adapter = createShopeeAdapter(
+    async () =>
+      new Response(
+        JSON.stringify({
+          ...productResponse,
+          data: {
+            ...productResponse.data,
+            item: {
+              ...productResponse.data.item,
+              title,
+              brand: "Clear",
+              models: [{ ...productResponse.data.item.models[0], name: title }],
+            },
+          },
+        }),
+      ),
+  );
+  const result = await adapter.getProductDetails(listing);
+  if (result.status !== "ok") throw new Error("Expected product.");
+  expect(result.data.brand).toBe("Clear");
+  expect(result.data.volume_ml).toBe(volume);
+  expect(result.data.pack_count).toBe(count);
+  expect(result.data.variants[0].volume_ml).toBe(volume);
+  expect(result.data.variants[0].pack_count).toBe(count);
+});
+
+it("does not infer a missing API brand from a branded title", async () => {
+  const adapter = createShopeeAdapter(
+    async () =>
+      new Response(
+        JSON.stringify({
+          ...productResponse,
+          data: {
+            ...productResponse.data,
+            item: { ...productResponse.data.item, title: "Clear shampoo", brand: null },
+          },
+        }),
+      ),
+  );
+  const result = await adapter.getProductDetails(listing);
+  if (result.status !== "ok") throw new Error("Expected product.");
+  expect(result.data.brand).toBeNull();
+  expect(result.data.sources.some((source) => source.field_path === "product.brand")).toBe(false);
+});
+
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
@@ -88,6 +140,9 @@ describe("Shopee marketplace adapter", () => {
       seller_id: String(captured.data.item.shop_id),
     });
     if (result.status !== "ok") throw new Error("Expected captured product details.");
+    expect(result.data.brand).toBe("Apple");
+    expect(result.data.brand_id).toBe("1189223");
+    expect(result.data.sources.some((source) => source.field_path === "product.brand")).toBe(true);
     expect(result.data.image_url).toBe(
       "https://down-vn.img.susercontent.com/file/vn-11134207-820l4-megm9h2a4f7k62",
     );

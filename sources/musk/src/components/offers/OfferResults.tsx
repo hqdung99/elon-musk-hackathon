@@ -160,6 +160,7 @@ function OfferCard({
   selected,
   active,
   onSelect,
+  withinBrand = false,
 }: {
   profile: OfferProfile;
   ranked: RankedOffer;
@@ -167,6 +168,7 @@ function OfferCard({
   selected: boolean;
   active: boolean;
   onSelect: () => void;
+  withinBrand?: boolean;
 }) {
   const variant = profile.product.variants.find(
     (item) => item.variant_id === profile.selected_variant_id,
@@ -176,7 +178,11 @@ function OfferCard({
     <article className={`offer-card ${selected ? "selected" : ""}`}>
       <div className="offer-top">
         <span className={`badge ${ranked.rank === 1 ? "green" : "neutral"}`}>
-          {ranked.rank === 1 ? "ĐỀ XUẤT CHO BẠN" : `THAM KHẢO #${ranked.rank}`}
+          {withinBrand
+            ? `CÙNG THƯƠNG HIỆU #${ranked.rank}`
+            : ranked.rank === 1
+              ? "ĐỀ XUẤT CHO BẠN"
+              : `THAM KHẢO #${ranked.rank}`}
         </span>
         {unknownChecks.length > 0 && <span className="badge warning">Chưa xác minh</span>}
         <span className="rating">
@@ -203,13 +209,25 @@ function OfferCard({
           </p>
           <div className="price">{formatMoney(profile.quote.total)}</div>
           <p className="muted small">
-            Tổng cho {profile.quote.quantity} máy ·{" "}
+            Tổng cho {profile.quote.quantity} sản phẩm ·{" "}
             {profile.quote.total
               ? profile.quote.total_estimated
                 ? "ước tính gồm giá sản phẩm và phí; cần xác nhận tại Shopee"
                 : "gồm phí và giảm giá đã xác nhận"
               : "chưa xác nhận đủ giá và phí"}
           </p>
+          {profile.product.brand && (
+            <p className="muted small">Thương hiệu: {profile.product.brand}</p>
+          )}
+          {(profile.product.volume_ml !== undefined ||
+            profile.product.pack_count !== undefined) && (
+            <p className="muted small">
+              Dung tích / sản phẩm:{" "}
+              {profile.product.volume_ml ? `${profile.product.volume_ml}ml` : "Chưa rõ"} · Số sản
+              phẩm / gói: {profile.product.pack_count ?? "Chưa rõ"} · Chi phí / 100ml (làm tròn, gồm
+              phí): {formatMoney(profile.quote.unit_price_per_100ml ?? null)}
+            </p>
+          )}
         </div>
       </div>
       <div className="offer-facts">
@@ -280,6 +298,7 @@ export function OfferResults({
   onRevise: () => void;
 }) {
   const [selectedId, setSelectedId] = useState(result.recommendation.recommended_offer_id);
+  const discovery = result.search_review.discovery;
   const selected = result.profiles.find((profile) => profile.offer_id === selectedId);
   const excluded = result.filters.filter((filter) => filter.status === "excluded");
   const label = (id: string) =>
@@ -299,7 +318,7 @@ export function OfferResults({
   const recommended = result.profiles.find(
     (profile) => profile.offer_id === result.recommendation.recommended_offer_id,
   );
-  const renderOffer = (ranked: RankedOffer) => {
+  const renderOffer = (ranked: RankedOffer, withinBrand = false) => {
     const profile = result.profiles.find((item) => item.offer_id === ranked.offer_id);
     if (!profile) throw new Error("Kết quả xếp hạng thiếu hồ sơ offer.");
 
@@ -312,6 +331,7 @@ export function OfferResults({
         selected={selectedId === profile.offer_id}
         active={active}
         onSelect={() => setSelectedId(profile.offer_id)}
+        withinBrand={withinBrand}
       />
     );
   };
@@ -334,17 +354,48 @@ export function OfferResults({
             {recommended ? `Musk đề xuất: ${recommended.seller.name}` : "Chưa có offer phù hợp."}
           </h2>
           <p className="muted">
-            {result.ranking.ranked_offers.length} offer được giữ lại để xếp hạng
+            {result.ranking.ranked_offers.length}{" "}
+            {result.brand_comparisons
+              ? "offer dẫn đầu mỗi thương hiệu được đối chiếu"
+              : "offer được giữ lại để xếp hạng"}
             {unverifiedCount > 0 && ` (${unverifiedCount} còn điều kiện chưa rõ)`} ·{" "}
             {result.profiles.length} offer đã khảo sát
           </p>
         </div>
       </div>
+      {discovery && (
+        <div className="callout" aria-label="Nghiên cứu thương hiệu">
+          <h3>Thương hiệu ứng viên từ web search</h3>
+          <p className="muted small">
+            Không phải top thị phần hoặc bằng chứng hiệu quả điều trị. Nghiên cứu:{" "}
+            {new Date(discovery.researched_at).toLocaleString("vi-VN")}.
+          </p>
+          <ol>
+            {discovery.brands.map((brand) => (
+              <li key={brand.name}>
+                <b>{brand.name}</b>: {brand.reason}
+                <ul>
+                  {brand.source_urls.map((url) => (
+                    <li key={url}>
+                      <a href={url} target="_blank" rel="noopener noreferrer">
+                        {discovery.sources.find((source) => source.url === url)?.title ?? url}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+          {discovery.limitations.map((limitation) => (
+            <p key={limitation}>{limitation}</p>
+          ))}
+        </div>
+      )}
       <ListingReviewTrail review={result.search_review} intent={result.intent} />
       <div className="offer-grid">
         {result.ranking.ranked_offers
           .filter((ranked) => ranked.offer_id === recommended?.offer_id)
-          .map(renderOffer)}
+          .map((row) => renderOffer(row))}
       </div>
       {alternatives.length > 0 && (
         <details className="excluded alternatives">
@@ -353,9 +404,27 @@ export function OfferResults({
             Đây là các phương án tham khảo, không phải đề xuất đồng hạng. Bạn vẫn có thể chọn phương
             án khác.
           </p>
-          <div className="offer-grid">{alternatives.map(renderOffer)}</div>
+          <div className="offer-grid">{alternatives.map((row) => renderOffer(row))}</div>
         </details>
       )}
+      {result.brand_comparisons?.map((comparison) => (
+        <details className="excluded alternatives" key={comparison.brand}>
+          <summary>
+            So sánh cùng thương hiệu: {comparison.brand} ({comparison.ranking.ranked_offers.length}{" "}
+            offer)
+          </summary>
+          <p className="muted small">
+            Xếp hạng trong nhóm trước, rồi đối chiếu offer đứng đầu mỗi nhóm giữa các thương hiệu.
+          </p>
+          {comparison.ranking.ranked_offers.length ? (
+            <div className="offer-grid">
+              {comparison.ranking.ranked_offers.map((row) => renderOffer(row, true))}
+            </div>
+          ) : (
+            <p>Chưa có offer được xác minh và giữ lại cho thương hiệu này.</p>
+          )}
+        </details>
+      ))}
       {excluded.length > 0 && (
         <details className="excluded">
           <summary>Vì sao không chọn {excluded.length} offer khác?</summary>
@@ -401,7 +470,7 @@ export function OfferResults({
                 )?.name
               }
               {" · "}
-              {selected.quote.quantity} máy · <b>{formatMoney(selected.quote.total)}</b>.
+              {selected.quote.quantity} sản phẩm · <b>{formatMoney(selected.quote.total)}</b>.
             </p>
             <p className="small muted">
               Duyệt cả giá, giao hàng và chính sách hiển thị. Có thay đổi? Musk sẽ dừng và hỏi lại.

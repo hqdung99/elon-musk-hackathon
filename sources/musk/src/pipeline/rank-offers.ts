@@ -65,18 +65,22 @@ export async function rankOffers(
   );
   validateRanking(ranking, candidates, intent);
   const preference = intent.preferences[0];
+  const path = preference?.field_path;
   if (
     intent.preferences.length !== 1 ||
-    preference.field_path !== "quote.total" ||
+    (path !== "quote.total" && path !== "quote.unit_price_per_100ml") ||
     (preference.direction !== "lower" && preference.direction !== "higher")
   )
     return ranking;
 
   const priced = ranking.ranked_offers.flatMap((row) => {
     const profile = candidates.find((candidate) => candidate.offer_id === row.offer_id);
-    const total = profile?.quote.total;
+    const total =
+      path === "quote.unit_price_per_100ml"
+        ? profile?.quote.unit_price_per_100ml
+        : profile?.quote.total;
 
-    return profile && total && isKnown(profile, "quote.total")
+    return profile && total && isKnown(profile, path)
       ? [{ row, total, estimated: profile.quote.total_estimated }]
       : [];
   });
@@ -97,8 +101,8 @@ export async function rankOffers(
         preference_reasons: [
           {
             preference_id: preference.preference_id,
-            profile_field_paths: ["quote.total"],
-            reason: `Tổng ${estimated ? "ước tính" : "báo giá"} ${total.amount_minor.toLocaleString("vi-VN")} ${total.currency}; xếp tổng ${direction === 1 ? "thấp" : "cao"} trước theo ưu tiên của bạn.`,
+            profile_field_paths: [path],
+            reason: `${path === "quote.unit_price_per_100ml" ? "Chi phí làm tròn trên 100ml" : "Tổng"} ${estimated ? "ước tính" : "báo giá"} ${total.amount_minor.toLocaleString("vi-VN")} ${total.currency}; xếp ${direction === 1 ? "thấp" : "cao"} trước theo ưu tiên của bạn.`,
           },
         ],
       })),

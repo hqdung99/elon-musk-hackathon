@@ -96,20 +96,39 @@ mandatory. Demo routing is scripted; natural-language routing uses OpenAI.
 
 ```mermaid
 flowchart TD
-    S1["1. Understand request"] --> Q{"Need clarification?"}
-    Q -- Yes --> U["User answers"] --> S1
-    Q -- No --> S2["2. Plan search"]
+    U["User message"] --> T["Turn interpreter"]
+    T -- New product, revision or clarification answer --> S1["Intent interpreter"]
+    T -- Ask about results --> A["Answer from existing evidence"]
+    T -- Ambiguous turn --> CQ["Ask which task to change"] --> U
+    T -- Decline --> Stop["Stop or revise request"]
+    T -- Request approval --> P{"Explicit UI approval?"}
+    S1 --> Q{"Need quantity, delivery or real clarification?"}
+    Q -- Yes --> U
+    Q -- No --> R{"Shopping goal"}
+    R -- Known brand or product family --> S2["2. Plan targeted search"]
     S2 --> S3["3. Search listings"]
-    S3 --> S4["4. Check relevance and choose SKU"]
-    S4 --> S5["5. Build offer profile"]
+    R -- Category without chosen brand --> D["Web-search brand discovery"]
+    D --> E["Up to 3 cited candidate brands"]
+    E --> B["Plan and search each brand, 3 listings each"]
+    B --> V["Deduplicate discovered listings"]
+    V --> S4["4. Check relevance and load product details"]
+    S3 --> S4
+    S4 --> BV{"Discovery route?"}
+    BV -- Yes --> VB["Verify API brand, skip mismatches and unknown brands"]
+    BV -- No --> SKU["Choose available SKU"]
+    VB --> SKU
+    SKU --> S5["5. Build offer profile"]
     S5 --> S6["6. Check requirements"]
-    S6 -- More candidates and retained slots --> S5
-    S6 -- Done --> S7["7. Rank retained offers"]
+    S6 --> C{"Discovery route?"}
+    C -- No --> S7["7. Rank targeted offers"]
+    C -- Yes --> W["Rank within each verified brand"]
+    W --> X["Rank each brand's leading offer across brands"]
     S7 --> S8["8. Recommend one offer"]
-    S8 --> P{"User approves?"}
-    P -- No --> Stop["Stop or revise request"]
+    X --> S8
+    S8 --> P
+    P -- No --> Stop
     P -- Yes --> S9["9. Revalidate approved offer"]
-    S9 -- Changed or failed --> S1
+    S9 -- Changed or failed --> U
     S9 -- Ready, including unknown warnings --> S10["10. Prepare Shopee cart"]
 ```
 
@@ -141,8 +160,10 @@ sequenceDiagram
     participant M as Musk
     participant S as Shopee API
     participant A as AI
-    M->>A: 1.1 Extract requirements, preferences and missing information
-    A-->>M: 1.2 Return intent and clarification questions
+    M->>A: 1.1 Interpret turn against active intent
+    A-->>M: 1.2 Return new task, revision, answer, question or stop action
+    M->>A: 1.3 Interpret intent using latest message and active intent only
+    A-->>M: 1.4 Return requirements, preferences, shopping goal and clarification questions
 ```
 
 **Output:**
@@ -150,7 +171,11 @@ sequenceDiagram
 ```text
 ShoppingIntent = {
   product_description: string, quantity: PositiveInt|null, delivery_area: string|null,
-  requirements: Requirement[], preferences: Preference[], questions_for_user: string[]
+  requirements: Requirement[], preferences: Preference[], questions_for_user: string[],
+  suggested_replies?: string[],
+  shopping_goal?: {
+    mode: "targeted"|"discover_brands", category: string|null, requested_brand: string|null
+  }
 }
 Requirement = {
   requirement_id: string, user_text: string, field_path: FieldPath|null,
@@ -164,8 +189,9 @@ Preference = {
 Value = string | number | boolean | string[] | number[]
 FieldPath =
   "product.model" | "product.storage_gb" | "product.condition"
+  | "product.brand" | "product.volume_ml" | "product.pack_count"
   | "seller.is_mall" | "seller.rating"
-  | "quote.total" | "quote.in_stock" | "quote.estimated_delivery_to"
+  | "quote.total" | "quote.unit_price_per_100ml" | "quote.in_stock" | "quote.estimated_delivery_to"
   | "policies.warranty_months" | "policies.returns_accepted"
 ```
 
@@ -175,6 +201,41 @@ Unsupported requirements keep nullable fields instead of inventing a mapping.
 Storage uses `GB`, warranty uses `months`, and total budgets use a currency code.
 Delivery dates use `ISODate`, never a location. Preferences are not hard filters;
 `preferred_value` specifies the desired value when that direction is used.
+OpenAI must return `shopping_goal`; older/demo intents without it retain the
+targeted route. An unchosen brand alone is not ambiguous when the category is clear.
+Discovery candidates never become invented hard requirements.
+
+### 1.5. Discover brands for category-only intent
+
+```mermaid
+sequenceDiagram
+    participant M as Musk
+    participant A as OpenAI
+    participant W as Hosted web search
+    M->>A: Research category and product use in Vietnam, no buyer address
+    A->>W: Required web_search through Responses API
+    W-->>A: Current web evidence and source URLs
+    A-->>M: Completed research with citations
+    M->>A: Extract up to three brands from this evidence only
+    A-->>M: Distinct brands, aliases, reasons and source references
+    M->>M: Validate names, alias collisions and source URL membership
+```
+
+```text
+BrandDiscovery = {
+  brands: {
+    name: string, aliases: string[], reason: string, source_urls: Url[]
+  }[], sources: { url: Url, title: string }[],
+  limitations: string[], researched_at: ISODateTime
+}
+```
+
+Require 1–3 brands, an actual completed hosted search and sourced narrative;
+reject incomplete/refused research or invented source references. Source links
+must use HTTP(S). Fewer than three brands require a visible limitation. These are
+relevant candidate brands, not a verified market-wide top-three ranking.
+Web content is untrusted evidence, not instructions; shampoo claims do not
+establish treatment effectiveness. Demo mode rejects discovery explicitly.
 
 ## 2. Plan search
 
@@ -206,6 +267,9 @@ SearchCapabilities = {
 be advertised capabilities. Each filter maps to an equivalent explicit `eq`
 requirement, never a preference. Every requirement must be covered by a filter or
 `post_search_requirement_ids`; reject unknown IDs and duplicate filter names.
+For discovery, build one plan per candidate brand while retaining the original
+user requirements/preferences. The query must contain its brand or alias; the
+candidate brand is not an added hard requirement.
 
 ## 3. Search listings
 
@@ -226,12 +290,18 @@ CandidateResults = { listings: Listing[], truncated: boolean, search_review: Sea
 Listing = { listing_id: string, seller_id: string, url: string, title: string }
 SearchReview = {
   plan: SearchPlan, pages_fetched: NonNegativeInt,
-  listing_limit: PositiveInt, page_limit: PositiveInt, truncated: boolean, entries: ListingReview[]
+  listing_limit: PositiveInt, page_limit: PositiveInt, truncated: boolean, entries: ListingReview[],
+  discovery?: BrandDiscovery,
+  brand_searches?: {
+    brand: string, plan: SearchPlan, pages_fetched: NonNegativeInt,
+    listing_limit: PositiveInt, page_limit: PositiveInt, truncated: boolean
+  }[]
 }
 ListingReview = {
   listing: Listing,
   status: "pending"|"irrelevant"|"skipped"|"excluded"|"eligible"|"unresolved"|"not_evaluated",
-  reasons: string[], seller_name?: string, selected_variant?: { variant_id: string, name: string }
+  reasons: string[], seller_name?: string, brand?: string,
+  selected_variant?: { variant_id: string, name: string }
 }
 ```
 
@@ -240,6 +310,12 @@ results are analyzed (`listing_limit`); extra pages, up to three, are read only 
 up for ads or duplicates; `pages_fetched <= page_limit`.
 `truncated` signals incomplete coverage. Inventory only fetched listings;
 initial entries are `pending` and later decisions update their status and reasons.
+Discovery applies that cap per brand: up to three brands × three organic listings,
+at most nine listings/nine pages. Aggregate `plan` describes the category only;
+`brand_searches` holds actual API queries/filters/limits. Deduplicate globally.
+Before quoting, verify actual sourced `ProductDetails.brand` against researched
+names/aliases; preserve the raw API brand for stable approval/revalidation.
+Skip mismatches and missing brand evidence explicitly, without guessing from titles.
 
 ## 4. Check relevance and choose SKU
 
@@ -312,12 +388,14 @@ OfferProfile = {
 ProductDetails = {
   listing_id: string, title: string, image_url?: Url|null, model: string|null, storage_gb: number|null,
   condition: "new"|"used"|"refurbished"|null, variants: ProductVariant[],
-  default_variant_id: string|null, sources: FieldSource[]
+  default_variant_id: string|null, sources: FieldSource[],
+  brand?: string|null, brand_id?: string|null, volume_ml?: number|null, pack_count?: PositiveInt|null
 }
 ProductVariant = {
   variant_id: string, name: string, model?: string|null, storage_gb?: number|null,
   has_stock?: boolean|null, is_clickable?: boolean|null, is_grayout?: boolean|null,
-  stock?: NonNegativeInt|null, image_url?: Url|null
+  stock?: NonNegativeInt|null, image_url?: Url|null,
+  volume_ml?: number|null, pack_count?: PositiveInt|null
 }
 SellerDetails = {
   seller_id: string, name: string, is_mall: boolean|null, rating: number|null,
@@ -338,6 +416,7 @@ ReviewSummary = {
 OfferQuote = {
   listing_id: string, variant_id: string, quantity: PositiveInt, delivery_area: string|null,
   item_unit_price: Money|null, shipping_cost: Money|null, other_fees: Money|null,
+  unit_price_per_100ml?: Money|null,
   discounts: Discount[], total: Money|null, in_stock: boolean|null,
   estimated_delivery_to: ISODate|null, observed_at: ISODateTime, sources: FieldSource[],
   shipping_estimated?: boolean, total_estimated?: boolean, limitations?: string[]
@@ -376,6 +455,12 @@ All components must share a currency; unsafe arithmetic or unknown required pric
 leaves `total` null, never zero. The generic fixture contract may carry discounts:
 subtract confirmed applied amounts once; an applied discount with unknown
 eligibility or amount also leaves the total null.
+Volume is in ml and explicit pack count uses `count`. Conservative SKU label
+facts override title facts; ambiguous/missing sizes and package counts stay
+unknown. Never assume one bottle per pack. Sourced cost per 100ml is rounded:
+`total × 100 / (quantity × volume_ml × pack_count)`. It includes quoted shipping,
+fees and discounts, preserves estimate status and never replaces an explicit
+total-price preference.
 
 ## 6. Check requirements
 
@@ -386,7 +471,7 @@ sequenceDiagram
     participant A as AI
     M->>M: 6.1 Check hard requirements against sourced facts
     M->>M: 6.2 Exclude failures and retain passing or unknown offers
-    M->>M: 6.3 Profile the relevant ones among the ten analyzed listings
+    M->>M: 6.3 Retain relevant offers within the route's analyzed listing limit
 ```
 
 **Output:**
@@ -406,7 +491,7 @@ RequirementCheck = {
 `unresolved`; otherwise `eligible`. Candidates contain only the latter two.
 Check explicit requirements plus quantity and availability; system check IDs may
 be `quantity` or `availability`. Unsupported comparisons or missing provenance
-return `unknown`, not pass. `eq` uses typed equality, `contains` is case-insensitive,
+return `unknown`, not pass. `eq` uses typed equality (brand equality normalizes case and punctuation), `contains` is case-insensitive,
 `in` expects a list, and `gte`/`lte` compare numbers or valid ISO delivery dates.
 
 ## 7. Rank retained offers
@@ -435,6 +520,14 @@ RankedOffer = {
 **Validate:** every candidate appears exactly once; ranks are consecutive from 1.
 Reasons reference an explicit preference and known, sourced fields. Preserve exact
 missing-field lists; unknown facts cannot be ranking advantages.
+In discovery mode rank every eligible/unresolved offer within its verified
+brand first. Then rank only each brand's leading offer across brands using the
+same explicit preferences and evidence checks. Keep all inner rankings:
+`PipelineResult.brand_comparisons?: { brand: string, ranking: RankingResults }[]`.
+Brands with no remaining offers keep an empty group, never a fabricated winner.
+Preference-only profile reuse repeats both ranking levels; a changed category,
+brand, quantity or hard requirement invalidates reuse. Targeted searches preserve
+the original single-ranking behavior.
 
 ## 8. Recommend one offer
 

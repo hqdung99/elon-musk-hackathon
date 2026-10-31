@@ -17,7 +17,7 @@ import { approveAndRevalidate, completeSelection, runWithIntent } from "./pipeli
 import { interpretTurn, intentMessages, canReuseProfiles } from "./pipeline/interpret-turn";
 import type { TurnContext } from "./pipeline/interpret-turn";
 import { interpretIntent } from "./pipeline/interpret-intent";
-import { rankOffers } from "./pipeline/rank-offers";
+import { compareOffers } from "./pipeline/compare-brands";
 import { filterOffers } from "./pipeline/filter-offers";
 import { recommendOffers } from "./pipeline/recommend-offers";
 import type { VariantChoices } from "./pipeline/types";
@@ -29,6 +29,7 @@ const stages: Record<Stage | "idle" | "done" | "blocked", string> = {
   idle: "Sẵn sàng lắng nghe",
   clarifying: "Hiểu nhu cầu của bạn",
   planning: "Lên kế hoạch tìm kiếm",
+  discovering: "Nghiên cứu thương hiệu có nguồn",
   searching: "Tìm các lựa chọn",
   profiling: "Thu thập bằng chứng",
   filtering: "Kiểm tra điều kiện",
@@ -236,12 +237,18 @@ export default function App() {
       ) {
         dispatch({ type: "progress", runId: id, stage: "ranking" });
         const { filters, candidates } = filterOffers(context.result.profiles, intent);
-        const ranking = await rankOffers(intent, candidates, deps);
+        const { ranking, brand_comparisons } = await compareOffers(
+          intent,
+          candidates,
+          deps,
+          context.result.search_review.discovery,
+        );
         const result = {
           ...context.result,
           intent,
           filters,
           ranking,
+          ...(brand_comparisons ? { brand_comparisons } : {}),
           recommendation: recommendOffers(
             intent,
             context.result.profiles,
@@ -249,6 +256,7 @@ export default function App() {
             deps,
             context.result.search_review.truncated,
             filters,
+            context.result.search_review,
           ),
         };
         if (signal.aborted || id !== runId.current) return;
@@ -339,7 +347,7 @@ export default function App() {
     dispatch({ type: "start", runId: id });
     message(
       "user",
-      `Duyệt ${profile.seller.name} · ${profile.quote.quantity} máy · ${formatMoney(profile.quote.total)} và các điều kiện hiển thị.`,
+      `Duyệt ${profile.seller.name} · ${profile.quote.quantity} sản phẩm · ${formatMoney(profile.quote.total)} và các điều kiện hiển thị.`,
       id,
     );
     try {

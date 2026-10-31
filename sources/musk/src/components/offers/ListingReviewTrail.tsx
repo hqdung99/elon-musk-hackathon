@@ -4,7 +4,7 @@ import type { ListingReview, SearchReview, ShoppingIntent } from "../../domain/s
 const outcomes: Record<ListingReview["status"], { label: string; badge: string }> = {
   pending: { label: "Chờ đánh giá SKU", badge: "neutral" },
   irrelevant: { label: "Loại: khác sản phẩm cần tìm", badge: "red" },
-  skipped: { label: "Bạn đã bỏ qua", badge: "neutral" },
+  skipped: { label: "Bỏ qua", badge: "neutral" },
   excluded: { label: "Loại: không đạt điều kiện", badge: "red" },
   eligible: { label: "Giữ lại để xếp hạng", badge: "green" },
   unresolved: { label: "Giữ lại: còn điều kiện chưa rõ", badge: "warning" },
@@ -55,16 +55,48 @@ export function ListingReviewTrail({
         </span>
       </summary>
       <div className="listing-review-body">
-        <p>
-          Từ khóa: <b>{review.plan.query}</b> · Sắp xếp: {sort ? (sorts[sort] ?? sort) : "Mặc định"}
-        </p>
-        <p>Bộ lọc API: {filters.join(" · ") || "Không có"}</p>
+        {!review.brand_searches && (
+          <>
+            <p>
+              Từ khóa: <b>{review.plan.query}</b> · Sắp xếp:{" "}
+              {sort ? (sorts[sort] ?? sort) : "Mặc định"}
+            </p>
+            <p>Bộ lọc API: {filters.join(" · ") || "Không có"}</p>
+          </>
+        )}
+        {review.brand_searches?.map((search) => (
+          <div key={search.brand}>
+            <p>
+              <b>{search.brand}</b> · Từ khóa: <b>{search.plan.query}</b> · Sắp xếp:{" "}
+              {search.plan.sort_by
+                ? (sorts[search.plan.sort_by] ?? search.plan.sort_by)
+                : "Mặc định"}
+            </p>
+            <p>
+              Bộ lọc API:{" "}
+              {search.plan.filters
+                .map((filter) => `${filter.name}: ${JSON.stringify(filter.value)}`)
+                .join(" · ") || "Không có"}
+            </p>
+            <p className="muted">
+              Đã tải {search.pages_fetched} trang · tối đa {search.listing_limit} listing,{" "}
+              {search.page_limit} trang cho thương hiệu này.
+            </p>
+            {search.truncated && (
+              <p className="callout warning">
+                {search.brand}: còn kết quả ngoài giới hạn, chưa được phân tích.
+              </p>
+            )}
+          </div>
+        ))}
         <p className="muted">
           Đã tải {review.pages_fetched} trang, phân tích {review.entries.length} listing duy nhất
-          không quảng cáo. Musk chỉ phân tích {review.listing_limit} kết quả đầu tiên (tối đa{" "}
-          {review.page_limit} trang để bù quảng cáo).
+          không quảng cáo.{" "}
+          {review.brand_searches
+            ? `Giới hạn tổng ${review.listing_limit} listing, tối đa ${review.page_limit} trang cho ${review.brand_searches.length} thương hiệu; listing trùng chỉ đánh giá một lần.`
+            : `Musk chỉ phân tích ${review.listing_limit} kết quả đầu tiên (tối đa ${review.page_limit} trang để bù quảng cáo).`}
         </p>
-        {review.truncated && (
+        {review.truncated && !review.brand_searches && (
           <p className="callout warning">
             Shopee còn thêm kết quả ngoài {review.listing_limit} kết quả đầu tiên; các kết quả đó
             không được tải hay phân tích và không nằm trong nhật ký.
@@ -86,6 +118,7 @@ export function ListingReviewTrail({
                 <span className={`badge ${outcomes[entry.status].badge}`}>
                   {outcomes[entry.status].label}
                 </span>
+                {entry.brand && <p className="muted">Thương hiệu Shopee xác nhận: {entry.brand}</p>}
                 {entry.selected_variant && (
                   <p className="muted">
                     Biến thể: {entry.selected_variant.name} · SKU{" "}

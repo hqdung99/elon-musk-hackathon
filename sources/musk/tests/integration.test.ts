@@ -16,6 +16,7 @@ afterEach(() => {
 it("integrates OpenAI contracts and Shopee search, relevance, explicit SKU, cart shipping, ranking and fresh revalidation", async () => {
   const intent = {
     product_description: "iPhone 16 128GB",
+    shopping_goal: { mode: "targeted", category: "điện thoại", requested_brand: "Apple" },
     quantity: 1,
     delivery_area: "TP.HCM",
     requirements: [

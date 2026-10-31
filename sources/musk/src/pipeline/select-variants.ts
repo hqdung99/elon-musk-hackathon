@@ -20,7 +20,11 @@ function fallbackVariant(intent: ShoppingIntent, product: ProductDetails) {
           ? (variant.storage_gb ?? product.storage_gb)
           : requirement.field_path === "product.model"
             ? (variant.model ?? product.model)
-            : null;
+            : requirement.field_path === "product.volume_ml"
+              ? (variant.volume_ml ?? product.volume_ml)
+              : requirement.field_path === "product.pack_count"
+                ? (variant.pack_count ?? product.pack_count)
+                : null;
       if (actual == null || requirement.value == null) return true;
       if (requirement.operator === "eq") return actual === requirement.value;
       if (

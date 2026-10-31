@@ -20,9 +20,13 @@ export const fieldSchema = z.enum([
   "product.model",
   "product.storage_gb",
   "product.condition",
+  "product.brand",
+  "product.volume_ml",
+  "product.pack_count",
   "seller.is_mall",
   "seller.rating",
   "quote.total",
+  "quote.unit_price_per_100ml",
   "quote.in_stock",
   "quote.estimated_delivery_to",
   "policies.warranty_months",
@@ -64,6 +68,13 @@ export const intentSchema = z.object({
   questions_for_user: z.array(z.string()),
   // Short messages the user can pick to answer questions_for_user; empty when nothing is asked.
   suggested_replies: z.array(z.string()).optional(),
+  shopping_goal: z
+    .object({
+      mode: z.enum(["targeted", "discover_brands"]),
+      category: z.string().min(1).nullable(),
+      requested_brand: z.string().min(1).nullable(),
+    })
+    .optional(),
 });
 
 export type ShoppingIntent = z.infer<typeof intentSchema>;
@@ -71,6 +82,53 @@ export type ShoppingIntent = z.infer<typeof intentSchema>;
 export type Requirement = z.infer<typeof requirementSchema>;
 
 export type Preference = z.infer<typeof preferenceSchema>;
+
+export const brandCandidatesSchema = z.object({
+  brands: z
+    .array(
+      z.object({
+        name: z.string().trim().min(1),
+        aliases: z.array(z.string().trim().min(1)),
+        reason: z.string().min(1),
+        source_urls: z
+          .array(
+            z
+              .string()
+              .url()
+              .regex(/^https?:\/\//i),
+          )
+          .min(1),
+      }),
+    )
+    .min(1)
+    .max(3),
+  limitations: z.array(z.string()),
+});
+
+export const brandDiscoverySchema = brandCandidatesSchema.extend({
+  sources: z
+    .array(
+      z.object({
+        url: z
+          .string()
+          .url()
+          .regex(/^https?:\/\//i),
+        title: z.string().min(1),
+      }),
+    )
+    .min(1),
+  researched_at: z.string().datetime({ offset: true }),
+});
+
+export type BrandDiscovery = z.infer<typeof brandDiscoverySchema>;
+
+export function normalizeBrand(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLocaleLowerCase()
+    .replace(/[^\p{L}\p{N}]/gu, "");
+}
 
 export const searchPlanSchema = z.object({
   query: z.string().min(1),
@@ -128,6 +186,7 @@ export interface ListingReview {
   reasons: string[];
   seller_name?: string;
   selected_variant?: { variant_id: string; name: string };
+  brand?: string;
 }
 
 export interface SearchReview {
@@ -138,6 +197,15 @@ export interface SearchReview {
   page_limit: number;
   truncated: boolean;
   entries: ListingReview[];
+  discovery?: BrandDiscovery;
+  brand_searches?: {
+    brand: string;
+    plan: SearchPlan;
+    pages_fetched: number;
+    listing_limit: number;
+    page_limit: number;
+    truncated: boolean;
+  }[];
 }
 
 const imageUrlSchema = z.string().url().startsWith("https://");
@@ -152,12 +220,18 @@ export const productVariantSchema = z.object({
   is_grayout: z.boolean().nullable().optional(),
   stock: z.number().int().nonnegative().nullable().optional(),
   image_url: imageUrlSchema.nullable().optional(),
+  volume_ml: z.number().positive().nullable().optional(),
+  pack_count: z.number().int().positive().nullable().optional(),
 });
 
 export const productSchema = z.object({
   listing_id: z.string(),
   title: z.string(),
   image_url: imageUrlSchema.nullable().optional(),
+  brand: z.string().min(1).nullable().optional(),
+  brand_id: z.string().nullable().optional(),
+  volume_ml: z.number().positive().nullable().optional(),
+  pack_count: z.number().int().positive().nullable().optional(),
   model: z.string().nullable(),
   storage_gb: z.number().nullable(),
   condition: z.enum(["new", "used", "refurbished"]).nullable(),
@@ -224,6 +298,7 @@ export const quoteSchema = z.object({
   quantity: z.number().int().positive(),
   delivery_area: z.string().nullable(),
   item_unit_price: moneySchema.nullable(),
+  unit_price_per_100ml: moneySchema.nullable().optional(),
   shipping_cost: moneySchema.nullable(),
   shipping_estimated: z.boolean().optional(),
   total_estimated: z.boolean().optional(),
@@ -311,6 +386,11 @@ export type RankingResults = z.infer<typeof rankingSchema>;
 
 export type RankedOffer = RankingResults["ranked_offers"][number];
 
+export interface BrandComparison {
+  brand: string;
+  ranking: RankingResults;
+}
+
 export interface Recommendation {
   recommended_offer_id: string | null;
   reasons: string[];
@@ -320,6 +400,7 @@ export interface Recommendation {
 export type Stage =
   | "clarifying"
   | "planning"
+  | "discovering"
   | "searching"
   | "profiling"
   | "filtering"
@@ -335,4 +416,5 @@ export interface PipelineResult {
   recommendation: Recommendation;
   mode: string;
   search_review: SearchReview;
+  brand_comparisons?: BrandComparison[];
 }
