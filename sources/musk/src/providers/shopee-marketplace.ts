@@ -15,6 +15,8 @@ import { createCheckoutShippingEstimator } from "./shopee-shipping";
 import { createShopeeCart } from "./shopee-cart";
 import { calculateTotal } from "../domain/requirements";
 import type { CheckoutAdapter, CheckoutNavigation } from "./checkout";
+import { forwardedHeader, shopeeHeaderNames } from "./shopee-headers";
+import type { ShopeeHeaders } from "./shopee-headers";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -116,8 +118,14 @@ function assertApiSuccess(payload: JsonRecord, endpoint: string): void {
 
 export function createShopeeAdapter(
   fetcher: typeof fetch = globalThis.fetch,
+  credentials?: ShopeeHeaders,
 ): MarketplaceAdapter & CheckoutAdapter {
   const products = new Map<string, Promise<ProductResponse>>();
+  const sessionHeaders: Record<string, string> = credentials
+    ? Object.fromEntries(
+        shopeeHeaderNames.map((name) => [forwardedHeader(name), credentials[name]]),
+      )
+    : {};
 
   async function request(
     path: string,
@@ -128,12 +136,8 @@ export function createShopeeAdapter(
     const response = await fetcher(`/shopee-api/${path}`, {
       method: body ? "POST" : "GET",
       credentials: "same-origin",
-      ...(body
-        ? {
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(body),
-          }
-        : {}),
+      headers: { ...sessionHeaders, ...(body ? { "content-type": "application/json" } : {}) },
+      ...(body ? { body: JSON.stringify(body) } : {}),
       ...(signal ? { signal } : {}),
     });
     if (!response.ok)
@@ -621,5 +625,3 @@ export function createShopeeAdapter(
     },
   };
 }
-
-export const shopeeAdapter = createShopeeAdapter();

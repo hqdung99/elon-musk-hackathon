@@ -14,27 +14,17 @@ npm run dev
 
 Open the URL printed by Vite. Default mode uses fixture data and scripted demo AI; no credentials needed.
 
-## Enable Azure + Shopee
+## Enable OpenAI + Shopee
 
-1. In browser DevTools, copy a working Shopee POST request (e.g. `select_variation_pc`) as **cURL (cmd)**, then run:
+Open **Cấu hình** in the app:
 
-   ```powershell
-   Get-Clipboard -Raw | npm run setup:shopee
-   ```
+1. **AI xử lý → OpenAI**: paste your OpenAI API key; the model defaults to `gpt-5-mini`.
+2. **Dữ liệu sản phẩm → Shopee**: in browser DevTools → Network, right-click a logged-in request to `shopee.vn/api/...` → **Copy as cURL** (bash or cmd), and paste it into **Dán cURL**. Musk keeps the cookie, CSRF token, `af-ac-enc-dat`, user-agent and referer.
+3. Click **Áp dụng cấu hình**.
 
-   This saves the five required Shopee headers and adds an empty Azure key entry if missing. Existing Azure settings are preserved.
+Keys and headers are saved in this browser's localStorage and survive reloads; use **Xóa header Shopee** or clear site data to remove them. Paste a fresh cURL when the Shopee session expires.
 
-2. Fill the key in the ignored `.env.local`, keeping the Shopee headers:
-
-   ```dotenv
-   VITE_AZURE_OPENAI_API_KEY="YOUR_ROTATED_DEMO_KEY"
-   ```
-
-   Optional endpoint, deployment, and API version settings: [.env.example](.env.example).
-
-3. Restart Vite. In **Cấu hình**, select **Azure OpenAI** and **Shopee**. Azure settings load automatically and are read-only.
-
-Refresh Shopee headers with the same command when the session expires; restart Vite after environment changes.
+Azure OpenAI is still configured through `.env.local` (`VITE_AZURE_OPENAI_API_KEY` and the options in [.env.example](.env.example)); restart Vite after changing it.
 
 ## Try it
 
@@ -53,7 +43,7 @@ Click **Mở giỏ hàng Shopee** to continue manually using the same Shopee acc
 - Shopee prices already include vouchers; Musk uses them unchanged, without fetching or subtracting more vouchers. Shipping uses the saved account address and remains estimated. Missing pricing and policies stay unknown.
 - Known term changes or failed requirements block handoff; unknown checks remain visible warnings. Verify intended items and all final terms on Shopee.
 - **Musk never places orders or makes payments.**
-- Never commit credentials. Shopee headers stay server-side; **`VITE_` Azure keys are browser-visible and embedded in builds**. Do not share credential-containing builds.
+- Never commit credentials. **The OpenAI key and Shopee session headers are stored in plain text in this browser profile** and sent to the local Vite proxy (Shopee) or straight to api.openai.com (OpenAI); use short-lived keys and revoke them after demos. **`VITE_` Azure keys are browser-visible and embedded in builds**. Do not share credential-containing builds.
 - The Shopee proxy works only during development. API errors never silently switch to demo data. Search is bounded, not market-wide; conversations clear on reload.
 
 ## Validate

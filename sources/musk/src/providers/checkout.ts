@@ -1,6 +1,5 @@
 import type { OfferProfile } from "../domain/schemas";
 import type { AdapterResult } from "./marketplace";
-import { shopeeAdapter } from "./shopee-marketplace";
 
 export interface CheckoutNavigation {
   status: "ready" | "opened" | "simulated";
@@ -17,8 +16,6 @@ export interface CheckoutAdapter {
     signal?: AbortSignal,
   ): Promise<AdapterResult<CheckoutNavigation>>;
 }
-
-export const shopeeCheckout: CheckoutAdapter = shopeeAdapter;
 
 export const fixtureCheckout: CheckoutAdapter = {
   async openCheckout() {

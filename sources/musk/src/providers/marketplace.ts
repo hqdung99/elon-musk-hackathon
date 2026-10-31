@@ -58,4 +58,4 @@ export function unwrap<T>(result: AdapterResult<T>): T {
   return result.data;
 }
 
-export { createShopeeAdapter, shopeeAdapter } from "./shopee-marketplace";
+export { createShopeeAdapter } from "./shopee-marketplace";

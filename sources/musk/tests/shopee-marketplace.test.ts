@@ -53,6 +53,44 @@ function jsonResponse(body: unknown, status = 200): Response {
 }
 
 describe("Shopee marketplace adapter", () => {
+  it("sends the Cấu hình session headers as x-musk-* on GET and POST requests", async () => {
+    const session = {
+      "af-ac-enc-dat": "fake-enc",
+      cookie: "session=fake",
+      "user-agent": "Test",
+      "x-csrftoken": "fake-csrf",
+      referer: "https://shopee.vn/",
+    };
+    const inits: RequestInit[] = [];
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      inits.push(init ?? {});
+
+      return jsonResponse({ error: 17 }, 200);
+    });
+    const adapter = createShopeeAdapter(fetcher, session);
+    const listing = { listing_id: "123", seller_id: "456", url: "https://shopee.vn/", title: "" };
+    await expect(adapter.getReviews(listing)).rejects.toThrow();
+    await expect(
+      adapter.openCheckout({
+        quote: { listing_id: "123", variant_id: "1", quantity: 1 },
+        product: { listing_id: "123", variants: [{ variant_id: "1" }], title: "" },
+        selected_variant_id: "1",
+        seller: { seller_id: "456" },
+        listing_url: "https://shopee.vn/",
+      } as never),
+    ).rejects.toThrow();
+    expect(inits.length).toBeGreaterThanOrEqual(2);
+    for (const init of inits)
+      expect(init.headers).toMatchObject({
+        "x-musk-af-ac-enc-dat": "fake-enc",
+        "x-musk-cookie": "session=fake",
+        "x-musk-user-agent": "Test",
+        "x-musk-x-csrftoken": "fake-csrf",
+        "x-musk-referer": "https://shopee.vn/",
+      });
+    expect(inits.some((init) => init.method === "POST")).toBe(true);
+  });
+
   it("maps API-provided filters and searches organic results with pagination", async () => {
     const fetcher = vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(String(input), "https://musk.local");

@@ -1,15 +1,23 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { IntentSummary } from "./components/requirements";
 import { OfferResults, formatMoney } from "./components/offers/OfferResults";
 import { VariantSelection } from "./components/offers/VariantSelection";
-import { Settings } from "./components/chat/Settings";
+import { Settings, aiProviderName } from "./components/chat/Settings";
 import type { SettingsValue } from "./components/chat/Settings";
 import type { OfferProfile, PipelineResult, Stage } from "./domain/schemas";
-import { createAzureAI, defaultAzureConfig, demoAI, readLocalConfig } from "./providers/ai";
+import {
+  createAzureAI,
+  createOpenAI,
+  defaultAzureConfig,
+  defaultOpenAIConfig,
+  demoAI,
+  readLocalConfig,
+} from "./providers/ai";
 import { createFixtureMarketplace } from "./providers/fixtures";
-import { shopeeAdapter } from "./providers/marketplace";
+import { createShopeeAdapter } from "./providers/marketplace";
 import { CartCleanupError } from "./providers/shopee-cart";
-import { fixtureCheckout, shopeeCheckout } from "./providers/checkout";
+import { fixtureCheckout } from "./providers/checkout";
+import { loadStoredSettings, saveSettings } from "./settings-storage";
 import { approveAndRevalidate, completeSelection, runPipeline } from "./pipeline/orchestrator";
 import type { VariantChoices } from "./pipeline/types";
 import { initialState, reducer } from "./state";
@@ -33,12 +41,20 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [input, setInput] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [settings, setSettings] = useState<SettingsValue>({
+  const [settings, setSettings] = useState<SettingsValue>(() => ({
     aiMode: "demo",
     dataMode: "fixture",
     scenario: "unchanged",
+    openai: defaultOpenAIConfig,
     azure: defaultAzureConfig,
-  });
+    shopee: null,
+    ...loadStoredSettings(),
+  }));
+  // One adapter per Shopee session so search, quotes and checkout share its product cache.
+  const shopee = useMemo(
+    () => createShopeeAdapter(globalThis.fetch, settings.shopee ?? undefined),
+    [settings.shopee],
+  );
   const runId = useRef(0);
   const controller = useRef<AbortController | null>(null);
   const userTexts = useRef<string[]>([]);
@@ -61,7 +77,7 @@ export default function App() {
             message: {
               id: crypto.randomUUID(),
               kind: "error",
-              text: "Không đọc được cấu hình local. Kiểm tra cấu hình Azure local rồi khởi động lại Vite.",
+              text: "Không đọc được cấu hình local. Kiểm tra cấu hình AI trong .env.local rồi khởi động lại Vite.",
             },
           });
       });
@@ -129,18 +145,33 @@ export default function App() {
 
   function errorText(error: unknown) {
     const raw = error instanceof Error ? error.message : "Có lỗi không xác định.";
-    const safe = settings.azure.apiKey ? raw.split(settings.azure.apiKey).join("[key đã ẩn]") : raw;
+    const safe = [settings.azure.apiKey, settings.openai.apiKey]
+      .map((key) => key.trim())
+      .filter(Boolean)
+      .reduce((text, key) => text.split(key).join("[key đã ẩn]"), raw);
 
-    return `${safe}\nKhông tự đổi sang dữ liệu demo. Với Azure, kiểm tra key, deployment, API version và CORS trong cấu hình.`;
+    return `${safe}\nKhông tự đổi sang dữ liệu demo. Với ${aiProviderName(settings.aiMode)}, kiểm tra key, model và cấu hình.`;
+  }
+
+  function shopeeMarketplace() {
+    if (!settings.shopee)
+      throw new Error("Chưa có header phiên Shopee. Dán cURL trong Cấu hình rồi thử lại.");
+
+    return shopee;
   }
 
   async function dependencies(signal: AbortSignal, id: number, revalidating = false) {
     return {
-      ai: settings.aiMode === "azure" ? await createAzureAI(settings.azure) : demoAI,
+      ai:
+        settings.aiMode === "openai"
+          ? await createOpenAI(settings.openai)
+          : settings.aiMode === "azure"
+            ? await createAzureAI(settings.azure)
+            : demoAI,
       marketplace:
         settings.dataMode === "fixture"
           ? createFixtureMarketplace(settings.scenario, revalidating || freshData.current)
-          : shopeeAdapter,
+          : shopeeMarketplace(),
       signal,
       progress: (stage: Stage) => dispatch({ type: "progress", runId: id, stage }),
     };
@@ -238,7 +269,7 @@ export default function App() {
         profile,
         result.intent,
         deps,
-        settings.dataMode === "fixture" ? fixtureCheckout : shopeeCheckout,
+        settings.dataMode === "fixture" ? fixtureCheckout : shopeeMarketplace(),
       );
       if (signal.aborted || id !== runId.current) return;
       if (
@@ -362,7 +393,9 @@ export default function App() {
             <span className="badge green">LOCAL MVP</span>
             <span>
               {settings.dataMode === "fixture" ? "Dữ liệu giả lập" : "Shopee API"} ·{" "}
-              {settings.aiMode === "demo" ? "AI demo, không gọi mô hình" : "Azure OpenAI"}
+              {settings.aiMode === "demo"
+                ? "AI demo, không gọi mô hình"
+                : aiProviderName(settings.aiMode)}
             </span>
             <button onClick={() => setSettingsOpen(true)}>Đổi chế độ ↗</button>
           </div>
@@ -409,7 +442,7 @@ export default function App() {
                   <p className="demo-hint">
                     Demo hỗ trợ kịch bản iPhone 16 128GB và câu trả lời có cấu trúc.
                     <br />
-                    Chọn Azure trong Cấu hình để dùng AI diễn giải tự nhiên.
+                    Chọn OpenAI hoặc Azure trong Cấu hình để dùng AI diễn giải tự nhiên.
                   </p>
                 </section>
               )}
@@ -529,7 +562,7 @@ export default function App() {
                   ✦{" "}
                   {settings.aiMode === "demo"
                     ? "Bắt đầu bằng ví dụ để khám phá"
-                    : "Được hỗ trợ bởi Azure OpenAI"}
+                    : `Được hỗ trợ bởi ${aiProviderName(settings.aiMode)}`}
                 </span>
                 <button
                   type="submit"
@@ -558,6 +591,7 @@ export default function App() {
             onSave={(value) => {
               const { id } = nextRun();
               setSettings(value);
+              saveSettings(value);
               setSettingsOpen(false);
               freshData.current = false;
               dispatch({ type: "invalidate", runId: id });

@@ -1,3 +1,4 @@
+import type { ChatOpenAI } from "@langchain/openai";
 import { z } from "zod";
 import { fieldValue } from "../domain/requirements";
 import {
@@ -20,7 +21,7 @@ import type {
 } from "../domain/schemas";
 
 export interface AIAdapter {
-  mode: "demo" | "azure";
+  mode: "demo" | "azure" | "openai";
   interpretIntent(messages: string[], signal?: AbortSignal): Promise<ShoppingIntent>;
   buildSearchPlan(
     intent: ShoppingIntent,
@@ -58,6 +59,13 @@ export const defaultAzureConfig: AzureConfig = {
   apiKey: "",
 };
 
+export interface OpenAIConfig {
+  apiKey: string;
+  model: string;
+}
+
+export const defaultOpenAIConfig: OpenAIConfig = { apiKey: "", model: "gpt-5-mini" };
+
 export async function readLocalConfig(): Promise<Partial<AzureConfig>> {
   const modules = import.meta.glob<{ default: Partial<AzureConfig> }>("/src/local-config.ts");
   const load = modules["/src/local-config.ts"];
@@ -87,6 +95,23 @@ Date today: ${new Date().toISOString().slice(0, 10)}.
 Use GB for storage and months for warranty units, VND for total budgets.
 Latest explicit revisions override earlier statements; preserve unchanged requirements.`;
 
+export async function createOpenAI(config: OpenAIConfig): Promise<AIAdapter> {
+  if (!config.apiKey.trim()) throw new Error("Thiếu API key OpenAI. Nhập key trong Cấu hình.");
+  if (!config.model.trim()) throw new Error("Thiếu tên model OpenAI. Nhập model trong Cấu hình.");
+  const { ChatOpenAI } = await import("@langchain/openai");
+
+  return createLangChainAI(
+    new ChatOpenAI({
+      model: config.model.trim(),
+      apiKey: config.apiKey.trim(),
+      maxRetries: 0,
+      timeout: 60_000,
+      configuration: { dangerouslyAllowBrowser: true },
+    }),
+    "openai",
+  );
+}
+
 export async function createAzureAI(config: AzureConfig): Promise<AIAdapter> {
   const endpoint = new URL(config.endpoint);
   if (
@@ -103,16 +128,23 @@ export async function createAzureAI(config: AzureConfig): Promise<AIAdapter> {
   if (!config.deployment.trim() || !config.apiVersion.trim())
     throw new Error("Thiếu deployment hoặc API version.");
   const { AzureChatOpenAI } = await import("@langchain/openai");
-  const model = new AzureChatOpenAI({
-    model: config.deployment,
-    azureOpenAIEndpoint: endpoint.origin,
-    azureOpenAIApiDeploymentName: config.deployment,
-    azureOpenAIApiVersion: config.apiVersion,
-    azureOpenAIApiKey: config.apiKey,
-    maxRetries: 0,
-    timeout: 60_000,
-    configuration: { dangerouslyAllowBrowser: true },
-  });
+
+  return createLangChainAI(
+    new AzureChatOpenAI({
+      model: config.deployment,
+      azureOpenAIEndpoint: endpoint.origin,
+      azureOpenAIApiDeploymentName: config.deployment,
+      azureOpenAIApiVersion: config.apiVersion,
+      azureOpenAIApiKey: config.apiKey,
+      maxRetries: 0,
+      timeout: 60_000,
+      configuration: { dangerouslyAllowBrowser: true },
+    }),
+    "azure",
+  );
+}
+
+function createLangChainAI(model: ChatOpenAI, mode: "azure" | "openai"): AIAdapter {
   async function structured<T>(
     schema: z.ZodType<T>,
     task: string,
@@ -133,7 +165,7 @@ export async function createAzureAI(config: AzureConfig): Promise<AIAdapter> {
   }
 
   return {
-    mode: "azure",
+    mode,
     interpretIntent: (messages, signal) =>
       structured(
         intentSchema,

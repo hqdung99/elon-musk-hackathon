@@ -1156,6 +1156,7 @@ h3 {
   color: var(--muted);
 }
 .settings-modal input,
+.settings-modal textarea,
 .settings-modal select {
   width: 100%;
   min-width: 0;
@@ -1165,6 +1166,12 @@ h3 {
   color: var(--ink);
   font-size: 11px;
   background: var(--tint);
+}
+.settings-modal textarea {
+  min-height: 90px;
+  resize: vertical;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
 }
 .settings-modal fieldset {
   margin: 0;

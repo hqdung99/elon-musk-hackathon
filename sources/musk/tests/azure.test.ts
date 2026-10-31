@@ -1,5 +1,11 @@
 import { afterEach, beforeAll, expect, it, vi } from "vitest";
-import { createAzureAI, defaultAzureConfig, demoAI, readLocalConfig } from "../src/providers/ai";
+import {
+  createAzureAI,
+  createOpenAI,
+  defaultAzureConfig,
+  demoAI,
+  readLocalConfig,
+} from "../src/providers/ai";
 import { createFixtureMarketplace, fixtureListings } from "../src/providers/fixtures";
 import { assembleProfile } from "../src/pipeline/profiles";
 
@@ -110,6 +116,39 @@ it("uses the supplied Azure endpoint, deployment, API version and structured out
   expect(requests[0].headers.get("api-key")).toBe("fake-unit-test-key");
   expect(JSON.parse(requests[0].body).tools[0].function.name).toBe("interpret_intent");
   expect(JSON.parse(requests[0].body).tools[0].function.strict).toBe(true);
+});
+
+it("calls the OpenAI Chat Completions API with a bearer key and strict structured output", async () => {
+  const intent = {
+    product_description: "iPhone 16 128GB",
+    quantity: 1,
+    delivery_area: "TP.HCM",
+    requirements: [],
+    preferences: [],
+    questions_for_user: [],
+  };
+  const requests: { url: string; headers: Headers; body: string }[] = [];
+  vi.stubGlobal("fetch", async (input: string | URL | Request, init?: RequestInit) => {
+    const request = new Request(input, init);
+    requests.push({ url: request.url, headers: request.headers, body: await request.text() });
+
+    return toolResponse("interpret_intent", intent);
+  });
+  const ai = await createOpenAI({ apiKey: " fake-openai-key ", model: "gpt-5-mini" });
+  expect(ai.mode).toBe("openai");
+  expect(await ai.interpretIntent(["Find an iPhone"])).toEqual(intent);
+  expect(requests).toHaveLength(1);
+  expect(requests[0].url).toBe("https://api.openai.com/v1/chat/completions");
+  expect(requests[0].headers.get("authorization")).toBe("Bearer fake-openai-key");
+  const body = JSON.parse(requests[0].body);
+  expect(body.model).toBe("gpt-5-mini");
+  expect(body.tools[0].function.strict).toBe(true);
+  await expect(createOpenAI({ apiKey: " ", model: "gpt-5-mini" })).rejects.toThrow(
+    "Thiếu API key OpenAI",
+  );
+  await expect(createOpenAI({ apiKey: "fake-openai-key", model: " " })).rejects.toThrow(
+    "Thiếu tên model OpenAI",
+  );
 });
 
 it.each(["mall", "is_mall", "no_filters"])(

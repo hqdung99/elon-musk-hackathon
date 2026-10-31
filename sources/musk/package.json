@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "setup:shopee": "node scripts/setup-shopee-headers.js",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "lint": "eslint .",
